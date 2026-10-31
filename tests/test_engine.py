@@ -442,3 +442,42 @@ def test_validation_metrics_are_role_prefixed_and_rule_ids_published(success):
     for plan in generate_candidates(success):
         report = validate_plan(success, plan)
         assert all(key.startswith(prefixes) for key in report.metrics), report.metrics
+
+
+# ---- provenance-only evidence: hist:* and derived:clock.* never act as operational facts ----
+PROVENANCE_ONLY = ("hist:", "derived:clock.")
+
+
+def test_no_rule_cites_historical_or_clock_provenance():
+    for rule in RULES.values():
+        assert not any(e.startswith(PROVENANCE_ONLY) for e in rule.evidence_ids), rule.rule_id
+
+
+@pytest.mark.parametrize("name", list(fx.SCENARIO_FILES))
+def test_violations_never_cite_provenance_only_evidence(name):
+    s = fx.load_fixture_scenario(name)
+    rejected = evaluate_candidates(s, generate_candidates(s)).rejected
+    cited = {e for r in rejected for v in r.violations for e in v.evidence_ids}
+    assert cited and not any(e.startswith(PROVENANCE_ONLY) for e in cited)
+
+
+def test_engine_source_never_reads_historical_fields():
+    import ast
+    import airspace.engine as engine_pkg
+
+    forbidden = {"historical_row", "historical_ref", "provenance"}
+    for path in Path(engine_pkg.__path__[0]).glob("*.py"):
+        tree = ast.parse(path.read_text())
+        names = {n.attr for n in ast.walk(tree) if isinstance(n, ast.Attribute)}
+        names |= {n.value for n in ast.walk(tree) if isinstance(n, ast.Constant) and isinstance(n.value, str)}
+        assert not (names & forbidden), (path.name, names & forbidden)
+
+
+def test_historical_and_clock_evidence_is_labelled_provenance(success):
+    hist = [e for e in success.provenance if e.evidence_id.startswith(PROVENANCE_ONLY)]
+    assert {e.evidence_id for e in hist} >= {"hist:row", "derived:clock.SCHEDULED_ARRIVAL"}
+    for e in hist:
+        assert e.kind == ("historical" if e.evidence_id.startswith("hist:") else "derived")
+        assert e.field_path.startswith(("historical_row", "historical_ref"))
+    assert "not a decision input" in next(e.note for e in hist if e.evidence_id == "hist:row")
+    assert all("display only" in e.note for e in hist if e.evidence_id.startswith("derived:clock."))
