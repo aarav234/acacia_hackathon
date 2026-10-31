@@ -45,7 +45,7 @@ async def main(mode: str, trace: str | None, save_trace: str | None, timeout: fl
     print("votes:", json.dumps(agent_votes(result)))
     if save_trace:
         Path(save_trace).parent.mkdir(parents=True, exist_ok=True)
-        Path(save_trace).write_text(json.dumps(export_trace(result), indent=2))
+        Path(save_trace).write_text(json.dumps(export_trace(result), indent=2), encoding="utf-8")
         print("saved sanitized trace ->", save_trace)
     return 0
 

@@ -126,11 +126,24 @@ def test_provider_selection_is_explicit(monkeypatch):
     monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-ant-test-not-real-000000")
     with pytest.raises(LiveProviderUnavailable):  # both keys, no explicit choice
         build_live_provider()
-    monkeypatch.setenv("AIRSPACE_LLM_PROVIDER", "anthropic")
-    assert isinstance(build_live_provider(), AnthropicProvider)
+    monkeypatch.setenv("AIRSPACE_LLM_PROVIDER", "openai")  # explicit choice resolves both-keys case
+    assert isinstance(build_live_provider(), OpenAIProvider)
     monkeypatch.setenv("AIRSPACE_LLM_PROVIDER", "gemini")
     with pytest.raises(LiveProviderUnavailable):
         build_live_provider()
+
+
+def test_explicit_anthropic_choice(monkeypatch):
+    # anthropic is an optional extra: without it, live anthropic is an explicit error, never mock
+    monkeypatch.setenv("AIRSPACE_LLM_PROVIDER", "anthropic")
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-ant-test-not-real-000000")
+    try:
+        import anthropic  # noqa: F401
+    except ImportError:
+        with pytest.raises(LiveProviderUnavailable, match="not installed"):
+            build_live_provider()
+    else:
+        assert isinstance(build_live_provider(), AnthropicProvider)
 
 
 def test_full_live_path_with_fake_openai_client():
