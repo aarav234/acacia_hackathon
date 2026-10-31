@@ -1,0 +1,136 @@
+{
+  "airports": {
+    "DEN": {
+      "active_runways": 4,
+      "airport": "Denver International Airport",
+      "gates": 150,
+      "iata_code": "DEN",
+      "max_runway_ops_per_hour": 90,
+      "min_turnaround_min": 45,
+      "predicate_rows_as_origin": 15480,
+      "size_class": "Large hub",
+      "source_row": 7,
+      "spare_gates_at_any_time": 3
+    },
+    "ITO": {
+      "active_runways": 1,
+      "airport": "Hilo International Airport",
+      "gates": 8,
+      "iata_code": "ITO",
+      "max_runway_ops_per_hour": 20,
+      "min_turnaround_min": 35,
+      "predicate_rows_as_origin": 234,
+      "size_class": "Non-hub",
+      "source_row": 145,
+      "spare_gates_at_any_time": 2
+    },
+    "MIA": {
+      "active_runways": 3,
+      "airport": "Miami International Airport",
+      "gates": 70,
+      "iata_code": "MIA",
+      "max_runway_ops_per_hour": 60,
+      "min_turnaround_min": 35,
+      "predicate_rows_as_origin": 5013,
+      "size_class": "Medium hub",
+      "source_row": 22,
+      "spare_gates_at_any_time": 3
+    },
+    "SJC": {
+      "active_runways": 2,
+      "airport": "Norman Y. Mineta San Jos\u00e9 International Airport",
+      "gates": 30,
+      "iata_code": "SJC",
+      "max_runway_ops_per_hour": 36,
+      "min_turnaround_min": 35,
+      "predicate_rows_as_origin": 2918,
+      "size_class": "Small hub",
+      "source_row": 37,
+      "spare_gates_at_any_time": 2
+    }
+  },
+  "fuel_crew": {
+    "contingency_pct_of_trip_fuel": 5,
+    "final_reserve_holding_min": 30,
+    "flight_crew_max_duty_h": 13,
+    "gate_change_notice_min": 20,
+    "ground_crew_shift_h": 8,
+    "ground_overtime_multiplier": 1.5,
+    "holding_burn_narrowbody_kg_per_h": 2400,
+    "holding_burn_widebody_kg_per_h": 6500,
+    "spare_fuel_on_arrival_holding_min": 45
+  },
+  "note": "Derived extract of the challenge workbook (values unchanged). Airport rows are a subset.",
+  "rules_of_play": {
+    "Constraints": "Use the limits in this workbook. Any limit you change must be stated in your demo.",
+    "Input": "Pick one row of flights.csv (WEATHER_DELAY > 15 or LATE_AIRCRAFT_DELAY > 20). That row is the disruption.",
+    "No consensus": "After 3 turns without agreement, the deterministic non-AI fallback decides. Log why.",
+    "Output": "A revised arrival time, gate, or flight plan, with a consensus log showing each turn.",
+    "Turn": "One turn = each of the three agents sends one structured message. Consensus must be reached within 3 turns."
+  },
+  "schema": "airspace.challenge2-extract/v1",
+  "sheet_notes": {
+    "airport_capacity": "SYNTHETIC planning limits for the challenge, scaled from each airport's traffic in flights.csv. Not real airport data. Teams may replace with sourced figures if they cite them.",
+    "wake_separation": "Simplified from FAA JO 7110.65 wake rules. Use these numbers for the ATC agent."
+  },
+  "source_file": "challenge2_operational_constraints.xlsx",
+  "source_sha256": "f889ae9e012c36cbbf95a5b0b70a0ae81c1fa9090f07be5f9d0db81520e78211",
+  "wake_rules": [
+    {
+      "follower": "heavy",
+      "leader": "super",
+      "min_departure_time_s": 180,
+      "min_separation_nm": 6.0,
+      "source_row": 4
+    },
+    {
+      "follower": "large",
+      "leader": "super",
+      "min_departure_time_s": 180,
+      "min_separation_nm": 7.0,
+      "source_row": 5
+    },
+    {
+      "follower": "small",
+      "leader": "super",
+      "min_departure_time_s": 180,
+      "min_separation_nm": 8.0,
+      "source_row": 6
+    },
+    {
+      "follower": "heavy",
+      "leader": "heavy",
+      "min_departure_time_s": 120,
+      "min_separation_nm": 4.0,
+      "source_row": 7
+    },
+    {
+      "follower": "large",
+      "leader": "heavy",
+      "min_departure_time_s": 120,
+      "min_separation_nm": 5.0,
+      "source_row": 8
+    },
+    {
+      "follower": "small",
+      "leader": "heavy",
+      "min_departure_time_s": 120,
+      "min_separation_nm": 6.0,
+      "source_row": 9
+    },
+    {
+      "follower": "small",
+      "leader": "large",
+      "min_departure_time_s": 60,
+      "min_separation_nm": 4.0,
+      "source_row": 10
+    },
+    {
+      "follower": "*",
+      "leader": "*",
+      "min_departure_time_s": 60,
+      "min_separation_nm": 3.0,
+      "source_row": 11
+    }
+  ]
+}

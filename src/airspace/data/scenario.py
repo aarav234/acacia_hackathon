@@ -175,8 +175,11 @@ def _historical_parts(row: dict[str, object], prov: dict[str, object]) -> tuple[
 
 
 def build_scenario(row: dict[str, object], config_path: Path) -> Scenario:
-    config_path = Path(config_path)
-    config = load_simulation_config(config_path)
+    return scenario_from_config(row, load_simulation_config(Path(config_path)))
+
+
+def scenario_from_config(row: dict[str, object], config: SimulationConfig) -> Scenario:
+    """build_scenario for an already-validated in-memory SimulationConfig."""
     prov = row.get(PROVENANCE_KEY)
     if not isinstance(prov, dict) or prov.get("namespace") != PROVENANCE_NAMESPACE:
         raise ScenarioBuildError(

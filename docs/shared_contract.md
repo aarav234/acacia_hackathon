@@ -27,9 +27,14 @@ from airspace.engine.bargaining import choose_compromise     # (assessments, fal
 from airspace.engine.bargaining import pareto_front, role_best, gains   # shortlist helpers
 from airspace.engine.pipeline import solve_scenario          # composition of the APIs above
 
+# Challenge-calibrated suite and independent checks (Member 1 analysis; no contract change)
+from airspace.data.scenario_suite import build_suite, suite_specs   # 40 scenarios, deterministic
+from airspace.engine.oracle import independent_oracle                # exact re-implementation for evaluation
+
 # Fixtures (no flights.csv needed)
 from airspace.data.fixtures import (
-    load_fixture_scenario,      # "success" | "no_feasible" | "no_positive_gain"
+    load_fixture_scenario,      # (name, version="v1"); name: "success" | "no_feasible" | "no_positive_gain"
+                                # version "v1" = 5-min grid (default), "v2" = 1-min grid (preferred)
     load_example_assessments,   # list[Assessment] for the success scenario
     load_example_result,        # RunResult — MOCK example, not a run
     config_path, build_config, config_dict,   # config builders for tests/sensitivity runs
@@ -132,3 +137,4 @@ when a background movement precedes/follows on that runway), `pilot_fuel_at_gate
 | `fixtures/example_assessments.json` | feasible assessments of the success scenario |
 | `fixtures/example_result.json` | **MOCK** `RunResult` illustrating the schema (`reason_code=example_fixture_mock_not_a_run`); not negotiation evidence |
 | `configs/sim_*_v1.json` | the versioned simulation configs the scenarios were built from |
+| `configs/sim_*_v2.json`, `fixtures/*_scenario_v2.json`, `fixtures/example_assessments_v2.json` | the same three scenarios at **1-minute** landing resolution (`slot_step_min = 1`, the contract's integer-minute decision space); identical operating values; load with `load_fixture_scenario(name, "v2")` |

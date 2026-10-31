@@ -1,0 +1,207 @@
+{
+ "environment": {
+  "python": "3.13.9",
+  "platform": "macOS-15.7.3-arm64-arm-64bit-Mach-O"
+ },
+ "partition": "holdout",
+ "seed": 20261101,
+ "weight_samples_per_family": 30,
+ "elapsed_s": 349.5,
+ "python_heap_peak_mb": 10.2,
+ "summary": {
+  "variants": 128,
+  "with_feasible": 119,
+  "outcomes": {
+   "fallback": 117,
+   "human_review": 9,
+   "compromise": 2
+  },
+  "oracle_agreement": "128/128",
+  "selected_plans_pass_validator": "119/119",
+  "rejections_by_rule": {
+   "RWY-SEP-LEAD": 3446,
+   "RWY-SEP-FOLLOW": 3028,
+   "TAXI-BLOCK": 590,
+   "FUEL-RESERVE": 2850,
+   "RWY-OPEN": 198,
+   "GATE-OCCUPANCY": 696,
+   "CREW-COVERAGE": 216
+  },
+  "labels": {
+   "FALLBACK_EFFICIENT": 117,
+   "ROLE_CANNOT_GAIN": 212,
+   "GRID_LIMITED": 4,
+   "CONFLICT": 4,
+   "CONSTRAINT_BOUND": 33,
+   "WEIGHT_SENSITIVE": 10,
+   "NO_FEASIBLE": 9,
+   "POSITIVE_BARGAIN": 2
+  },
+  "blocking_roles": {
+   "pilot": 99,
+   "ground": 50,
+   "atc": 63
+  },
+  "grids": {
+   "cap_errors": 0,
+   "event_matches_integer_minute": "128/128",
+   "candidates_total": {
+    "slot_grid": 8370,
+    "integer_minute": 41850,
+    "event": 28698
+   },
+   "feasible_total": {
+    "slot_grid": 2143,
+    "integer_minute": 9996,
+    "event": 3763
+   },
+   "mean_pareto_vector_coverage": {
+    "slot_grid": 0.49669421487603305,
+    "event": 1.0
+   },
+   "integer_minute_bargains": 4,
+   "integer_minute_fallback_differs": 44,
+   "slot_vs_integer_minute_mean_raw_delta_selected": {
+    "landing_delay_min": -1.261,
+    "incremental_fuel_kg": -49.664,
+    "turnaround_delay_min": -1.21,
+    "crew_overtime_min": -0.303
+   }
+  },
+  "selectors": {
+   "A_strict_nash": {
+    "share_fallback": 0.9832,
+    "share_pareto": 1.0,
+    "share_individually_rational": 1.0,
+    "mean_weight_stability": 0.9787,
+    "mean_raw": {
+     "landing_delay_min": 3.025,
+     "spillover_proxy_min": 6.462,
+     "incremental_fuel_kg": 203.622,
+     "connection_penalty_pax": 18.563,
+     "turbulence_exposure_index": 1.488,
+     "turnaround_delay_min": 23.622,
+     "crew_overtime_min": 5.059,
+     "gate_change_indicator": 0.655
+    }
+   },
+   "A2_strict_nash_scaled": {
+    "share_fallback": 0.9832,
+    "share_pareto": 1.0,
+    "share_individually_rational": 1.0,
+    "mean_weight_stability": 0.9787,
+    "mean_raw": {
+     "landing_delay_min": 3.025,
+     "spillover_proxy_min": 6.462,
+     "incremental_fuel_kg": 203.622,
+     "connection_penalty_pax": 18.563,
+     "turbulence_exposure_index": 1.488,
+     "turnaround_delay_min": 23.622,
+     "crew_overtime_min": 5.059,
+     "gate_change_indicator": 0.655
+    }
+   },
+   "B_weak_ir_lex": {
+    "share_fallback": 0.9832,
+    "share_pareto": 1.0,
+    "share_individually_rational": 1.0,
+    "mean_weight_stability": 0.9686,
+    "mean_raw": {
+     "landing_delay_min": 3.025,
+     "spillover_proxy_min": 6.462,
+     "incremental_fuel_kg": 203.622,
+     "connection_penalty_pax": 18.563,
+     "turbulence_exposure_index": 1.488,
+     "turnaround_delay_min": 23.622,
+     "crew_overtime_min": 5.059,
+     "gate_change_indicator": 0.655
+    }
+   },
+   "D1_kalai_smorodinsky": {
+    "share_fallback": 0.9832,
+    "share_pareto": 1.0,
+    "share_individually_rational": 1.0,
+    "mean_weight_stability": 0.9686,
+    "mean_raw": {
+     "landing_delay_min": 3.025,
+     "spillover_proxy_min": 6.462,
+     "incremental_fuel_kg": 203.622,
+     "connection_penalty_pax": 18.563,
+     "turbulence_exposure_index": 1.488,
+     "turnaround_delay_min": 23.622,
+     "crew_overtime_min": 5.059,
+     "gate_change_indicator": 0.655
+    }
+   },
+   "D2_leximin_normalised": {
+    "share_fallback": 0.9832,
+    "share_pareto": 1.0,
+    "share_individually_rational": 1.0,
+    "mean_weight_stability": 0.9686,
+    "mean_raw": {
+     "landing_delay_min": 3.025,
+     "spillover_proxy_min": 6.462,
+     "incremental_fuel_kg": 203.622,
+     "connection_penalty_pax": 18.563,
+     "turbulence_exposure_index": 1.488,
+     "turnaround_delay_min": 23.622,
+     "crew_overtime_min": 5.059,
+     "gate_change_indicator": 0.655
+    }
+   },
+   "E_utilitarian": {
+    "share_fallback": 0.5882,
+    "share_pareto": 1.0,
+    "share_individually_rational": 0.605,
+    "mean_weight_stability": 0.813,
+    "mean_raw": {
+     "landing_delay_min": 3.277,
+     "spillover_proxy_min": 4.529,
+     "incremental_fuel_kg": 232.857,
+     "connection_penalty_pax": 19.874,
+     "turbulence_exposure_index": 1.397,
+     "turnaround_delay_min": 24.924,
+     "crew_overtime_min": 5.143,
+     "gate_change_indicator": 0.378
+    }
+   },
+   "E2_utilitarian_ir": {
+    "share_fallback": 0.9832,
+    "share_pareto": 1.0,
+    "share_individually_rational": 1.0,
+    "mean_weight_stability": 0.9686,
+    "mean_raw": {
+     "landing_delay_min": 3.025,
+     "spillover_proxy_min": 6.462,
+     "incremental_fuel_kg": 203.622,
+     "connection_penalty_pax": 18.563,
+     "turbulence_exposure_index": 1.488,
+     "turnaround_delay_min": 23.622,
+     "crew_overtime_min": 5.059,
+     "gate_change_indicator": 0.655
+    }
+   },
+   "C_strict_nash_worst_case_d": {
+    "share_fallback": 0.479,
+    "share_pareto": 1.0,
+    "share_individually_rational": 0.4958,
+    "mean_weight_stability": 0.8268,
+    "mean_raw": {
+     "landing_delay_min": 3.697,
+     "spillover_proxy_min": 3.866,
+     "incremental_fuel_kg": 255.84,
+     "connection_penalty_pax": 23.134,
+     "turbulence_exposure_index": 1.514,
+     "turnaround_delay_min": 25.756,
+     "crew_overtime_min": 5.378,
+     "gate_change_indicator": 0.286
+    }
+   }
+  },
+  "production_ms": {
+   "generate": 2.11,
+   "validate_and_score": 119.981,
+   "select": 0.457
+  }
+ }
+}

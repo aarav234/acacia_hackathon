@@ -1,0 +1,65 @@
+{
+ "environment": {
+  "python": "3.13.9",
+  "platform": "macOS-15.7.3-arm64-arm-64bit-Mach-O",
+  "machine": "arm64"
+ },
+ "engine_scaling": [
+  {
+   "horizon_min": 15,
+   "candidates": 30,
+   "feasible": 8,
+   "median_ms": 8.704,
+   "min_ms": 8.453,
+   "deterministic_over_3_runs": true,
+   "oracle_ms": 0.831
+  },
+  {
+   "horizon_min": 45,
+   "candidates": 108,
+   "feasible": 37,
+   "median_ms": 32.887,
+   "min_ms": 32.834,
+   "deterministic_over_3_runs": true,
+   "oracle_ms": 3.373
+  },
+  {
+   "horizon_min": 90,
+   "candidates": 270,
+   "feasible": 58,
+   "median_ms": 91.71,
+   "min_ms": 91.02,
+   "deterministic_over_3_runs": true,
+   "oracle_ms": 8.284
+  },
+  {
+   "horizon_min": 180,
+   "candidates": 432,
+   "feasible": 42,
+   "median_ms": 181.002,
+   "min_ms": 180.828,
+   "deterministic_over_3_runs": true,
+   "oracle_ms": 15.463
+  },
+  {
+   "horizon_min": 360,
+   "candidates": 936,
+   "feasible": 40,
+   "median_ms": 545.662,
+   "min_ms": 544.828,
+   "deterministic_over_3_runs": true,
+   "oracle_ms": 47.967
+  }
+ ],
+ "ingestion": {
+  "first_qualifying_row": {
+   "median_ms": 383.895,
+   "min_ms": 377.278
+  },
+  "full_scan_to_last_row_s": 7.45,
+  "last_row_outcome": "NonQualifyingRowError",
+  "full_scan_rows_per_s": 780863,
+  "file_bytes": 592406591
+ },
+ "peak_rss_mb": 621.9
+}

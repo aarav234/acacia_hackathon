@@ -241,14 +241,14 @@ def test_run_result_invariants():
 # ---- committed artefacts stay in sync with the code ---------------------
 def test_committed_configs_match_builders():
     for name in fx.BUILDERS:
-        committed = SimulationConfig.model_validate_json(fx.config_path(name).read_text())
+        committed = SimulationConfig.model_validate_json(fx.config_path(name).read_text(encoding="utf-8"))
         assert committed == fx.build_config(name), name
 
 
 def test_committed_json_schemas_match_models():
     for name, model in PUBLIC_MODELS.items():
         path = fx.FIXTURES_DIR / "schemas" / f"{name}.schema.json"
-        assert json.loads(path.read_text()) == model.model_json_schema(), name
+        assert json.loads(path.read_text(encoding="utf-8")) == model.model_json_schema(), name
 
 
 def test_fixture_loaders_return_validated_models():

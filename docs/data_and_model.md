@@ -101,6 +101,10 @@ is `{namespace, mode:"synthetic", note}` with no flight values.
   `service_end = gate_in + service_duration_min`.
 * **Cap.** If `slots × routes > candidate_cap`, `CandidateCapExceededError` is raised.
   The list is never truncated.
+* **Resolution.** Production scenario generation uses `slot_step_min = 1`, the contract's full integer-minute
+  decision space. The v1 fixtures and the published research suites keep the 5-minute baseline.
+  At 1 minute the cap allows a horizon of ⌊2000 / routes⌋ minutes: 333 min with 6 routes, 133 min with 15.
+  Longer horizons raise the cap error. Evidence: `docs/reports/research/I_candidate_generator_improvement.md`.
 
 ## 5. Hard constraints (`airspace.engine.constraints`)
 
@@ -255,3 +259,22 @@ PYTHONPATH=src python -m airspace.engine.report fixtures/success_scenario.json
 
 Set `AIRSPACE_DATA_DIR` if the CSVs are not at the repository root. The real-data
 tests skip, with a visible reason, when `flights.csv` is absent.
+
+## 11. Challenge workbook, validation suite and analysis reports
+
+* `airspace.data.challenge` loads `challenge2_operational_constraints.xlsx` strictly. The values are challenge-supplied planning rules, not measurements.
+* `airspace.data.scenario_suite` builds 40 workbook-calibrated scenarios anchored to four genuine `flights.csv` rows.
+* `airspace.engine.oracle.independent_oracle` re-implements enumeration, every hard rule, the raw metrics and the selection in exact rationals.
+* `airspace.engine.sensitivity` and `airspace.engine.benchmark` produce the experiments.
+
+Reports: `docs/reports/01_bugfix_and_provenance.md`, `02_dataset_assessment.md`,
+`03_calibration_and_optimisation.md`, `04_validation.md`; small result files are in `docs/reports/results/`.
+The mathematical-assurance pass (reproducibility, model audit, candidate coverage, calibration,
+bargaining alternatives, stratified held-out validation, recommendations, handoff) is in
+`docs/reports/research/` (Reports A–H and `preregistration.md`).
+
+```bash
+PYTHONPATH=src python -m airspace.data.scenario_suite                  # rebuild extract + anchor rows (needs xlsx + flights.csv)
+PYTHONPATH=src python -m airspace.engine.sensitivity --out runs/sens   # 11,481 runs, ~4 min, seed 20261031
+PYTHONPATH=src python -m airspace.engine.benchmark --out runs/bench --flights flights.csv
+```

@@ -1,0 +1,4995 @@
+{
+ "environment": {
+  "python": "3.13.9",
+  "platform": "macOS-15.7.3-arm64-arm-64bit-Mach-O",
+  "seed": 20261031,
+  "dirichlet_samples_per_family": 100
+ },
+ "scenario_count": 43,
+ "config_counts": {
+  "baseline": 1,
+  "ofat_pm10_pm20": 32,
+  "dirichlet_local_k50": 100,
+  "dirichlet_uniform_k1": 100,
+  "simplex_vertices": 18,
+  "scale_ofat_x0.5_x2": 16
+ },
+ "total_runs": 11481,
+ "elapsed_s": 227.62,
+ "engine_ms_per_run": {
+  "mean": 17.106,
+  "max": 107.975
+ },
+ "families": {
+  "baseline": {
+   "runs": 43,
+   "runs_with_feasible_plan": 34,
+   "reasons": {
+    "compromise_found": 2,
+    "no_feasible_plan": 9,
+    "no_positive_bargain": 32
+   },
+   "positive_bargain_rate_given_feasible": 0.0588,
+   "selection_equals_baseline_rate": 1.0,
+   "scenarios_with_any_compromise": 2,
+   "mean_selected_minus_fallback_raw": {
+    "landing_delay_min": 0.1471,
+    "incremental_fuel_kg": 8.3824,
+    "turnaround_delay_min": 0.1176,
+    "crew_overtime_min": 0.1765
+   },
+   "oracle_agreement": "43/43"
+  },
+  "ofat_pm10_pm20": {
+   "runs": 1376,
+   "runs_with_feasible_plan": 1088,
+   "reasons": {
+    "compromise_found": 64,
+    "no_feasible_plan": 288,
+    "no_positive_bargain": 1024
+   },
+   "positive_bargain_rate_given_feasible": 0.0588,
+   "selection_equals_baseline_rate": 1.0,
+   "scenarios_with_any_compromise": 2,
+   "mean_selected_minus_fallback_raw": {
+    "landing_delay_min": 0.1471,
+    "incremental_fuel_kg": 8.3824,
+    "turnaround_delay_min": 0.1176,
+    "crew_overtime_min": 0.1765
+   },
+   "oracle_agreement": "1376/1376"
+  },
+  "dirichlet_local_k50": {
+   "runs": 4300,
+   "runs_with_feasible_plan": 3400,
+   "reasons": {
+    "compromise_found": 170,
+    "no_positive_bargain": 3230,
+    "no_feasible_plan": 900
+   },
+   "positive_bargain_rate_given_feasible": 0.05,
+   "selection_equals_baseline_rate": 0.9894,
+   "scenarios_with_any_compromise": 3,
+   "mean_selected_minus_fallback_raw": {
+    "landing_delay_min": 0.1441,
+    "incremental_fuel_kg": 7.4647,
+    "turnaround_delay_min": 0.0971,
+    "crew_overtime_min": 0.1712
+   },
+   "oracle_agreement": "4300/4300"
+  },
+  "dirichlet_uniform_k1": {
+   "runs": 4300,
+   "runs_with_feasible_plan": 3400,
+   "reasons": {
+    "compromise_found": 275,
+    "no_positive_bargain": 3125,
+    "no_feasible_plan": 900
+   },
+   "positive_bargain_rate_given_feasible": 0.0809,
+   "selection_equals_baseline_rate": 0.9447,
+   "scenarios_with_any_compromise": 6,
+   "mean_selected_minus_fallback_raw": {
+    "landing_delay_min": 0.3971,
+    "incremental_fuel_kg": 17.8559,
+    "turnaround_delay_min": 0.3941,
+    "crew_overtime_min": 0.21
+   },
+   "oracle_agreement": "4300/4300"
+  },
+  "simplex_vertices": {
+   "runs": 774,
+   "runs_with_feasible_plan": 612,
+   "reasons": {
+    "no_positive_bargain": 605,
+    "compromise_found": 7,
+    "no_feasible_plan": 162
+   },
+   "positive_bargain_rate_given_feasible": 0.0114,
+   "selection_equals_baseline_rate": 0.9363,
+   "scenarios_with_any_compromise": 6,
+   "mean_selected_minus_fallback_raw": {
+    "landing_delay_min": 0.098,
+    "incremental_fuel_kg": 3.6765,
+    "turnaround_delay_min": 0.0866,
+    "crew_overtime_min": 0.0196
+   },
+   "oracle_agreement": "774/774"
+  },
+  "scale_ofat_x0.5_x2": {
+   "runs": 688,
+   "runs_with_feasible_plan": 544,
+   "reasons": {
+    "no_positive_bargain": 516,
+    "compromise_found": 28,
+    "no_feasible_plan": 144
+   },
+   "positive_bargain_rate_given_feasible": 0.0515,
+   "selection_equals_baseline_rate": 0.9926,
+   "scenarios_with_any_compromise": 2,
+   "mean_selected_minus_fallback_raw": {
+    "landing_delay_min": 0.1287,
+    "incremental_fuel_kg": 7.3346,
+    "turnaround_delay_min": 0.1029,
+    "crew_overtime_min": 0.1544
+   },
+   "oracle_agreement": "688/688"
+  }
+ },
+ "blocking_roles": {
+  "success": {
+   "feasible": 23,
+   "role_can_gain": {
+    "atc": true,
+    "pilot": true,
+    "ground": true
+   },
+   "fallback_atc_optimal": false,
+   "fallback_pareto": false,
+   "eligible": 1
+  },
+  "no_feasible": {
+   "feasible": 0
+  },
+  "no_positive_gain": {
+   "feasible": 20,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": false,
+    "ground": true
+   },
+   "fallback_atc_optimal": true,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-mia-baseline": {
+   "feasible": 16,
+   "role_can_gain": {
+    "atc": true,
+    "pilot": false,
+    "ground": true
+   },
+   "fallback_atc_optimal": false,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-mia-on_time": {
+   "feasible": 12,
+   "role_can_gain": {
+    "atc": true,
+    "pilot": false,
+    "ground": true
+   },
+   "fallback_atc_optimal": false,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-mia-large_delay": {
+   "feasible": 14,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": true,
+    "ground": true
+   },
+   "fallback_atc_optimal": false,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-mia-runway_closure": {
+   "feasible": 12,
+   "role_can_gain": {
+    "atc": true,
+    "pilot": false,
+    "ground": true
+   },
+   "fallback_atc_optimal": false,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-mia-dense_traffic": {
+   "feasible": 11,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": false,
+    "ground": true
+   },
+   "fallback_atc_optimal": true,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-mia-gate_restricted": {
+   "feasible": 2,
+   "role_can_gain": {
+    "atc": true,
+    "pilot": false,
+    "ground": false
+   },
+   "fallback_atc_optimal": false,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-mia-crew_restricted": {
+   "feasible": 20,
+   "role_can_gain": {
+    "atc": true,
+    "pilot": false,
+    "ground": false
+   },
+   "fallback_atc_optimal": false,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-mia-tight_fuel": {
+   "feasible": 14,
+   "role_can_gain": {
+    "atc": true,
+    "pilot": true,
+    "ground": true
+   },
+   "fallback_atc_optimal": false,
+   "fallback_pareto": false,
+   "eligible": 1
+  },
+  "suite-mia-generous_fuel": {
+   "feasible": 26,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": false,
+    "ground": true
+   },
+   "fallback_atc_optimal": true,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-mia-all_runways_closed": {
+   "feasible": 0
+  },
+  "suite-den-baseline": {
+   "feasible": 17,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": true,
+    "ground": true
+   },
+   "fallback_atc_optimal": true,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-den-on_time": {
+   "feasible": 16,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": false,
+    "ground": false
+   },
+   "fallback_atc_optimal": true,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-den-large_delay": {
+   "feasible": 11,
+   "role_can_gain": {
+    "atc": true,
+    "pilot": false,
+    "ground": true
+   },
+   "fallback_atc_optimal": false,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-den-runway_closure": {
+   "feasible": 16,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": false,
+    "ground": true
+   },
+   "fallback_atc_optimal": true,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-den-dense_traffic": {
+   "feasible": 10,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": false,
+    "ground": true
+   },
+   "fallback_atc_optimal": true,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-den-gate_restricted": {
+   "feasible": 6,
+   "role_can_gain": {
+    "atc": true,
+    "pilot": false,
+    "ground": false
+   },
+   "fallback_atc_optimal": false,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-den-crew_restricted": {
+   "feasible": 12,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": false,
+    "ground": false
+   },
+   "fallback_atc_optimal": true,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-den-tight_fuel": {
+   "feasible": 20,
+   "role_can_gain": {
+    "atc": true,
+    "pilot": true,
+    "ground": true
+   },
+   "fallback_atc_optimal": false,
+   "fallback_pareto": false,
+   "eligible": 0
+  },
+  "suite-den-generous_fuel": {
+   "feasible": 64,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": true,
+    "ground": true
+   },
+   "fallback_atc_optimal": true,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-den-all_runways_closed": {
+   "feasible": 0
+  },
+  "suite-sjc-baseline": {
+   "feasible": 4,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": true,
+    "ground": false
+   },
+   "fallback_atc_optimal": true,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-sjc-on_time": {
+   "feasible": 6,
+   "role_can_gain": {
+    "atc": true,
+    "pilot": false,
+    "ground": false
+   },
+   "fallback_atc_optimal": false,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-sjc-large_delay": {
+   "feasible": 3,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": false,
+    "ground": false
+   },
+   "fallback_atc_optimal": true,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-sjc-runway_closure": {
+   "feasible": 2,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": false,
+    "ground": false
+   },
+   "fallback_atc_optimal": true,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-sjc-dense_traffic": {
+   "feasible": 6,
+   "role_can_gain": {
+    "atc": true,
+    "pilot": false,
+    "ground": true
+   },
+   "fallback_atc_optimal": false,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-sjc-gate_restricted": {
+   "feasible": 0
+  },
+  "suite-sjc-crew_restricted": {
+   "feasible": 5,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": false,
+    "ground": false
+   },
+   "fallback_atc_optimal": true,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-sjc-tight_fuel": {
+   "feasible": 8,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": false,
+    "ground": false
+   },
+   "fallback_atc_optimal": true,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-sjc-generous_fuel": {
+   "feasible": 39,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": false,
+    "ground": false
+   },
+   "fallback_atc_optimal": true,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-sjc-all_runways_closed": {
+   "feasible": 0
+  },
+  "suite-ito-baseline": {
+   "feasible": 4,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": false,
+    "ground": true
+   },
+   "fallback_atc_optimal": true,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-ito-on_time": {
+   "feasible": 3,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": false,
+    "ground": true
+   },
+   "fallback_atc_optimal": true,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-ito-large_delay": {
+   "feasible": 0
+  },
+  "suite-ito-runway_closure": {
+   "feasible": 0
+  },
+  "suite-ito-dense_traffic": {
+   "feasible": 3,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": false,
+    "ground": false
+   },
+   "fallback_atc_optimal": true,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-ito-gate_restricted": {
+   "feasible": 0
+  },
+  "suite-ito-crew_restricted": {
+   "feasible": 6,
+   "role_can_gain": {
+    "atc": true,
+    "pilot": false,
+    "ground": false
+   },
+   "fallback_atc_optimal": false,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-ito-tight_fuel": {
+   "feasible": 3,
+   "role_can_gain": {
+    "atc": false,
+    "pilot": false,
+    "ground": true
+   },
+   "fallback_atc_optimal": true,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-ito-generous_fuel": {
+   "feasible": 21,
+   "role_can_gain": {
+    "atc": true,
+    "pilot": false,
+    "ground": true
+   },
+   "fallback_atc_optimal": false,
+   "fallback_pareto": true,
+   "eligible": 0
+  },
+  "suite-ito-all_runways_closed": {
+   "feasible": 0
+  }
+ },
+ "baselines": {
+  "success": {
+   "fallback": {
+    "plan": "P0010_R1_G2_T2",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 8.0,
+     "incremental_fuel_kg": 60.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 3.0,
+     "turnaround_delay_min": 0.0,
+     "crew_overtime_min": 4.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": false,
+    "utilities": {
+     "atc": 0.6799999999999999,
+     "pilot": 0.32799999999999996,
+     "ground": 0.76
+    }
+   },
+   "nash": {
+    "plan": "P0015_R2_G1_T3",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 3.0,
+     "incremental_fuel_kg": 225.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.25,
+     "turnaround_delay_min": 0.0,
+     "crew_overtime_min": 10.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.78,
+     "pilot": 0.6799999999999999,
+     "ground": 0.9
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0015_R2_G1_T3",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 3.0,
+     "incremental_fuel_kg": 225.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.25,
+     "turnaround_delay_min": 0.0,
+     "crew_overtime_min": 10.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.78,
+     "pilot": 0.6799999999999999,
+     "ground": 0.9
+    }
+   },
+   "atc_best": {
+    "plan": "P0015_R1_G2_T2",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 210.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 3.25,
+     "turnaround_delay_min": 0.0,
+     "crew_overtime_min": 9.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.9,
+     "pilot": 0.09799999999999998,
+     "ground": 0.71
+    }
+   },
+   "pilot_best": {
+    "plan": "P0015_R2_G3_T4",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 3.0,
+     "incremental_fuel_kg": 195.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.25,
+     "turnaround_delay_min": 0.0,
+     "crew_overtime_min": 8.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.78,
+     "pilot": 0.716,
+     "ground": 0.72
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R2_G1_T3",
+    "raw": {
+     "landing_delay_min": 10.0,
+     "spillover_proxy_min": 8.0,
+     "incremental_fuel_kg": 375.0,
+     "connection_penalty_pax": 40.0,
+     "turbulence_exposure_index": 0.5,
+     "turnaround_delay_min": 5.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.48,
+     "pilot": 0.33000000000000007,
+     "ground": 0.9166666666666666
+    }
+   }
+  },
+  "no_feasible": null,
+  "no_positive_gain": {
+   "fallback": {
+    "plan": "P0010_R2_G3_T4",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.0,
+     "turnaround_delay_min": 0.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.946,
+     "ground": 0.8
+    }
+   },
+   "nash": {
+    "plan": "P0010_R2_G3_T4",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.0,
+     "turnaround_delay_min": 0.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.946,
+     "ground": 0.8
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0010_R2_G1_T3",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 75.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.0,
+     "turnaround_delay_min": 0.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.91,
+     "ground": 1.0
+    }
+   },
+   "atc_best": {
+    "plan": "P0010_R2_G3_T4",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.0,
+     "turnaround_delay_min": 0.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.946,
+     "ground": 0.8
+    }
+   },
+   "pilot_best": {
+    "plan": "P0010_R2_G3_T4",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.0,
+     "turnaround_delay_min": 0.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.946,
+     "ground": 0.8
+    }
+   },
+   "ground_best": {
+    "plan": "P0010_R2_G1_T3",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 75.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.0,
+     "turnaround_delay_min": 0.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.91,
+     "ground": 1.0
+    }
+   }
+  },
+  "suite-mia-baseline": {
+   "fallback": {
+    "plan": "P0020_R2_G3_T23",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 14.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.45,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.44000000000000006,
+     "pilot": 0.856,
+     "ground": 0.6
+    }
+   },
+   "nash": {
+    "plan": "P0020_R2_G3_T23",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 14.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.45,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.44000000000000006,
+     "pilot": 0.856,
+     "ground": 0.6
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R3_G1_T31",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 3.0,
+     "incremental_fuel_kg": 120.0,
+     "connection_penalty_pax": 10.0,
+     "turbulence_exposure_index": 1.3,
+     "turnaround_delay_min": 17.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.88,
+     "pilot": 0.5660000000000001,
+     "ground": 0.7166666666666667
+    }
+   },
+   "atc_best": {
+    "plan": "P0020_R3_G1_T31",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 3.0,
+     "incremental_fuel_kg": 120.0,
+     "connection_penalty_pax": 10.0,
+     "turbulence_exposure_index": 1.3,
+     "turnaround_delay_min": 17.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.88,
+     "pilot": 0.5660000000000001,
+     "ground": 0.7166666666666667
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R2_G3_T23",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 14.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.45,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.44000000000000006,
+     "pilot": 0.856,
+     "ground": 0.6
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R3_G1_T31",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 3.0,
+     "incremental_fuel_kg": 120.0,
+     "connection_penalty_pax": 10.0,
+     "turbulence_exposure_index": 1.3,
+     "turnaround_delay_min": 17.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.88,
+     "pilot": 0.5660000000000001,
+     "ground": 0.7166666666666667
+    }
+   }
+  },
+  "suite-mia-on_time": {
+   "fallback": {
+    "plan": "P0020_R2_G3_T23",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 120.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.87,
+     "turnaround_delay_min": 2.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.84,
+     "pilot": 0.6819999999999999,
+     "ground": 0.7666666666666666
+    }
+   },
+   "nash": {
+    "plan": "P0020_R2_G3_T23",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 120.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.87,
+     "turnaround_delay_min": 2.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.84,
+     "pilot": 0.6819999999999999,
+     "ground": 0.7666666666666666
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R2_G3_T23",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 120.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.87,
+     "turnaround_delay_min": 2.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.84,
+     "pilot": 0.6819999999999999,
+     "ground": 0.7666666666666666
+    }
+   },
+   "atc_best": {
+    "plan": "P0025_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 275.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.86,
+     "turnaround_delay_min": 4.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.9,
+     "pilot": 0.09800000000000009,
+     "ground": 0.9333333333333333
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R2_G3_T23",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 120.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.87,
+     "turnaround_delay_min": 2.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.84,
+     "pilot": 0.6819999999999999,
+     "ground": 0.7666666666666666
+    }
+   },
+   "ground_best": {
+    "plan": "P0025_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 275.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.86,
+     "turnaround_delay_min": 4.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.9,
+     "pilot": 0.09800000000000009,
+     "ground": 0.9333333333333333
+    }
+   }
+  },
+  "suite-mia-large_delay": {
+   "fallback": {
+    "plan": "P0020_R1_G4_T14",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 5.0,
+     "incremental_fuel_kg": 75.0,
+     "connection_penalty_pax": 48.0,
+     "turbulence_exposure_index": 2.87,
+     "turnaround_delay_min": 59.0,
+     "crew_overtime_min": 4.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.8,
+     "pilot": 0.19199999999999995,
+     "ground": -0.22333333333333316
+    }
+   },
+   "nash": {
+    "plan": "P0020_R1_G4_T14",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 5.0,
+     "incremental_fuel_kg": 75.0,
+     "connection_penalty_pax": 48.0,
+     "turbulence_exposure_index": 2.87,
+     "turnaround_delay_min": 59.0,
+     "crew_overtime_min": 4.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.8,
+     "pilot": 0.19199999999999995,
+     "ground": -0.22333333333333316
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R1_G4_T14",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 5.0,
+     "incremental_fuel_kg": 75.0,
+     "connection_penalty_pax": 48.0,
+     "turbulence_exposure_index": 2.87,
+     "turnaround_delay_min": 59.0,
+     "crew_overtime_min": 4.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.8,
+     "pilot": 0.19199999999999995,
+     "ground": -0.22333333333333316
+    }
+   },
+   "atc_best": {
+    "plan": "P0020_R1_G4_T14",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 5.0,
+     "incremental_fuel_kg": 75.0,
+     "connection_penalty_pax": 48.0,
+     "turbulence_exposure_index": 2.87,
+     "turnaround_delay_min": 59.0,
+     "crew_overtime_min": 4.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.8,
+     "pilot": 0.19199999999999995,
+     "ground": -0.22333333333333316
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R2_G2_T22",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 9.0,
+     "incremental_fuel_kg": 105.0,
+     "connection_penalty_pax": 48.0,
+     "turbulence_exposure_index": 2.22,
+     "turnaround_delay_min": 61.0,
+     "crew_overtime_min": 6.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6399999999999999,
+     "pilot": 0.2859999999999999,
+     "ground": -0.2766666666666666
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 9.0,
+     "incremental_fuel_kg": 135.0,
+     "connection_penalty_pax": 48.0,
+     "turbulence_exposure_index": 2.22,
+     "turnaround_delay_min": 63.0,
+     "crew_overtime_min": 8.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6399999999999999,
+     "pilot": 0.25,
+     "ground": -0.13000000000000012
+    }
+   }
+  },
+  "suite-mia-runway_closure": {
+   "fallback": {
+    "plan": "P0020_R3_G2_T32",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 9.0,
+     "incremental_fuel_kg": 150.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.66,
+     "turnaround_delay_min": 19.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6399999999999999,
+     "pilot": 0.688,
+     "ground": 0.4833333333333334
+    }
+   },
+   "nash": {
+    "plan": "P0020_R3_G2_T32",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 9.0,
+     "incremental_fuel_kg": 150.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.66,
+     "turnaround_delay_min": 19.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6399999999999999,
+     "pilot": 0.688,
+     "ground": 0.4833333333333334
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0025_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 290.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.86,
+     "turnaround_delay_min": 20.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.9,
+     "pilot": 0.48,
+     "ground": 0.6666666666666667
+    }
+   },
+   "atc_best": {
+    "plan": "P0025_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 290.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.86,
+     "turnaround_delay_min": 20.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.9,
+     "pilot": 0.48,
+     "ground": 0.6666666666666667
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R3_G2_T32",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 9.0,
+     "incremental_fuel_kg": 150.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.66,
+     "turnaround_delay_min": 19.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6399999999999999,
+     "pilot": 0.688,
+     "ground": 0.4833333333333334
+    }
+   },
+   "ground_best": {
+    "plan": "P0025_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 290.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.86,
+     "turnaround_delay_min": 20.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.9,
+     "pilot": 0.48,
+     "ground": 0.6666666666666667
+    }
+   }
+  },
+  "suite-mia-dense_traffic": {
+   "fallback": {
+    "plan": "P0020_R3_G4_T34",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 12.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.91,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.52,
+     "pilot": 0.3639999999999999,
+     "ground": 0.6
+    }
+   },
+   "nash": {
+    "plan": "P0020_R3_G4_T34",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 12.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.91,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.52,
+     "pilot": 0.3639999999999999,
+     "ground": 0.6
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R3_G4_T34",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 12.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.91,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.52,
+     "pilot": 0.3639999999999999,
+     "ground": 0.6
+    }
+   },
+   "atc_best": {
+    "plan": "P0020_R3_G4_T34",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 12.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.91,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.52,
+     "pilot": 0.3639999999999999,
+     "ground": 0.6
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R3_G4_T34",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 12.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.91,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.52,
+     "pilot": 0.3639999999999999,
+     "ground": 0.6
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R3_G1_T31",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 12.0,
+     "incremental_fuel_kg": 180.0,
+     "connection_penalty_pax": 40.0,
+     "turbulence_exposure_index": 2.91,
+     "turnaround_delay_min": 21.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.52,
+     "pilot": 0.08199999999999996,
+     "ground": 0.65
+    }
+   }
+  },
+  "suite-mia-gate_restricted": {
+   "fallback": {
+    "plan": "P0025_R3_G4_T34",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 7.0,
+     "incremental_fuel_kg": 245.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.0,
+     "turnaround_delay_min": 17.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6200000000000001,
+     "pilot": 0.30600000000000005,
+     "ground": 0.5166666666666666
+    }
+   },
+   "nash": {
+    "plan": "P0025_R3_G4_T34",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 7.0,
+     "incremental_fuel_kg": 245.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.0,
+     "turnaround_delay_min": 17.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6200000000000001,
+     "pilot": 0.30600000000000005,
+     "ground": 0.5166666666666666
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0025_R3_G4_T34",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 7.0,
+     "incremental_fuel_kg": 245.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.0,
+     "turnaround_delay_min": 17.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6200000000000001,
+     "pilot": 0.30600000000000005,
+     "ground": 0.5166666666666666
+    }
+   },
+   "atc_best": {
+    "plan": "P0030_R3_G4_T34",
+    "raw": {
+     "landing_delay_min": 10.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 445.0,
+     "connection_penalty_pax": 39.0,
+     "turbulence_exposure_index": 2.25,
+     "turnaround_delay_min": 22.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.8,
+     "pilot": -0.10099999999999998,
+     "ground": 0.43333333333333335
+    }
+   },
+   "pilot_best": {
+    "plan": "P0025_R3_G4_T34",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 7.0,
+     "incremental_fuel_kg": 245.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.0,
+     "turnaround_delay_min": 17.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6200000000000001,
+     "pilot": 0.30600000000000005,
+     "ground": 0.5166666666666666
+    }
+   },
+   "ground_best": {
+    "plan": "P0025_R3_G4_T34",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 7.0,
+     "incremental_fuel_kg": 245.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.0,
+     "turnaround_delay_min": 17.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6200000000000001,
+     "pilot": 0.30600000000000005,
+     "ground": 0.5166666666666666
+    }
+   }
+  },
+  "suite-mia-crew_restricted": {
+   "fallback": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 8.0,
+     "incremental_fuel_kg": 60.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.34,
+     "turnaround_delay_min": 13.0,
+     "crew_overtime_min": 18.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6799999999999999,
+     "pilot": 0.86,
+     "ground": 0.6033333333333333
+    }
+   },
+   "nash": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 8.0,
+     "incremental_fuel_kg": 60.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.34,
+     "turnaround_delay_min": 13.0,
+     "crew_overtime_min": 18.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6799999999999999,
+     "pilot": 0.86,
+     "ground": 0.6033333333333333
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 8.0,
+     "incremental_fuel_kg": 60.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.34,
+     "turnaround_delay_min": 13.0,
+     "crew_overtime_min": 18.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6799999999999999,
+     "pilot": 0.86,
+     "ground": 0.6033333333333333
+    }
+   },
+   "atc_best": {
+    "plan": "P0020_R1_G2_T12",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 7.0,
+     "incremental_fuel_kg": 75.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.62,
+     "turnaround_delay_min": 14.0,
+     "crew_overtime_min": 19.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.72,
+     "pilot": 0.786,
+     "ground": 0.3766666666666667
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 8.0,
+     "incremental_fuel_kg": 60.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.34,
+     "turnaround_delay_min": 13.0,
+     "crew_overtime_min": 18.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6799999999999999,
+     "pilot": 0.86,
+     "ground": 0.6033333333333333
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 8.0,
+     "incremental_fuel_kg": 60.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.34,
+     "turnaround_delay_min": 13.0,
+     "crew_overtime_min": 18.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6799999999999999,
+     "pilot": 0.86,
+     "ground": 0.6033333333333333
+    }
+   }
+  },
+  "suite-mia-tight_fuel": {
+   "fallback": {
+    "plan": "P0020_R2_G4_T24",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 13.0,
+     "incremental_fuel_kg": 120.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.12,
+     "turnaround_delay_min": 13.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": false,
+    "utilities": {
+     "atc": 0.48,
+     "pilot": 0.43199999999999994,
+     "ground": 0.5833333333333333
+    }
+   },
+   "nash": {
+    "plan": "P0020_R3_G1_T31",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 2.0,
+     "incremental_fuel_kg": 240.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.04,
+     "turnaround_delay_min": 17.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.9199999999999999,
+     "pilot": 0.504,
+     "ground": 0.7166666666666667
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R3_G2_T32",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 2.0,
+     "incremental_fuel_kg": 120.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.04,
+     "turnaround_delay_min": 13.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.9199999999999999,
+     "pilot": 0.648,
+     "ground": 0.5833333333333333
+    }
+   },
+   "atc_best": {
+    "plan": "P0020_R3_G2_T32",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 2.0,
+     "incremental_fuel_kg": 120.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.04,
+     "turnaround_delay_min": 13.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.9199999999999999,
+     "pilot": 0.648,
+     "ground": 0.5833333333333333
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R3_G2_T32",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 2.0,
+     "incremental_fuel_kg": 120.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.04,
+     "turnaround_delay_min": 13.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.9199999999999999,
+     "pilot": 0.648,
+     "ground": 0.5833333333333333
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R3_G1_T31",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 2.0,
+     "incremental_fuel_kg": 240.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.04,
+     "turnaround_delay_min": 17.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.9199999999999999,
+     "pilot": 0.504,
+     "ground": 0.7166666666666667
+    }
+   }
+  },
+  "suite-mia-generous_fuel": {
+   "fallback": {
+    "plan": "P0020_R2_G4_T24",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 6.0,
+     "incremental_fuel_kg": 105.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.1,
+     "turnaround_delay_min": 16.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.76,
+     "pilot": 0.6539999999999999,
+     "ground": 0.5333333333333333
+    }
+   },
+   "nash": {
+    "plan": "P0020_R2_G4_T24",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 6.0,
+     "incremental_fuel_kg": 105.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.1,
+     "turnaround_delay_min": 16.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.76,
+     "pilot": 0.6539999999999999,
+     "ground": 0.5333333333333333
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R2_G4_T24",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 6.0,
+     "incremental_fuel_kg": 105.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.1,
+     "turnaround_delay_min": 16.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.76,
+     "pilot": 0.6539999999999999,
+     "ground": 0.5333333333333333
+    }
+   },
+   "atc_best": {
+    "plan": "P0020_R2_G4_T24",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 6.0,
+     "incremental_fuel_kg": 105.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.1,
+     "turnaround_delay_min": 16.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.76,
+     "pilot": 0.6539999999999999,
+     "ground": 0.5333333333333333
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R2_G4_T24",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 6.0,
+     "incremental_fuel_kg": 105.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.1,
+     "turnaround_delay_min": 16.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.76,
+     "pilot": 0.6539999999999999,
+     "ground": 0.5333333333333333
+    }
+   },
+   "ground_best": {
+    "plan": "P0025_R3_G1_T31",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 305.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.87,
+     "turnaround_delay_min": 21.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.74,
+     "pilot": 0.45999999999999996,
+     "ground": 0.65
+    }
+   }
+  },
+  "suite-mia-all_runways_closed": null,
+  "suite-den-baseline": {
+   "fallback": {
+    "plan": "P0020_R3_G2_T32",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 6.0,
+     "incremental_fuel_kg": 75.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.52,
+     "turnaround_delay_min": 14.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.76,
+     "pilot": 0.406,
+     "ground": 0.5666666666666667
+    }
+   },
+   "nash": {
+    "plan": "P0020_R3_G2_T32",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 6.0,
+     "incremental_fuel_kg": 75.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.52,
+     "turnaround_delay_min": 14.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.76,
+     "pilot": 0.406,
+     "ground": 0.5666666666666667
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R4_G1_T41",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 8.0,
+     "incremental_fuel_kg": 165.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.77,
+     "turnaround_delay_min": 20.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6799999999999999,
+     "pilot": 0.6479999999999999,
+     "ground": 0.6666666666666667
+    }
+   },
+   "atc_best": {
+    "plan": "P0020_R3_G2_T32",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 6.0,
+     "incremental_fuel_kg": 75.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.52,
+     "turnaround_delay_min": 14.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.76,
+     "pilot": 0.406,
+     "ground": 0.5666666666666667
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R4_G2_T42",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 8.0,
+     "incremental_fuel_kg": 105.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.77,
+     "turnaround_delay_min": 16.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6799999999999999,
+     "pilot": 0.72,
+     "ground": 0.5333333333333333
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R3_G1_T31",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 6.0,
+     "incremental_fuel_kg": 165.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.52,
+     "turnaround_delay_min": 20.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.76,
+     "pilot": 0.29800000000000004,
+     "ground": 0.6666666666666667
+    }
+   }
+  },
+  "suite-den-on_time": {
+   "fallback": {
+    "plan": "P0020_R3_G1_T31",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.21,
+     "turnaround_delay_min": 0.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.84,
+     "pilot": 0.704,
+     "ground": 1.0
+    }
+   },
+   "nash": {
+    "plan": "P0020_R3_G1_T31",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.21,
+     "turnaround_delay_min": 0.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.84,
+     "pilot": 0.704,
+     "ground": 1.0
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R3_G1_T31",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.21,
+     "turnaround_delay_min": 0.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.84,
+     "pilot": 0.704,
+     "ground": 1.0
+    }
+   },
+   "atc_best": {
+    "plan": "P0020_R3_G1_T31",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.21,
+     "turnaround_delay_min": 0.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.84,
+     "pilot": 0.704,
+     "ground": 1.0
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R3_G1_T31",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.21,
+     "turnaround_delay_min": 0.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.84,
+     "pilot": 0.704,
+     "ground": 1.0
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R3_G1_T31",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.21,
+     "turnaround_delay_min": 0.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.84,
+     "pilot": 0.704,
+     "ground": 1.0
+    }
+   }
+  },
+  "suite-den-large_delay": {
+   "fallback": {
+    "plan": "P0020_R2_G4_T24",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 9.0,
+     "incremental_fuel_kg": 75.0,
+     "connection_penalty_pax": 73.0,
+     "turbulence_exposure_index": 1.17,
+     "turnaround_delay_min": 59.0,
+     "crew_overtime_min": 14.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6399999999999999,
+     "pilot": 0.4570000000000001,
+     "ground": -0.32333333333333325
+    }
+   },
+   "nash": {
+    "plan": "P0020_R2_G4_T24",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 9.0,
+     "incremental_fuel_kg": 75.0,
+     "connection_penalty_pax": 73.0,
+     "turbulence_exposure_index": 1.17,
+     "turnaround_delay_min": 59.0,
+     "crew_overtime_min": 14.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6399999999999999,
+     "pilot": 0.4570000000000001,
+     "ground": -0.32333333333333325
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 9.0,
+     "incremental_fuel_kg": 120.0,
+     "connection_penalty_pax": 73.0,
+     "turbulence_exposure_index": 1.17,
+     "turnaround_delay_min": 62.0,
+     "crew_overtime_min": 17.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6399999999999999,
+     "pilot": 0.403,
+     "ground": -0.20333333333333337
+    }
+   },
+   "atc_best": {
+    "plan": "P0025_R1_G2_T12",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 1.0,
+     "incremental_fuel_kg": 290.0,
+     "connection_penalty_pax": 73.0,
+     "turbulence_exposure_index": 0.3,
+     "turnaround_delay_min": 65.0,
+     "crew_overtime_min": 20.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.86,
+     "pilot": 0.373,
+     "ground": -0.48333333333333317
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R2_G4_T24",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 9.0,
+     "incremental_fuel_kg": 75.0,
+     "connection_penalty_pax": 73.0,
+     "turbulence_exposure_index": 1.17,
+     "turnaround_delay_min": 59.0,
+     "crew_overtime_min": 14.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6399999999999999,
+     "pilot": 0.4570000000000001,
+     "ground": -0.32333333333333325
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 9.0,
+     "incremental_fuel_kg": 120.0,
+     "connection_penalty_pax": 73.0,
+     "turbulence_exposure_index": 1.17,
+     "turnaround_delay_min": 62.0,
+     "crew_overtime_min": 17.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6399999999999999,
+     "pilot": 0.403,
+     "ground": -0.20333333333333337
+    }
+   }
+  },
+  "suite-den-runway_closure": {
+   "fallback": {
+    "plan": "P0020_R3_G3_T33",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 3.0,
+     "incremental_fuel_kg": 60.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.37,
+     "turnaround_delay_min": 13.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.88,
+     "pilot": 0.45399999999999996,
+     "ground": 0.5833333333333333
+    }
+   },
+   "nash": {
+    "plan": "P0020_R3_G3_T33",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 3.0,
+     "incremental_fuel_kg": 60.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.37,
+     "turnaround_delay_min": 13.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.88,
+     "pilot": 0.45399999999999996,
+     "ground": 0.5833333333333333
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R3_G3_T33",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 3.0,
+     "incremental_fuel_kg": 60.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.37,
+     "turnaround_delay_min": 13.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.88,
+     "pilot": 0.45399999999999996,
+     "ground": 0.5833333333333333
+    }
+   },
+   "atc_best": {
+    "plan": "P0020_R3_G3_T33",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 3.0,
+     "incremental_fuel_kg": 60.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.37,
+     "turnaround_delay_min": 13.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.88,
+     "pilot": 0.45399999999999996,
+     "ground": 0.5833333333333333
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R3_G3_T33",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 3.0,
+     "incremental_fuel_kg": 60.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.37,
+     "turnaround_delay_min": 13.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.88,
+     "pilot": 0.45399999999999996,
+     "ground": 0.5833333333333333
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R3_G1_T31",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 3.0,
+     "incremental_fuel_kg": 150.0,
+     "connection_penalty_pax": 36.0,
+     "turbulence_exposure_index": 2.37,
+     "turnaround_delay_min": 19.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.88,
+     "pilot": 0.238,
+     "ground": 0.6833333333333333
+    }
+   }
+  },
+  "suite-den-dense_traffic": {
+   "fallback": {
+    "plan": "P0025_R4_G2_T42",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 305.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.56,
+     "turnaround_delay_min": 21.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.74,
+     "pilot": 0.32199999999999995,
+     "ground": 0.44999999999999996
+    }
+   },
+   "nash": {
+    "plan": "P0025_R4_G2_T42",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 305.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.56,
+     "turnaround_delay_min": 21.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.74,
+     "pilot": 0.32199999999999995,
+     "ground": 0.44999999999999996
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0025_R4_G1_T41",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 350.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.56,
+     "turnaround_delay_min": 24.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.74,
+     "pilot": 0.268,
+     "ground": 0.6
+    }
+   },
+   "atc_best": {
+    "plan": "P0025_R4_G2_T42",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 305.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.56,
+     "turnaround_delay_min": 21.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.74,
+     "pilot": 0.32199999999999995,
+     "ground": 0.44999999999999996
+    }
+   },
+   "pilot_best": {
+    "plan": "P0025_R4_G2_T42",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 305.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.56,
+     "turnaround_delay_min": 21.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.74,
+     "pilot": 0.32199999999999995,
+     "ground": 0.44999999999999996
+    }
+   },
+   "ground_best": {
+    "plan": "P0025_R4_G1_T41",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 350.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.56,
+     "turnaround_delay_min": 24.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.74,
+     "pilot": 0.268,
+     "ground": 0.6
+    }
+   }
+  },
+  "suite-den-gate_restricted": {
+   "fallback": {
+    "plan": "P0020_R1_G4_T14",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 11.0,
+     "incremental_fuel_kg": 90.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.33,
+     "turnaround_delay_min": 15.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.5599999999999999,
+     "pilot": 0.626,
+     "ground": 0.55
+    }
+   },
+   "nash": {
+    "plan": "P0020_R1_G4_T14",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 11.0,
+     "incremental_fuel_kg": 90.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.33,
+     "turnaround_delay_min": 15.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.5599999999999999,
+     "pilot": 0.626,
+     "ground": 0.55
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R3_G4_T34",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 105.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.63,
+     "turnaround_delay_min": 16.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.548,
+     "ground": 0.5333333333333333
+    }
+   },
+   "atc_best": {
+    "plan": "P0020_R3_G4_T34",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 105.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.63,
+     "turnaround_delay_min": 16.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.548,
+     "ground": 0.5333333333333333
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R1_G4_T14",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 11.0,
+     "incremental_fuel_kg": 90.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.33,
+     "turnaround_delay_min": 15.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.5599999999999999,
+     "pilot": 0.626,
+     "ground": 0.55
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R1_G4_T14",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 11.0,
+     "incremental_fuel_kg": 90.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.33,
+     "turnaround_delay_min": 15.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.5599999999999999,
+     "pilot": 0.626,
+     "ground": 0.55
+    }
+   }
+  },
+  "suite-den-crew_restricted": {
+   "fallback": {
+    "plan": "P0020_R4_G1_T41",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 105.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.93,
+     "turnaround_delay_min": 16.0,
+     "crew_overtime_min": 31.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.2879999999999999,
+     "ground": 0.42333333333333334
+    }
+   },
+   "nash": {
+    "plan": "P0020_R4_G1_T41",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 105.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.93,
+     "turnaround_delay_min": 16.0,
+     "crew_overtime_min": 31.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.2879999999999999,
+     "ground": 0.42333333333333334
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R4_G1_T41",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 105.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.93,
+     "turnaround_delay_min": 16.0,
+     "crew_overtime_min": 31.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.2879999999999999,
+     "ground": 0.42333333333333334
+    }
+   },
+   "atc_best": {
+    "plan": "P0020_R4_G1_T41",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 105.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.93,
+     "turnaround_delay_min": 16.0,
+     "crew_overtime_min": 31.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.2879999999999999,
+     "ground": 0.42333333333333334
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R4_G1_T41",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 105.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.93,
+     "turnaround_delay_min": 16.0,
+     "crew_overtime_min": 31.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.2879999999999999,
+     "ground": 0.42333333333333334
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R4_G1_T41",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 105.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.93,
+     "turnaround_delay_min": 16.0,
+     "crew_overtime_min": 31.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.2879999999999999,
+     "ground": 0.42333333333333334
+    }
+   }
+  },
+  "suite-den-tight_fuel": {
+   "fallback": {
+    "plan": "P0020_R1_G3_T13",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 8.0,
+     "incremental_fuel_kg": 120.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.73,
+     "turnaround_delay_min": 13.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": false,
+    "utilities": {
+     "atc": 0.6799999999999999,
+     "pilot": 0.30999999999999994,
+     "ground": 0.5833333333333333
+    }
+   },
+   "nash": {
+    "plan": "P0020_R1_G3_T13",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 8.0,
+     "incremental_fuel_kg": 120.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.73,
+     "turnaround_delay_min": 13.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": false,
+    "utilities": {
+     "atc": 0.6799999999999999,
+     "pilot": 0.30999999999999994,
+     "ground": 0.5833333333333333
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R4_G1_T41",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 8.0,
+     "incremental_fuel_kg": 150.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.04,
+     "turnaround_delay_min": 14.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6799999999999999,
+     "pilot": 0.4119999999999999,
+     "ground": 0.7666666666666666
+    }
+   },
+   "atc_best": {
+    "plan": "P0025_R4_G1_T41",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 350.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.29,
+     "turnaround_delay_min": 19.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.9,
+     "pilot": 0.122,
+     "ground": 0.6833333333333333
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R4_G1_T41",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 8.0,
+     "incremental_fuel_kg": 150.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.04,
+     "turnaround_delay_min": 14.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6799999999999999,
+     "pilot": 0.4119999999999999,
+     "ground": 0.7666666666666666
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R4_G1_T41",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 8.0,
+     "incremental_fuel_kg": 150.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.04,
+     "turnaround_delay_min": 14.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6799999999999999,
+     "pilot": 0.4119999999999999,
+     "ground": 0.7666666666666666
+    }
+   }
+  },
+  "suite-den-generous_fuel": {
+   "fallback": {
+    "plan": "P0020_R2_G2_T22",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 90.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.34,
+     "turnaround_delay_min": 15.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.42400000000000004,
+     "ground": 0.55
+    }
+   },
+   "nash": {
+    "plan": "P0020_R2_G2_T22",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 90.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.34,
+     "turnaround_delay_min": 15.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.42400000000000004,
+     "ground": 0.55
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R4_G3_T43",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 105.0,
+     "connection_penalty_pax": 15.0,
+     "turbulence_exposure_index": 0.04,
+     "turnaround_delay_min": 16.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.821,
+     "ground": 0.5333333333333333
+    }
+   },
+   "atc_best": {
+    "plan": "P0020_R2_G2_T22",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 90.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.34,
+     "turnaround_delay_min": 15.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.42400000000000004,
+     "ground": 0.55
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R4_G3_T43",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 105.0,
+     "connection_penalty_pax": 15.0,
+     "turbulence_exposure_index": 0.04,
+     "turnaround_delay_min": 16.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.821,
+     "ground": 0.5333333333333333
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 120.0,
+     "connection_penalty_pax": 15.0,
+     "turbulence_exposure_index": 2.34,
+     "turnaround_delay_min": 17.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.34299999999999997,
+     "ground": 0.7166666666666667
+    }
+   }
+  },
+  "suite-den-all_runways_closed": null,
+  "suite-sjc-baseline": {
+   "fallback": {
+    "plan": "P0025_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 6.0,
+     "incremental_fuel_kg": 290.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 3.16,
+     "turnaround_delay_min": 20.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.66,
+     "pilot": 0.019999999999999907,
+     "ground": 0.6666666666666667
+    }
+   },
+   "nash": {
+    "plan": "P0025_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 6.0,
+     "incremental_fuel_kg": 290.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 3.16,
+     "turnaround_delay_min": 20.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.66,
+     "pilot": 0.019999999999999907,
+     "ground": 0.6666666666666667
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0025_R1_G2_T12",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 7.0,
+     "incremental_fuel_kg": 305.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.21,
+     "turnaround_delay_min": 21.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6200000000000001,
+     "pilot": 0.392,
+     "ground": 0.44999999999999996
+    }
+   },
+   "atc_best": {
+    "plan": "P0025_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 6.0,
+     "incremental_fuel_kg": 290.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 3.16,
+     "turnaround_delay_min": 20.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.66,
+     "pilot": 0.019999999999999907,
+     "ground": 0.6666666666666667
+    }
+   },
+   "pilot_best": {
+    "plan": "P0025_R1_G2_T12",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 7.0,
+     "incremental_fuel_kg": 305.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.21,
+     "turnaround_delay_min": 21.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6200000000000001,
+     "pilot": 0.392,
+     "ground": 0.44999999999999996
+    }
+   },
+   "ground_best": {
+    "plan": "P0025_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 6.0,
+     "incremental_fuel_kg": 290.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 3.16,
+     "turnaround_delay_min": 20.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.66,
+     "pilot": 0.019999999999999907,
+     "ground": 0.6666666666666667
+    }
+   }
+  },
+  "suite-sjc-on_time": {
+   "fallback": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 10.0,
+     "incremental_fuel_kg": 150.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.9,
+     "turnaround_delay_min": 4.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6,
+     "pilot": 0.24,
+     "ground": 0.9333333333333333
+    }
+   },
+   "nash": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 10.0,
+     "incremental_fuel_kg": 150.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.9,
+     "turnaround_delay_min": 4.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6,
+     "pilot": 0.24,
+     "ground": 0.9333333333333333
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 10.0,
+     "incremental_fuel_kg": 150.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.9,
+     "turnaround_delay_min": 4.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6,
+     "pilot": 0.24,
+     "ground": 0.9333333333333333
+    }
+   },
+   "atc_best": {
+    "plan": "P0030_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 10.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 550.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 3.4,
+     "turnaround_delay_min": 14.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.64,
+     "pilot": -0.3400000000000001,
+     "ground": 0.7666666666666666
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 10.0,
+     "incremental_fuel_kg": 150.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.9,
+     "turnaround_delay_min": 4.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6,
+     "pilot": 0.24,
+     "ground": 0.9333333333333333
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 10.0,
+     "incremental_fuel_kg": 150.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.9,
+     "turnaround_delay_min": 4.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6,
+     "pilot": 0.24,
+     "ground": 0.9333333333333333
+    }
+   }
+  },
+  "suite-sjc-large_delay": {
+   "fallback": {
+    "plan": "P0025_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 13.0,
+     "incremental_fuel_kg": 260.0,
+     "connection_penalty_pax": 76.0,
+     "turbulence_exposure_index": 2.87,
+     "turnaround_delay_min": 63.0,
+     "crew_overtime_min": 8.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.38,
+     "pilot": -0.1140000000000001,
+     "ground": -0.13000000000000012
+    }
+   },
+   "nash": {
+    "plan": "P0025_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 13.0,
+     "incremental_fuel_kg": 260.0,
+     "connection_penalty_pax": 76.0,
+     "turbulence_exposure_index": 2.87,
+     "turnaround_delay_min": 63.0,
+     "crew_overtime_min": 8.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.38,
+     "pilot": -0.1140000000000001,
+     "ground": -0.13000000000000012
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0025_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 13.0,
+     "incremental_fuel_kg": 260.0,
+     "connection_penalty_pax": 76.0,
+     "turbulence_exposure_index": 2.87,
+     "turnaround_delay_min": 63.0,
+     "crew_overtime_min": 8.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.38,
+     "pilot": -0.1140000000000001,
+     "ground": -0.13000000000000012
+    }
+   },
+   "atc_best": {
+    "plan": "P0025_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 13.0,
+     "incremental_fuel_kg": 260.0,
+     "connection_penalty_pax": 76.0,
+     "turbulence_exposure_index": 2.87,
+     "turnaround_delay_min": 63.0,
+     "crew_overtime_min": 8.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.38,
+     "pilot": -0.1140000000000001,
+     "ground": -0.13000000000000012
+    }
+   },
+   "pilot_best": {
+    "plan": "P0025_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 13.0,
+     "incremental_fuel_kg": 260.0,
+     "connection_penalty_pax": 76.0,
+     "turbulence_exposure_index": 2.87,
+     "turnaround_delay_min": 63.0,
+     "crew_overtime_min": 8.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.38,
+     "pilot": -0.1140000000000001,
+     "ground": -0.13000000000000012
+    }
+   },
+   "ground_best": {
+    "plan": "P0025_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 13.0,
+     "incremental_fuel_kg": 260.0,
+     "connection_penalty_pax": 76.0,
+     "turbulence_exposure_index": 2.87,
+     "turnaround_delay_min": 63.0,
+     "crew_overtime_min": 8.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.38,
+     "pilot": -0.1140000000000001,
+     "ground": -0.13000000000000012
+    }
+   }
+  },
+  "suite-sjc-runway_closure": {
+   "fallback": {
+    "plan": "P0030_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 10.0,
+     "spillover_proxy_min": 14.0,
+     "incremental_fuel_kg": 505.0,
+     "connection_penalty_pax": 35.0,
+     "turbulence_exposure_index": 3.02,
+     "turnaround_delay_min": 26.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.2400000000000001,
+     "pilot": -0.31499999999999995,
+     "ground": 0.5666666666666667
+    }
+   },
+   "nash": {
+    "plan": "P0030_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 10.0,
+     "spillover_proxy_min": 14.0,
+     "incremental_fuel_kg": 505.0,
+     "connection_penalty_pax": 35.0,
+     "turbulence_exposure_index": 3.02,
+     "turnaround_delay_min": 26.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.2400000000000001,
+     "pilot": -0.31499999999999995,
+     "ground": 0.5666666666666667
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0030_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 10.0,
+     "spillover_proxy_min": 14.0,
+     "incremental_fuel_kg": 505.0,
+     "connection_penalty_pax": 35.0,
+     "turbulence_exposure_index": 3.02,
+     "turnaround_delay_min": 26.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.2400000000000001,
+     "pilot": -0.31499999999999995,
+     "ground": 0.5666666666666667
+    }
+   },
+   "atc_best": {
+    "plan": "P0030_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 10.0,
+     "spillover_proxy_min": 14.0,
+     "incremental_fuel_kg": 505.0,
+     "connection_penalty_pax": 35.0,
+     "turbulence_exposure_index": 3.02,
+     "turnaround_delay_min": 26.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.2400000000000001,
+     "pilot": -0.31499999999999995,
+     "ground": 0.5666666666666667
+    }
+   },
+   "pilot_best": {
+    "plan": "P0030_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 10.0,
+     "spillover_proxy_min": 14.0,
+     "incremental_fuel_kg": 505.0,
+     "connection_penalty_pax": 35.0,
+     "turbulence_exposure_index": 3.02,
+     "turnaround_delay_min": 26.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.2400000000000001,
+     "pilot": -0.31499999999999995,
+     "ground": 0.5666666666666667
+    }
+   },
+   "ground_best": {
+    "plan": "P0030_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 10.0,
+     "spillover_proxy_min": 14.0,
+     "incremental_fuel_kg": 505.0,
+     "connection_penalty_pax": 35.0,
+     "turbulence_exposure_index": 3.02,
+     "turnaround_delay_min": 26.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.2400000000000001,
+     "pilot": -0.31499999999999995,
+     "ground": 0.5666666666666667
+    }
+   }
+  },
+  "suite-sjc-dense_traffic": {
+   "fallback": {
+    "plan": "P0020_R1_G2_T12",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 16.0,
+     "incremental_fuel_kg": 60.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.69,
+     "turnaround_delay_min": 13.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.3599999999999999,
+     "pilot": 0.79,
+     "ground": 0.5833333333333333
+    }
+   },
+   "nash": {
+    "plan": "P0020_R1_G2_T12",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 16.0,
+     "incremental_fuel_kg": 60.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.69,
+     "turnaround_delay_min": 13.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.3599999999999999,
+     "pilot": 0.79,
+     "ground": 0.5833333333333333
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 16.0,
+     "incremental_fuel_kg": 120.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.69,
+     "turnaround_delay_min": 17.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.3599999999999999,
+     "pilot": 0.718,
+     "ground": 0.7166666666666667
+    }
+   },
+   "atc_best": {
+    "plan": "P0030_R1_G2_T12",
+    "raw": {
+     "landing_delay_min": 10.0,
+     "spillover_proxy_min": 10.0,
+     "incremental_fuel_kg": 460.0,
+     "connection_penalty_pax": 50.0,
+     "turbulence_exposure_index": 1.19,
+     "turnaround_delay_min": 23.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.4,
+     "pilot": 0.05999999999999994,
+     "ground": 0.41666666666666663
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R1_G2_T12",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 16.0,
+     "incremental_fuel_kg": 60.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.69,
+     "turnaround_delay_min": 13.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.3599999999999999,
+     "pilot": 0.79,
+     "ground": 0.5833333333333333
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 16.0,
+     "incremental_fuel_kg": 120.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.69,
+     "turnaround_delay_min": 17.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.3599999999999999,
+     "pilot": 0.718,
+     "ground": 0.7166666666666667
+    }
+   }
+  },
+  "suite-sjc-gate_restricted": null,
+  "suite-sjc-crew_restricted": {
+   "fallback": {
+    "plan": "P0020_R2_G2_T22",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 12.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.36,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 17.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.52,
+     "pilot": 0.474,
+     "ground": 0.42999999999999994
+    }
+   },
+   "nash": {
+    "plan": "P0020_R2_G2_T22",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 12.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.36,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 17.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.52,
+     "pilot": 0.474,
+     "ground": 0.42999999999999994
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R2_G2_T22",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 12.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.36,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 17.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.52,
+     "pilot": 0.474,
+     "ground": 0.42999999999999994
+    }
+   },
+   "atc_best": {
+    "plan": "P0020_R2_G2_T22",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 12.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.36,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 17.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.52,
+     "pilot": 0.474,
+     "ground": 0.42999999999999994
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R2_G2_T22",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 12.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.36,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 17.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.52,
+     "pilot": 0.474,
+     "ground": 0.42999999999999994
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R2_G2_T22",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 12.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.36,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 17.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.52,
+     "pilot": 0.474,
+     "ground": 0.42999999999999994
+    }
+   }
+  },
+  "suite-sjc-tight_fuel": {
+   "fallback": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 90.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.39,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.8140000000000001,
+     "ground": 0.8
+    }
+   },
+   "nash": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 90.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.39,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.8140000000000001,
+     "ground": 0.8
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 90.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.39,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.8140000000000001,
+     "ground": 0.8
+    }
+   },
+   "atc_best": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 90.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.39,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.8140000000000001,
+     "ground": 0.8
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 90.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.39,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.8140000000000001,
+     "ground": 0.8
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R2_G1_T21",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 90.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.39,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.8140000000000001,
+     "ground": 0.8
+    }
+   }
+  },
+  "suite-sjc-generous_fuel": {
+   "fallback": {
+    "plan": "P0020_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.41,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.46399999999999997,
+     "ground": 0.8
+    }
+   },
+   "nash": {
+    "plan": "P0020_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.41,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.46399999999999997,
+     "ground": 0.8
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.41,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.46399999999999997,
+     "ground": 0.8
+    }
+   },
+   "atc_best": {
+    "plan": "P0020_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.41,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.46399999999999997,
+     "ground": 0.8
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.41,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.46399999999999997,
+     "ground": 0.8
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.41,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 1.0,
+     "pilot": 0.46399999999999997,
+     "ground": 0.8
+    }
+   }
+  },
+  "suite-sjc-all_runways_closed": null,
+  "suite-ito-baseline": {
+   "fallback": {
+    "plan": "P0020_R1_G3_T13",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 10.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.48,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6,
+     "pilot": 0.65,
+     "ground": 0.6
+    }
+   },
+   "nash": {
+    "plan": "P0020_R1_G3_T13",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 10.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.48,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6,
+     "pilot": 0.65,
+     "ground": 0.6
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R1_G3_T13",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 10.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.48,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6,
+     "pilot": 0.65,
+     "ground": 0.6
+    }
+   },
+   "atc_best": {
+    "plan": "P0020_R1_G3_T13",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 10.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.48,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6,
+     "pilot": 0.65,
+     "ground": 0.6
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R1_G3_T13",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 10.0,
+     "incremental_fuel_kg": 45.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.48,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6,
+     "pilot": 0.65,
+     "ground": 0.6
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 10.0,
+     "incremental_fuel_kg": 180.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 1.48,
+     "turnaround_delay_min": 21.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6,
+     "pilot": 0.488,
+     "ground": 0.65
+    }
+   }
+  },
+  "suite-ito-on_time": {
+   "fallback": {
+    "plan": "P0030_R1_G3_T13",
+    "raw": {
+     "landing_delay_min": 10.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 460.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.74,
+     "turnaround_delay_min": 8.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.64,
+     "pilot": -0.10000000000000009,
+     "ground": 0.6666666666666666
+    }
+   },
+   "nash": {
+    "plan": "P0030_R1_G3_T13",
+    "raw": {
+     "landing_delay_min": 10.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 460.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.74,
+     "turnaround_delay_min": 8.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.64,
+     "pilot": -0.10000000000000009,
+     "ground": 0.6666666666666666
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0030_R1_G3_T13",
+    "raw": {
+     "landing_delay_min": 10.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 460.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.74,
+     "turnaround_delay_min": 8.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.64,
+     "pilot": -0.10000000000000009,
+     "ground": 0.6666666666666666
+    }
+   },
+   "atc_best": {
+    "plan": "P0030_R1_G3_T13",
+    "raw": {
+     "landing_delay_min": 10.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 460.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.74,
+     "turnaround_delay_min": 8.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.64,
+     "pilot": -0.10000000000000009,
+     "ground": 0.6666666666666666
+    }
+   },
+   "pilot_best": {
+    "plan": "P0030_R1_G3_T13",
+    "raw": {
+     "landing_delay_min": 10.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 460.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.74,
+     "turnaround_delay_min": 8.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.64,
+     "pilot": -0.10000000000000009,
+     "ground": 0.6666666666666666
+    }
+   },
+   "ground_best": {
+    "plan": "P0030_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 10.0,
+     "spillover_proxy_min": 4.0,
+     "incremental_fuel_kg": 580.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 2.74,
+     "turnaround_delay_min": 16.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.64,
+     "pilot": -0.244,
+     "ground": 0.7333333333333334
+    }
+   }
+  },
+  "suite-ito-large_delay": null,
+  "suite-ito-runway_closure": null,
+  "suite-ito-dense_traffic": {
+   "fallback": {
+    "plan": "P0025_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 9.0,
+     "incremental_fuel_kg": 290.0,
+     "connection_penalty_pax": 59.0,
+     "turbulence_exposure_index": 3.15,
+     "turnaround_delay_min": 20.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.54,
+     "pilot": -0.1549999999999998,
+     "ground": 0.6666666666666667
+    }
+   },
+   "nash": {
+    "plan": "P0025_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 9.0,
+     "incremental_fuel_kg": 290.0,
+     "connection_penalty_pax": 59.0,
+     "turbulence_exposure_index": 3.15,
+     "turnaround_delay_min": 20.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.54,
+     "pilot": -0.1549999999999998,
+     "ground": 0.6666666666666667
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0025_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 9.0,
+     "incremental_fuel_kg": 290.0,
+     "connection_penalty_pax": 59.0,
+     "turbulence_exposure_index": 3.15,
+     "turnaround_delay_min": 20.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.54,
+     "pilot": -0.1549999999999998,
+     "ground": 0.6666666666666667
+    }
+   },
+   "atc_best": {
+    "plan": "P0025_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 9.0,
+     "incremental_fuel_kg": 290.0,
+     "connection_penalty_pax": 59.0,
+     "turbulence_exposure_index": 3.15,
+     "turnaround_delay_min": 20.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.54,
+     "pilot": -0.1549999999999998,
+     "ground": 0.6666666666666667
+    }
+   },
+   "pilot_best": {
+    "plan": "P0025_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 9.0,
+     "incremental_fuel_kg": 290.0,
+     "connection_penalty_pax": 59.0,
+     "turbulence_exposure_index": 3.15,
+     "turnaround_delay_min": 20.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.54,
+     "pilot": -0.1549999999999998,
+     "ground": 0.6666666666666667
+    }
+   },
+   "ground_best": {
+    "plan": "P0025_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 9.0,
+     "incremental_fuel_kg": 290.0,
+     "connection_penalty_pax": 59.0,
+     "turbulence_exposure_index": 3.15,
+     "turnaround_delay_min": 20.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.54,
+     "pilot": -0.1549999999999998,
+     "ground": 0.6666666666666667
+    }
+   }
+  },
+  "suite-ito-gate_restricted": null,
+  "suite-ito-crew_restricted": {
+   "fallback": {
+    "plan": "P0025_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 10.0,
+     "incremental_fuel_kg": 350.0,
+     "connection_penalty_pax": 29.0,
+     "turbulence_exposure_index": 1.53,
+     "turnaround_delay_min": 24.0,
+     "crew_overtime_min": 29.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.5,
+     "pilot": 0.18699999999999994,
+     "ground": 0.31000000000000005
+    }
+   },
+   "nash": {
+    "plan": "P0025_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 10.0,
+     "incremental_fuel_kg": 350.0,
+     "connection_penalty_pax": 29.0,
+     "turbulence_exposure_index": 1.53,
+     "turnaround_delay_min": 24.0,
+     "crew_overtime_min": 29.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.5,
+     "pilot": 0.18699999999999994,
+     "ground": 0.31000000000000005
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0025_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 10.0,
+     "incremental_fuel_kg": 350.0,
+     "connection_penalty_pax": 29.0,
+     "turbulence_exposure_index": 1.53,
+     "turnaround_delay_min": 24.0,
+     "crew_overtime_min": 29.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.5,
+     "pilot": 0.18699999999999994,
+     "ground": 0.31000000000000005
+    }
+   },
+   "atc_best": {
+    "plan": "P0030_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 10.0,
+     "spillover_proxy_min": 7.0,
+     "incremental_fuel_kg": 550.0,
+     "connection_penalty_pax": 29.0,
+     "turbulence_exposure_index": 1.78,
+     "turnaround_delay_min": 29.0,
+     "crew_overtime_min": 34.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.52,
+     "pilot": -0.10299999999999998,
+     "ground": 0.17666666666666675
+    }
+   },
+   "pilot_best": {
+    "plan": "P0025_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 10.0,
+     "incremental_fuel_kg": 350.0,
+     "connection_penalty_pax": 29.0,
+     "turbulence_exposure_index": 1.53,
+     "turnaround_delay_min": 24.0,
+     "crew_overtime_min": 29.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.5,
+     "pilot": 0.18699999999999994,
+     "ground": 0.31000000000000005
+    }
+   },
+   "ground_best": {
+    "plan": "P0025_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 10.0,
+     "incremental_fuel_kg": 350.0,
+     "connection_penalty_pax": 29.0,
+     "turbulence_exposure_index": 1.53,
+     "turnaround_delay_min": 24.0,
+     "crew_overtime_min": 29.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.5,
+     "pilot": 0.18699999999999994,
+     "ground": 0.31000000000000005
+    }
+   }
+  },
+  "suite-ito-tight_fuel": {
+   "fallback": {
+    "plan": "P0020_R1_G3_T13",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 12.0,
+     "incremental_fuel_kg": 90.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.06,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.52,
+     "pilot": 0.88,
+     "ground": 0.6
+    }
+   },
+   "nash": {
+    "plan": "P0020_R1_G3_T13",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 12.0,
+     "incremental_fuel_kg": 90.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.06,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.52,
+     "pilot": 0.88,
+     "ground": 0.6
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R1_G3_T13",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 12.0,
+     "incremental_fuel_kg": 90.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.06,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.52,
+     "pilot": 0.88,
+     "ground": 0.6
+    }
+   },
+   "atc_best": {
+    "plan": "P0020_R1_G3_T13",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 12.0,
+     "incremental_fuel_kg": 90.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.06,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.52,
+     "pilot": 0.88,
+     "ground": 0.6
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R1_G3_T13",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 12.0,
+     "incremental_fuel_kg": 90.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.06,
+     "turnaround_delay_min": 12.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.52,
+     "pilot": 0.88,
+     "ground": 0.6
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 12.0,
+     "incremental_fuel_kg": 300.0,
+     "connection_penalty_pax": 48.0,
+     "turbulence_exposure_index": 0.06,
+     "turnaround_delay_min": 19.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.52,
+     "pilot": 0.484,
+     "ground": 0.6833333333333333
+    }
+   }
+  },
+  "suite-ito-generous_fuel": {
+   "fallback": {
+    "plan": "P0020_R1_G2_T12",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 8.0,
+     "incremental_fuel_kg": 135.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.39,
+     "turnaround_delay_min": 18.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6799999999999999,
+     "pilot": 0.76,
+     "ground": 0.5
+    }
+   },
+   "nash": {
+    "plan": "P0020_R1_G2_T12",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 8.0,
+     "incremental_fuel_kg": 135.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.39,
+     "turnaround_delay_min": 18.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6799999999999999,
+     "pilot": 0.76,
+     "ground": 0.5
+    }
+   },
+   "utilitarian_sum": {
+    "plan": "P0020_R1_G2_T12",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 8.0,
+     "incremental_fuel_kg": 135.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.39,
+     "turnaround_delay_min": 18.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6799999999999999,
+     "pilot": 0.76,
+     "ground": 0.5
+    }
+   },
+   "atc_best": {
+    "plan": "P0025_R1_G2_T12",
+    "raw": {
+     "landing_delay_min": 5.0,
+     "spillover_proxy_min": 0.0,
+     "incremental_fuel_kg": 335.0,
+     "connection_penalty_pax": 48.0,
+     "turbulence_exposure_index": 0.64,
+     "turnaround_delay_min": 23.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.9,
+     "pilot": 0.32599999999999996,
+     "ground": 0.41666666666666663
+    }
+   },
+   "pilot_best": {
+    "plan": "P0020_R1_G2_T12",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 8.0,
+     "incremental_fuel_kg": 135.0,
+     "connection_penalty_pax": 0.0,
+     "turbulence_exposure_index": 0.39,
+     "turnaround_delay_min": 18.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 1.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6799999999999999,
+     "pilot": 0.76,
+     "ground": 0.5
+    }
+   },
+   "ground_best": {
+    "plan": "P0020_R1_G1_T11",
+    "raw": {
+     "landing_delay_min": 0.0,
+     "spillover_proxy_min": 8.0,
+     "incremental_fuel_kg": 180.0,
+     "connection_penalty_pax": 48.0,
+     "turbulence_exposure_index": 0.39,
+     "turnaround_delay_min": 21.0,
+     "crew_overtime_min": 0.0,
+     "gate_change_indicator": 0.0
+    },
+    "pareto": true,
+    "utilities": {
+     "atc": 0.6799999999999999,
+     "pilot": 0.562,
+     "ground": 0.65
+    }
+   }
+  },
+  "suite-ito-all_runways_closed": null
+ },
+ "disagreement_counterfactuals": {
+  "success": {
+   "contract_fallback_d": "P0015_R2_G1_T3",
+   "counterfactual_worst_case_d": "P0015_R2_G1_T3",
+   "epsilon_0": "P0015_R2_G1_T3",
+   "epsilon_1e-06": "P0015_R2_G1_T3",
+   "epsilon_0.001": "P0015_R2_G1_T3",
+   "epsilon_0.01": "P0015_R2_G1_T3"
+  },
+  "no_feasible": null,
+  "no_positive_gain": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0010_R2_G1_T3",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-mia-baseline": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0020_R3_G1_T31",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-mia-on_time": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0020_R2_G3_T23",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-mia-large_delay": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0020_R1_G4_T14",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-mia-runway_closure": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0025_R2_G1_T21",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-mia-dense_traffic": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0020_R3_G4_T34",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-mia-gate_restricted": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": null,
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-mia-crew_restricted": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0020_R2_G1_T21",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-mia-tight_fuel": {
+   "contract_fallback_d": "P0020_R3_G1_T31",
+   "counterfactual_worst_case_d": "P0020_R3_G1_T31",
+   "epsilon_0": "P0020_R3_G1_T31",
+   "epsilon_1e-06": "P0020_R3_G1_T31",
+   "epsilon_0.001": "P0020_R3_G1_T31",
+   "epsilon_0.01": "P0020_R3_G1_T31"
+  },
+  "suite-mia-generous_fuel": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0025_R3_G1_T31",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-mia-all_runways_closed": null,
+  "suite-den-baseline": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0020_R4_G1_T41",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-den-on_time": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0020_R3_G1_T31",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-den-large_delay": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0020_R2_G1_T21",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-den-runway_closure": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0020_R3_G1_T31",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-den-dense_traffic": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0025_R4_G1_T41",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-den-gate_restricted": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0020_R3_G4_T34",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-den-crew_restricted": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0020_R4_G1_T41",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-den-tight_fuel": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0020_R4_G1_T41",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-den-generous_fuel": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0020_R2_G1_T21",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-den-all_runways_closed": null,
+  "suite-sjc-baseline": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0025_R2_G1_T21",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-sjc-on_time": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0025_R2_G1_T21",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-sjc-large_delay": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": null,
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-sjc-runway_closure": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": null,
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-sjc-dense_traffic": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0030_R1_G1_T11",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-sjc-gate_restricted": null,
+  "suite-sjc-crew_restricted": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0020_R2_G2_T22",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-sjc-tight_fuel": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0020_R2_G1_T21",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-sjc-generous_fuel": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0020_R1_G1_T11",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-sjc-all_runways_closed": null,
+  "suite-ito-baseline": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0020_R1_G3_T13",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-ito-on_time": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": null,
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-ito-large_delay": null,
+  "suite-ito-runway_closure": null,
+  "suite-ito-dense_traffic": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": null,
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-ito-gate_restricted": null,
+  "suite-ito-crew_restricted": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0030_R1_G1_T11",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-ito-tight_fuel": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": null,
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-ito-generous_fuel": {
+   "contract_fallback_d": null,
+   "counterfactual_worst_case_d": "P0020_R1_G1_T11",
+   "epsilon_0": null,
+   "epsilon_1e-06": null,
+   "epsilon_0.001": null,
+   "epsilon_0.01": null
+  },
+  "suite-ito-all_runways_closed": null
+ },
+ "affine": {
+  "success": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 1
+  },
+  "no_feasible": null,
+  "no_positive_gain": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-mia-baseline": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-mia-on_time": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-mia-large_delay": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-mia-runway_closure": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-mia-dense_traffic": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-mia-gate_restricted": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-mia-crew_restricted": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-mia-tight_fuel": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 1
+  },
+  "suite-mia-generous_fuel": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-mia-all_runways_closed": null,
+  "suite-den-baseline": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-den-on_time": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-den-large_delay": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-den-runway_closure": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-den-dense_traffic": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-den-gate_restricted": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-den-crew_restricted": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-den-tight_fuel": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-den-generous_fuel": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-den-all_runways_closed": null,
+  "suite-sjc-baseline": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-sjc-on_time": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-sjc-large_delay": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-sjc-runway_closure": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-sjc-dense_traffic": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-sjc-gate_restricted": null,
+  "suite-sjc-crew_restricted": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-sjc-tight_fuel": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-sjc-generous_fuel": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-sjc-all_runways_closed": null,
+  "suite-ito-baseline": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-ito-on_time": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-ito-large_delay": null,
+  "suite-ito-runway_closure": null,
+  "suite-ito-dense_traffic": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-ito-gate_restricted": null,
+  "suite-ito-crew_restricted": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-ito-tight_fuel": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-ito-generous_fuel": {
+   "trials": 20,
+   "changed_eps1e-9": 0,
+   "changed_eps0": 0,
+   "eligible": 0
+  },
+  "suite-ito-all_runways_closed": null
+ }
+}

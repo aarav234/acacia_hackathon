@@ -1,0 +1,466 @@
+{
+  "MIA": {
+    "YEAR": 2015,
+    "MONTH": 1,
+    "DAY": 1,
+    "DAY_OF_WEEK": 4,
+    "AIRLINE": "AA",
+    "FLIGHT_NUMBER": 1057,
+    "TAIL_NUMBER": "N3ASAA",
+    "ORIGIN_AIRPORT": "DFW",
+    "DESTINATION_AIRPORT": "MIA",
+    "SCHEDULED_DEPARTURE": "0515",
+    "DEPARTURE_TIME": "0703",
+    "DEPARTURE_DELAY": 108,
+    "TAXI_OUT": 15,
+    "WHEELS_OFF": "0718",
+    "SCHEDULED_TIME": 161,
+    "ELAPSED_TIME": 155,
+    "AIR_TIME": 133,
+    "DISTANCE": 1121,
+    "WHEELS_ON": "1031",
+    "TAXI_IN": 7,
+    "SCHEDULED_ARRIVAL": "0856",
+    "ARRIVAL_TIME": "1038",
+    "ARRIVAL_DELAY": 102,
+    "DIVERTED": 0,
+    "CANCELLED": 0,
+    "CANCELLATION_REASON": null,
+    "AIR_SYSTEM_DELAY": 0,
+    "SECURITY_DELAY": 0,
+    "AIRLINE_DELAY": 0,
+    "LATE_AIRCRAFT_DELAY": 0,
+    "WEATHER_DELAY": 102,
+    "__airspace_provenance__": {
+      "namespace": "airspace.ingest/v1",
+      "mode": "historical",
+      "source_file": "flights.csv",
+      "source_sha256": "afa4e42188b113dd69427a3fbd00a4b6979c6235c866f963c2899d18a3403a83",
+      "row_index": 70,
+      "row_index_basis": "zero-based data row index in the original file, header excluded",
+      "selection_method": "explicit_row_index",
+      "selection_predicate": "WEATHER_DELAY > 15 OR LATE_AIRCRAFT_DELAY > 20",
+      "suitability_rule": "CANCELLED == 0 AND DIVERTED == 0 AND SCHEDULED_ARRIVAL, WHEELS_ON, ARRIVAL_TIME, ARRIVAL_DELAY present",
+      "predicate_values": {
+        "WEATHER_DELAY": 102,
+        "LATE_AIRCRAFT_DELAY": 0
+      },
+      "row_hash": "7cf14bd0edabd01f9745294ef19b7c5c9bae12732414a246a5d1bd666b9e14e5",
+      "skipped_invalid_candidate_rows": 0,
+      "joins": {
+        "airline": {
+          "source_id": "AA",
+          "status": "resolved",
+          "name": "American Airlines Inc."
+        },
+        "origin_airport": {
+          "source_id": "DFW",
+          "status": "resolved",
+          "iata_code": "DFW",
+          "airport": "Dallas/Fort Worth International Airport",
+          "city": "Dallas-Fort Worth",
+          "state": "TX",
+          "country": "USA",
+          "latitude": 32.89595,
+          "longitude": -97.0372
+        },
+        "destination_airport": {
+          "source_id": "MIA",
+          "status": "resolved",
+          "iata_code": "MIA",
+          "airport": "Miami International Airport",
+          "city": "Miami",
+          "state": "FL",
+          "country": "USA",
+          "latitude": 25.79325,
+          "longitude": -80.29056
+        }
+      },
+      "derived_local_clock_times": {
+        "ARRIVAL_TIME": {
+          "local_clock": "10:38",
+          "minutes_after_local_midnight": 638,
+          "day_offset": 0
+        },
+        "DEPARTURE_TIME": {
+          "local_clock": "07:03",
+          "minutes_after_local_midnight": 423,
+          "day_offset": 0
+        },
+        "SCHEDULED_ARRIVAL": {
+          "local_clock": "08:56",
+          "minutes_after_local_midnight": 536,
+          "day_offset": 0
+        },
+        "SCHEDULED_DEPARTURE": {
+          "local_clock": "05:15",
+          "minutes_after_local_midnight": 315,
+          "day_offset": 0
+        },
+        "WHEELS_OFF": {
+          "local_clock": "07:18",
+          "minutes_after_local_midnight": 438,
+          "day_offset": 0
+        },
+        "WHEELS_ON": {
+          "local_clock": "10:31",
+          "minutes_after_local_midnight": 631,
+          "day_offset": 0
+        }
+      },
+      "lookup_files_sha256": {
+        "airlines.csv": "ec54f453260c2a46fc76d497ab0eb0a4c13724b566fba8a7ce3bb8ad712acca3",
+        "airports.csv": "23c4cea98c318225bd923b2068ead8af089845071f79fd9ea0037ba6a61cd4e2"
+      },
+      "time_semantics": "HHMM values are historical local clock text (2400 = midnight next day). They are contextual display only; SCHEDULED_ARRIVAL is gate-in, not a landing timestamp."
+    }
+  },
+  "DEN": {
+    "YEAR": 2015,
+    "MONTH": 1,
+    "DAY": 1,
+    "DAY_OF_WEEK": 4,
+    "AIRLINE": "OO",
+    "FLIGHT_NUMBER": 5547,
+    "TAIL_NUMBER": "N910SW",
+    "ORIGIN_AIRPORT": "ONT",
+    "DESTINATION_AIRPORT": "DEN",
+    "SCHEDULED_DEPARTURE": "0559",
+    "DEPARTURE_TIME": "0758",
+    "DEPARTURE_DELAY": 119,
+    "TAXI_OUT": 4,
+    "WHEELS_OFF": "0802",
+    "SCHEDULED_TIME": 141,
+    "ELAPSED_TIME": 138,
+    "AIR_TIME": 123,
+    "DISTANCE": 819,
+    "WHEELS_ON": "1105",
+    "TAXI_IN": 11,
+    "SCHEDULED_ARRIVAL": "0920",
+    "ARRIVAL_TIME": "1116",
+    "ARRIVAL_DELAY": 116,
+    "DIVERTED": 0,
+    "CANCELLED": 0,
+    "CANCELLATION_REASON": null,
+    "AIR_SYSTEM_DELAY": 0,
+    "SECURITY_DELAY": 0,
+    "AIRLINE_DELAY": 0,
+    "LATE_AIRCRAFT_DELAY": 0,
+    "WEATHER_DELAY": 116,
+    "__airspace_provenance__": {
+      "namespace": "airspace.ingest/v1",
+      "mode": "historical",
+      "source_file": "flights.csv",
+      "source_sha256": "afa4e42188b113dd69427a3fbd00a4b6979c6235c866f963c2899d18a3403a83",
+      "row_index": 171,
+      "row_index_basis": "zero-based data row index in the original file, header excluded",
+      "selection_method": "explicit_row_index",
+      "selection_predicate": "WEATHER_DELAY > 15 OR LATE_AIRCRAFT_DELAY > 20",
+      "suitability_rule": "CANCELLED == 0 AND DIVERTED == 0 AND SCHEDULED_ARRIVAL, WHEELS_ON, ARRIVAL_TIME, ARRIVAL_DELAY present",
+      "predicate_values": {
+        "WEATHER_DELAY": 116,
+        "LATE_AIRCRAFT_DELAY": 0
+      },
+      "row_hash": "269157e7353edd2e176e9b2beb41c1b5e12b400e8e41fa7b76e28972e5b96a52",
+      "skipped_invalid_candidate_rows": 0,
+      "joins": {
+        "airline": {
+          "source_id": "OO",
+          "status": "resolved",
+          "name": "Skywest Airlines Inc."
+        },
+        "origin_airport": {
+          "source_id": "ONT",
+          "status": "resolved",
+          "iata_code": "ONT",
+          "airport": "Ontario International Airport",
+          "city": "Ontario",
+          "state": "CA",
+          "country": "USA",
+          "latitude": 34.056,
+          "longitude": -117.60119
+        },
+        "destination_airport": {
+          "source_id": "DEN",
+          "status": "resolved",
+          "iata_code": "DEN",
+          "airport": "Denver International Airport",
+          "city": "Denver",
+          "state": "CO",
+          "country": "USA",
+          "latitude": 39.85841,
+          "longitude": -104.667
+        }
+      },
+      "derived_local_clock_times": {
+        "ARRIVAL_TIME": {
+          "local_clock": "11:16",
+          "minutes_after_local_midnight": 676,
+          "day_offset": 0
+        },
+        "DEPARTURE_TIME": {
+          "local_clock": "07:58",
+          "minutes_after_local_midnight": 478,
+          "day_offset": 0
+        },
+        "SCHEDULED_ARRIVAL": {
+          "local_clock": "09:20",
+          "minutes_after_local_midnight": 560,
+          "day_offset": 0
+        },
+        "SCHEDULED_DEPARTURE": {
+          "local_clock": "05:59",
+          "minutes_after_local_midnight": 359,
+          "day_offset": 0
+        },
+        "WHEELS_OFF": {
+          "local_clock": "08:02",
+          "minutes_after_local_midnight": 482,
+          "day_offset": 0
+        },
+        "WHEELS_ON": {
+          "local_clock": "11:05",
+          "minutes_after_local_midnight": 665,
+          "day_offset": 0
+        }
+      },
+      "lookup_files_sha256": {
+        "airlines.csv": "ec54f453260c2a46fc76d497ab0eb0a4c13724b566fba8a7ce3bb8ad712acca3",
+        "airports.csv": "23c4cea98c318225bd923b2068ead8af089845071f79fd9ea0037ba6a61cd4e2"
+      },
+      "time_semantics": "HHMM values are historical local clock text (2400 = midnight next day). They are contextual display only; SCHEDULED_ARRIVAL is gate-in, not a landing timestamp."
+    }
+  },
+  "SJC": {
+    "YEAR": 2015,
+    "MONTH": 1,
+    "DAY": 1,
+    "DAY_OF_WEEK": 4,
+    "AIRLINE": "AS",
+    "FLIGHT_NUMBER": 709,
+    "TAIL_NUMBER": "N769AS",
+    "ORIGIN_AIRPORT": "SLC",
+    "DESTINATION_AIRPORT": "SJC",
+    "SCHEDULED_DEPARTURE": "0640",
+    "DEPARTURE_TIME": "0747",
+    "DEPARTURE_DELAY": 67,
+    "TAXI_OUT": 28,
+    "WHEELS_OFF": "0815",
+    "SCHEDULED_TIME": 123,
+    "ELAPSED_TIME": 106,
+    "AIR_TIME": 75,
+    "DISTANCE": 584,
+    "WHEELS_ON": "0830",
+    "TAXI_IN": 3,
+    "SCHEDULED_ARRIVAL": "0743",
+    "ARRIVAL_TIME": "0833",
+    "ARRIVAL_DELAY": 50,
+    "DIVERTED": 0,
+    "CANCELLED": 0,
+    "CANCELLATION_REASON": null,
+    "AIR_SYSTEM_DELAY": 0,
+    "SECURITY_DELAY": 0,
+    "AIRLINE_DELAY": 0,
+    "LATE_AIRCRAFT_DELAY": 0,
+    "WEATHER_DELAY": 50,
+    "__airspace_provenance__": {
+      "namespace": "airspace.ingest/v1",
+      "mode": "historical",
+      "source_file": "flights.csv",
+      "source_sha256": "afa4e42188b113dd69427a3fbd00a4b6979c6235c866f963c2899d18a3403a83",
+      "row_index": 682,
+      "row_index_basis": "zero-based data row index in the original file, header excluded",
+      "selection_method": "explicit_row_index",
+      "selection_predicate": "WEATHER_DELAY > 15 OR LATE_AIRCRAFT_DELAY > 20",
+      "suitability_rule": "CANCELLED == 0 AND DIVERTED == 0 AND SCHEDULED_ARRIVAL, WHEELS_ON, ARRIVAL_TIME, ARRIVAL_DELAY present",
+      "predicate_values": {
+        "WEATHER_DELAY": 50,
+        "LATE_AIRCRAFT_DELAY": 0
+      },
+      "row_hash": "d478210cbe47c69a3ca1799a04e8c2a8ceb3207b6bab91ef70c9c0fd53b9d814",
+      "skipped_invalid_candidate_rows": 0,
+      "joins": {
+        "airline": {
+          "source_id": "AS",
+          "status": "resolved",
+          "name": "Alaska Airlines Inc."
+        },
+        "origin_airport": {
+          "source_id": "SLC",
+          "status": "resolved",
+          "iata_code": "SLC",
+          "airport": "Salt Lake City International Airport",
+          "city": "Salt Lake City",
+          "state": "UT",
+          "country": "USA",
+          "latitude": 40.78839,
+          "longitude": -111.97777
+        },
+        "destination_airport": {
+          "source_id": "SJC",
+          "status": "resolved",
+          "iata_code": "SJC",
+          "airport": "Norman Y. Mineta San Jos\u00e9 International Airport",
+          "city": "San Jose",
+          "state": "CA",
+          "country": "USA",
+          "latitude": 37.36186,
+          "longitude": -121.92901
+        }
+      },
+      "derived_local_clock_times": {
+        "ARRIVAL_TIME": {
+          "local_clock": "08:33",
+          "minutes_after_local_midnight": 513,
+          "day_offset": 0
+        },
+        "DEPARTURE_TIME": {
+          "local_clock": "07:47",
+          "minutes_after_local_midnight": 467,
+          "day_offset": 0
+        },
+        "SCHEDULED_ARRIVAL": {
+          "local_clock": "07:43",
+          "minutes_after_local_midnight": 463,
+          "day_offset": 0
+        },
+        "SCHEDULED_DEPARTURE": {
+          "local_clock": "06:40",
+          "minutes_after_local_midnight": 400,
+          "day_offset": 0
+        },
+        "WHEELS_OFF": {
+          "local_clock": "08:15",
+          "minutes_after_local_midnight": 495,
+          "day_offset": 0
+        },
+        "WHEELS_ON": {
+          "local_clock": "08:30",
+          "minutes_after_local_midnight": 510,
+          "day_offset": 0
+        }
+      },
+      "lookup_files_sha256": {
+        "airlines.csv": "ec54f453260c2a46fc76d497ab0eb0a4c13724b566fba8a7ce3bb8ad712acca3",
+        "airports.csv": "23c4cea98c318225bd923b2068ead8af089845071f79fd9ea0037ba6a61cd4e2"
+      },
+      "time_semantics": "HHMM values are historical local clock text (2400 = midnight next day). They are contextual display only; SCHEDULED_ARRIVAL is gate-in, not a landing timestamp."
+    }
+  },
+  "ITO": {
+    "YEAR": 2015,
+    "MONTH": 1,
+    "DAY": 1,
+    "DAY_OF_WEEK": 4,
+    "AIRLINE": "HA",
+    "FLIGHT_NUMBER": 132,
+    "TAIL_NUMBER": "N483HA",
+    "ORIGIN_AIRPORT": "OGG",
+    "DESTINATION_AIRPORT": "ITO",
+    "SCHEDULED_DEPARTURE": "0927",
+    "DEPARTURE_TIME": "1007",
+    "DEPARTURE_DELAY": 40,
+    "TAXI_OUT": 11,
+    "WHEELS_OFF": "1018",
+    "SCHEDULED_TIME": 37,
+    "ELAPSED_TIME": 42,
+    "AIR_TIME": 26,
+    "DISTANCE": 121,
+    "WHEELS_ON": "1044",
+    "TAXI_IN": 5,
+    "SCHEDULED_ARRIVAL": "1004",
+    "ARRIVAL_TIME": "1049",
+    "ARRIVAL_DELAY": 45,
+    "DIVERTED": 0,
+    "CANCELLED": 0,
+    "CANCELLATION_REASON": null,
+    "AIR_SYSTEM_DELAY": 0,
+    "SECURITY_DELAY": 0,
+    "AIRLINE_DELAY": 5,
+    "LATE_AIRCRAFT_DELAY": 40,
+    "WEATHER_DELAY": 0,
+    "__airspace_provenance__": {
+      "namespace": "airspace.ingest/v1",
+      "mode": "historical",
+      "source_file": "flights.csv",
+      "source_sha256": "afa4e42188b113dd69427a3fbd00a4b6979c6235c866f963c2899d18a3403a83",
+      "row_index": 2845,
+      "row_index_basis": "zero-based data row index in the original file, header excluded",
+      "selection_method": "explicit_row_index",
+      "selection_predicate": "WEATHER_DELAY > 15 OR LATE_AIRCRAFT_DELAY > 20",
+      "suitability_rule": "CANCELLED == 0 AND DIVERTED == 0 AND SCHEDULED_ARRIVAL, WHEELS_ON, ARRIVAL_TIME, ARRIVAL_DELAY present",
+      "predicate_values": {
+        "WEATHER_DELAY": 0,
+        "LATE_AIRCRAFT_DELAY": 40
+      },
+      "row_hash": "4dd25f76e96586f8e3eb0442e2417070da9eb203047ffcd8897e7dbc0b15d9de",
+      "skipped_invalid_candidate_rows": 0,
+      "joins": {
+        "airline": {
+          "source_id": "HA",
+          "status": "resolved",
+          "name": "Hawaiian Airlines Inc."
+        },
+        "origin_airport": {
+          "source_id": "OGG",
+          "status": "resolved",
+          "iata_code": "OGG",
+          "airport": "Kahului Airport",
+          "city": "Kahului",
+          "state": "HI",
+          "country": "USA",
+          "latitude": 20.89865,
+          "longitude": -156.43046
+        },
+        "destination_airport": {
+          "source_id": "ITO",
+          "status": "resolved",
+          "iata_code": "ITO",
+          "airport": "Hilo International Airport",
+          "city": "Hilo",
+          "state": "HI",
+          "country": "USA",
+          "latitude": 19.72026,
+          "longitude": -155.04847
+        }
+      },
+      "derived_local_clock_times": {
+        "ARRIVAL_TIME": {
+          "local_clock": "10:49",
+          "minutes_after_local_midnight": 649,
+          "day_offset": 0
+        },
+        "DEPARTURE_TIME": {
+          "local_clock": "10:07",
+          "minutes_after_local_midnight": 607,
+          "day_offset": 0
+        },
+        "SCHEDULED_ARRIVAL": {
+          "local_clock": "10:04",
+          "minutes_after_local_midnight": 604,
+          "day_offset": 0
+        },
+        "SCHEDULED_DEPARTURE": {
+          "local_clock": "09:27",
+          "minutes_after_local_midnight": 567,
+          "day_offset": 0
+        },
+        "WHEELS_OFF": {
+          "local_clock": "10:18",
+          "minutes_after_local_midnight": 618,
+          "day_offset": 0
+        },
+        "WHEELS_ON": {
+          "local_clock": "10:44",
+          "minutes_after_local_midnight": 644,
+          "day_offset": 0
+        }
+      },
+      "lookup_files_sha256": {
+        "airlines.csv": "ec54f453260c2a46fc76d497ab0eb0a4c13724b566fba8a7ce3bb8ad712acca3",
+        "airports.csv": "23c4cea98c318225bd923b2068ead8af089845071f79fd9ea0037ba6a61cd4e2"
+      },
+      "time_semantics": "HHMM values are historical local clock text (2400 = midnight next day). They are contextual display only; SCHEDULED_ARRIVAL is gate-in, not a landing timestamp."
+    }
+  }
+}
