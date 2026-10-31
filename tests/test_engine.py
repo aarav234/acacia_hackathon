@@ -738,3 +738,199 @@ def test_stratified_suite_partition_is_fixed_distinct_and_disjoint(suite):
     assert len(set(fps)) == len(fps)
     assert not set(fps) & {operations_fingerprint(s) for _, s in suite}
     assert [sp.seed for sp in stratified_specs()] == [sp.seed for sp in specs]  # reproducible
+
+
+# ---- one-minute candidate generation (v2 profile) and 5-minute backward compatibility ----
+import hashlib  # noqa: E402
+
+from airspace.contracts import SimulationConfig  # noqa: E402
+
+from airspace.data.scenario_suite import (  # noqa: E402
+    BASELINE_SLOT_STEP_MIN, PRODUCTION_SLOT_STEP_MIN, at_resolution, final_evaluation_specs, suite_specs as _suite_specs,
+)
+
+DIGEST_SUITE40_5MIN = "5243aa5aa6f60edfe88c874fd23e0682f1b9011c0fae0ac152f68350d7ef0e63"
+DIGEST_STRATIFIED160_5MIN = "75d6c297e6e56778353a8db5ad8624eca1335e527946586ab56555159a899ae9"
+
+
+@pytest.fixture(scope="module")
+def success_v2() -> Scenario:
+    return fx.load_fixture_scenario("success", "v2")
+
+
+def v2_from(cfg: dict, tmp_path: Path, name: str = "v2.json") -> Scenario:
+    return scenario_from(cfg, tmp_path, name)
+
+
+def test_five_minute_baselines_are_bit_for_bit_unchanged(suite):
+    assert fx.DEFAULT_FIXTURE_VERSION == "v1" and fx.load_fixture_scenario("success").slot_step_min == 5
+    assert hashlib.sha256("".join(s.state_hash for _, s in suite).encode()).hexdigest() == DIGEST_SUITE40_5MIN
+    strat = "".join(build_suite_scenario(sp).state_hash for sp in stratified_specs())
+    assert hashlib.sha256(strat.encode()).hexdigest() == DIGEST_STRATIFIED160_5MIN
+    assert all(sp.assumptions.slot_step_min == BASELINE_SLOT_STEP_MIN for sp in _suite_specs() + stratified_specs())
+
+
+def test_production_scenario_generation_defaults_to_one_minute():
+    from airspace.data.scenario_suite import ChallengeAssumptions
+
+    assert ChallengeAssumptions().slot_step_min == PRODUCTION_SLOT_STEP_MIN == 1
+    assert fx.PREFERRED_FIXTURE_VERSION == "v2"
+
+
+def test_v2_profile_differs_from_v1_only_in_resolution_and_labels():
+    for name in fx.BUILDERS:
+        v1, v2 = fx.config_dict(name, "v1"), fx.config_dict(name, "v2")
+        assert v2["operations"] == v1["operations"] and v2["earliest_landing_min"] == v1["earliest_landing_min"]
+        assert v2["planning_horizon_min"] == v1["planning_horizon_min"]
+        assert (v1["slot_step_min"], v2["slot_step_min"]) == (5, 1)
+        assert v2["scenario_id"].endswith("-v2") and v2["config_version"].endswith("-v2")
+        assert fx.build_config(name, "v2") == SimulationConfig.model_validate_json(fx.config_path(name, "v2").read_text())
+
+
+def test_one_minute_slots_cover_every_integer_minute_and_route(success_v2):
+    plans = generate_candidates(success_v2)
+    assert list(success_v2.slots) == list(range(10, 50))
+    routes = success_v2.operations.taxi_routes
+    assert len(plans) == 40 * len(routes) == 240
+    assert {p.landing_min for p in plans} == set(range(10, 50))
+
+
+def test_generator_equals_exhaustive_independent_enumeration(success_v2):
+    ops = success_v2.operations
+    expected = set()
+    for L in range(success_v2.earliest_landing_min, success_v2.earliest_landing_min + success_v2.planning_horizon_min):
+        for rw in ops.runways:
+            for g in ops.gates:
+                for r in ops.taxi_routes:
+                    if (r.runway_id, r.gate_id) == (rw.runway_id, g.gate_id):
+                        expected.add((L, rw.runway_id, g.gate_id, r.route_id, L + r.taxi_min, L + r.taxi_min + ops.service.service_duration_min))
+    got = {(p.landing_min, p.runway_id, p.gate_id, p.taxi_route_id, p.gate_in_min, p.service_end_min) for p in generate_candidates(success_v2)}
+    assert got == expected  # nothing missing, nothing extra
+    unconnected = {(rw.runway_id, g.gate_id) for rw in ops.runways for g in ops.gates} - {(r.runway_id, r.gate_id) for r in ops.taxi_routes}
+    assert unconnected and not {(p[1], p[2]) for p in got} & unconnected
+
+
+def test_one_minute_ids_unique_ordered_and_repeatable(success_v2):
+    a, b = generate_candidates(success_v2), generate_candidates(success_v2)
+    assert a == b and len({p.plan_id for p in a}) == len(a)
+    keys = [(p.landing_min, p.runway_id, p.gate_id, p.taxi_route_id) for p in a]
+    assert keys == sorted(keys)
+    assert solve_scenario(success_v2).summary() == solve_scenario(success_v2).summary()
+
+
+def test_v1_and_v2_share_identical_plans_on_five_minute_minutes(success, success_v2):
+    v1 = {a.plan.plan_id: a for a in assess_candidates(success, generate_candidates(success))}
+    v2 = {a.plan.plan_id: a for a in assess_candidates(success_v2, generate_candidates(success_v2))}
+    assert set(v1) <= set(v2)  # every v1 feasible plan id exists, unchanged, in v2
+    for pid, a in v1.items():
+        assert a.components == v2[pid].components  # identical raw metrics and utilities
+
+
+def test_horizon_boundaries_one_minute(success_v2):
+    plans = generate_candidates(success_v2)
+    assert min(p.landing_min for p in plans) == 10 and max(p.landing_min for p in plans) == 49
+    edge = next(p for p in plans if p.plan_id == "P0049_R1_G2_T2")
+    beyond = Plan.model_validate({**edge.model_dump(), "plan_id": "P0050_R1_G2_T2", "landing_min": 50,
+                                  "gate_in_min": 54, "service_end_min": 84})
+    assert "PLAN-SLOT" in {v.rule_id for v in validate_plan(success_v2, beyond).violations}
+
+
+def test_narrow_runway_window_one_minute(tmp_path):
+    cfg = fx.config_dict("success", "v2")
+    cfg["operations"]["runways"][0]["open_windows"] = [{"start_min": 12, "end_min": 15}]  # R1, occupancy 2 min
+    s = v2_from(cfg, tmp_path)
+    ok = {p.landing_min for p in generate_candidates(s) if p.runway_id == "R1" and "RWY-OPEN" not in
+          {v.rule_id for v in validate_plan(s, p).violations}}
+    assert ok == {12, 13}  # [L, L+2) inside [12, 15)
+
+
+def test_fuel_limited_window_matches_exact_cutoff_per_route(success_v2):
+    f = success_v2.operations.fuel
+    for route in success_v2.operations.taxi_routes:
+        slack = (Fraction(f.snapshot_fuel_kg) - Fraction(f.approach_burn_kg) - Fraction(f.taxi_burn_kg_per_min) * route.taxi_min
+                 - Fraction(f.min_reserve_kg)) / Fraction(f.airborne_burn_kg_per_min)
+        cutoff = success_v2.earliest_landing_min + math.floor(slack)  # last minute with reserve >= minimum
+        for p in generate_candidates(success_v2):
+            if p.taxi_route_id == route.route_id:
+                fails = "FUEL-RESERVE" in {v.rule_id for v in validate_plan(success_v2, p).violations}
+                assert fails == (p.landing_min > cutoff), (route.route_id, p.landing_min)
+
+
+def test_gate_conflict_and_separation_boundaries_one_minute(success_v2):
+    def rules(pid):
+        return rule_ids(success_v2, pid)
+    # G1 existing [0,15) + 5 buffer: T3 (taxi 5) gate-in 20 at L=15 touches; L=14 overlaps
+    assert "GATE-OCCUPANCY" not in rules("P0015_R2_G1_T3") and "GATE-OCCUPANCY" in rules("P0014_R2_G1_T3")
+    # R2 heavy arrival @8, heavy->medium 3: L=11 exactly separated, L=10 not
+    assert "RWY-SEP-LEAD" not in rules("P0011_R2_G3_T4") and "RWY-SEP-LEAD" in rules("P0010_R2_G3_T4")
+    # R1 heavy departure @12: follow needs 2 (L<=10 ok, L=11 fails); lead needs 3 (L=15 ok, L=14 fails)
+    assert "RWY-SEP-FOLLOW" not in rules("P0010_R1_G2_T2") and "RWY-SEP-FOLLOW" in rules("P0011_R1_G2_T2")
+    assert "RWY-SEP-LEAD" in rules("P0014_R1_G2_T2") and "RWY-SEP-LEAD" not in rules("P0015_R1_G2_T2")
+
+
+def test_unique_and_no_feasible_plan_one_minute(tmp_path):
+    cfg = fx.config_dict("success", "v2")
+    cfg["planning_horizon_min"] = 1
+    out = solve_scenario(v2_from(cfg, tmp_path))
+    assert [a.plan.plan_id for a in out.assessments] == ["P0010_R1_G2_T2"] and out.reason == "no_positive_bargain"
+    none = solve_scenario(fx.load_fixture_scenario("no_feasible", "v2"))
+    assert none.candidate_count == 240 and none.assessments == [] and none.reason == "no_feasible_plan"
+
+
+def test_candidate_cap_at_one_minute_is_explicit(tmp_path):
+    cfg = fx.config_dict("success", "v2")
+    cfg["planning_horizon_min"] = 333  # 333 x 6 routes = 1998 <= 2000
+    assert len(generate_candidates(v2_from(cfg, tmp_path, "a.json"))) == 1998
+    cfg["planning_horizon_min"] = 334  # 2004 > 2000: error, never truncation
+    with pytest.raises(CandidateCapExceededError, match="2004"):
+        generate_candidates(v2_from(cfg, tmp_path, "b.json"))
+
+
+def test_v2_provenance_and_hash_stable(tmp_path, success_v2):
+    rng = random.Random(5)
+    cfg = fx.config_dict("success", "v2")
+    def shuffled(obj):
+        if isinstance(obj, dict):
+            items = list(obj.items())
+            rng.shuffle(items)
+            return {k: shuffled(v) for k, v in items}
+        return [shuffled(v) for v in obj] if isinstance(obj, list) else obj
+
+    for i in range(3):
+        p = tmp_path / f"s{i}.json"
+        p.write_text(json.dumps(shuffled(cfg)))
+        assert build_scenario(fx.load_anchor_row(), p).state_hash == success_v2.state_hash
+    assert success_v2.source_mode == "historical_anchor"
+    assert any("1-minute landing resolution" in e.note for e in success_v2.provenance)
+
+
+def test_weights_never_change_feasibility_at_one_minute(success_v2):
+    ref = independent_oracle(success_v2)
+    for w in sens.weight_families(seed=9, n_dirichlet=3)["dirichlet_uniform_k1"]:
+        alt = independent_oracle(sens.reweighted(success_v2, w))
+        assert {p: v["failed"] for p, v in alt.plans.items()} == {p: v["failed"] for p, v in ref.plans.items()}
+
+
+def test_oracle_agrees_and_selection_feasible_at_one_minute(suite):
+    scen = [fx.load_fixture_scenario(n, "v2") for n in fx.SCENARIO_FILES]
+    scen += [build_suite_scenario(at_resolution(sp, 1)) for sp in _suite_specs()[::4]]
+    for s in scen:
+        assert s.slot_step_min == 1
+        out, ref = solve_scenario(s), independent_oracle(s)
+        assert {a.plan.plan_id for a in out.assessments} == set(ref.feasible_ids)
+        assert ref.fallback_id == (out.fallback.plan_id if out.fallback else None)
+        assert ref.compromise_id == (out.compromise.plan_id if out.compromise else None)
+        chosen = out.compromise or out.fallback
+        if chosen:
+            assert validate_plan(s, chosen).feasible
+
+
+def test_v2_example_assessments_match_engine(success_v2):
+    assert fx.load_example_assessments("v2") == assess_candidates(success_v2, generate_candidates(success_v2))
+
+
+def test_final_evaluation_set_is_new_and_disjoint():
+    fin = final_evaluation_specs()
+    fps = {operations_fingerprint(build_suite_scenario(sp)) for sp in fin}
+    prior = {operations_fingerprint(build_suite_scenario(sp)) for sp in stratified_specs()[::3] + _suite_specs()}
+    assert len(fin) == len(fps) == 64 and not fps & prior
