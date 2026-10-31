@@ -9,11 +9,14 @@ from __future__ import annotations
 import csv
 import json
 import random
+from dataclasses import replace
 from pathlib import Path
 
+import pandas as pd
 import pytest
 
 from airspace.contracts import canonical_hash
+from airspace.data import challenge as ch
 from airspace.data import fixtures as fx
 from airspace.data.ingest import (
     FLIGHT_COLUMNS,
@@ -366,3 +369,134 @@ def test_repeated_sequential_ingestion_is_closed_and_identical(tmp_path, tracked
     results = [select_flight(path, chunk_rows=2) for _ in range(5)]
     assert all(r == results[0] for r in results)
     _assert_all_closed(tracked_readers, 5)
+
+
+# ---- challenge workbook (challenge2_operational_constraints.xlsx) --------------------
+
+WORKBOOK = default_data_dir() / ch.WORKBOOK_NAME
+EXTRACT = fx.FIXTURES_DIR / ch.EXTRACT_NAME
+
+
+def _make_workbook(path: Path, mutate=None) -> Path:
+    """Write a structurally faithful workbook from the committed extract (SYNTHETIC test copy)."""
+    openpyxl = pytest.importorskip("openpyxl")
+    data = json.loads(EXTRACT.read_text())
+    sheets = {
+        "airport_capacity": [[data["sheet_notes"]["airport_capacity"]], [], list(ch.CAPACITY_COLUMNS)]
+        + [[a["iata_code"], a["airport"], "c", "ST", a["predicate_rows_as_origin"], a["size_class"], a["active_runways"],
+            a["gates"], a["max_runway_ops_per_hour"], a["min_turnaround_min"], a["spare_gates_at_any_time"]]
+           for a in data["airports"].values()],
+        "wake_separation": [[data["sheet_notes"]["wake_separation"]], [], list(ch.WAKE_COLUMNS)]
+        + [[{v: k for k, v in ch._WAKE_LABELS.items()}.get(r["leader"], ch.WAKE_WILDCARD),
+            {v: k for k, v in ch._WAKE_LABELS.items()}.get(r["follower"]), r["min_separation_nm"], r["min_departure_time_s"]]
+           for r in data["wake_rules"]],
+        "fuel_and_crew": [["rule", "value", "applies_to"]] + [
+            ["Final fuel reserve", "30 minutes of holding fuel", "x"], ["Contingency fuel", "5% of trip fuel", "x"],
+            ["Holding fuel burn (narrowbody)", "2,400 kg per hour", "x"], ["Holding fuel burn (widebody)", "6,500 kg per hour", "x"],
+            ["Assumed spare fuel on arrival", "45 minutes of holding (unless the team states otherwise)", "x"],
+            ["Flight crew max duty", "13 hours from report time", "x"],
+            ["Ground crew shift", "8 hours; overtime costs 1.5x after that", "x"],
+            ["Gate change notice", "At least 20 minutes before arrival", "x"]],
+        "rules_of_play": [["topic", "detail"]] + [[k, v] for k, v in data["rules_of_play"].items()],
+    }
+    if mutate:
+        mutate(sheets)
+    wb = openpyxl.Workbook()
+    wb.remove(wb.active)
+    for name, rows in sheets.items():
+        ws = wb.create_sheet(name)
+        for row in rows:
+            ws.append(row)
+    wb.save(path)
+    return path
+
+
+def test_workbook_loader_round_trips_extract(tmp_path):
+    c = ch.load_workbook(_make_workbook(tmp_path / "wb.xlsx"))
+    ref = ch.load_extract(EXTRACT)
+    strip = lambda d: {k: replace(v, source_row=0) for k, v in d.items()}  # test copy has different row numbers
+    assert strip(c.airports) == strip(ref.airports) and c.fuel_crew == ref.fuel_crew
+    assert [replace(r, source_row=0) for r in c.wake_rules] == [replace(r, source_row=0) for r in ref.wake_rules]
+    assert c.fuel_crew.holding_burn_narrowbody_kg_per_h == 2400 and c.fuel_crew.ground_overtime_multiplier == 1.5
+
+
+@pytest.mark.parametrize("mutation,match", [
+    (lambda s: s["airport_capacity"][2].__setitem__(6, "runways"), "columns changed"),
+    (lambda s: s["airport_capacity"].append(list(s["airport_capacity"][3])), "duplicate IATA_CODE"),
+    (lambda s: s["airport_capacity"][3].__setitem__(0, "10397"), "invalid IATA_CODE"),  # numeric ids never enter
+    (lambda s: s["airport_capacity"][3].__setitem__(7, None), "expected integer"),  # missing value, not 0
+    (lambda s: s["airport_capacity"][3].__setitem__(10, 999), "spare gates exceed"),
+    (lambda s: s["wake_separation"][-1].__setitem__(1, "Heavy"), "wildcard row must have an empty follower"),
+    (lambda s: s["wake_separation"][3].__setitem__(0, "Jumbo"), "unknown wake category"),
+    (lambda s: s["fuel_and_crew"][3].__setitem__(1, "about 2400 kg/h"), "unrecognised value"),
+    (lambda s: s["fuel_and_crew"].pop(), "rules changed"),
+])
+def test_workbook_loader_fails_closed(tmp_path, mutation, match):
+    path = _make_workbook(tmp_path / "wb.xlsx", mutation)
+    with pytest.raises(ch.ChallengeDataError, match=match):
+        ch.load_workbook(path)
+
+
+def test_numeric_october_airport_ids_are_never_mapped_to_profiles():
+    with pytest.raises(ch.ChallengeDataError, match="never mapped"):
+        ch.load_extract(EXTRACT).airport("14057")
+
+
+def test_wake_wildcard_and_conversion():
+    from airspace.data.scenario_suite import separation_minutes
+
+    c = ch.load_extract(EXTRACT)
+    assert c.wake("large", "large").leader == "*"  # unlisted pair -> 'Any other pair'
+    assert c.wake("heavy", "large").min_separation_nm == 5.0
+    sep = separation_minutes(c, 140.0)
+    assert sep[("heavy", "large")] == 3  # ceil(max(5/140*60=2.14, 120 s=2.0))
+    assert sep[("super", "small")] == 4  # ceil(max(8/140*60=3.43, 3.0))
+    assert sep[("large", "large")] == 2  # ceil(max(1.29, 1.0))
+    assert separation_minutes(c, 280.0)[("super", "small")] == 3  # departure time dominates at high speed
+
+
+@pytest.mark.skipif(not WORKBOOK.exists(), reason="original challenge workbook not present")
+def test_real_workbook_matches_committed_extract():
+    pytest.importorskip("openpyxl")
+    c = ch.load_workbook(WORKBOOK)
+    data = json.loads(EXTRACT.read_text())
+    assert data["source_sha256"] == c.source_sha256
+    assert data == ch.to_extract(c, list(data["airports"]))
+    assert len(c.airports) == 322
+
+
+@real_data
+@pytest.mark.skipif(not WORKBOOK.exists(), reason="original challenge workbook not present")
+def test_real_workbook_count_column_is_derived_from_flights_csv():
+    """'delayed_departures_in_flights_csv' == per-ORIGIN count of the selection predicate."""
+    pytest.importorskip("openpyxl")
+    c = ch.load_workbook(WORKBOOK)
+    counts: dict[str, int] = {}
+    with pd.read_csv(FLIGHTS, usecols=["ORIGIN_AIRPORT", "WEATHER_DELAY", "LATE_AIRCRAFT_DELAY"],
+                     dtype={"ORIGIN_AIRPORT": str}, chunksize=1_000_000) as reader:
+        for chunk in reader:
+            hit = chunk[(chunk.WEATHER_DELAY > 15) | (chunk.LATE_AIRCRAFT_DELAY > 20)]
+            for k, v in hit.ORIGIN_AIRPORT.value_counts().items():
+                counts[k] = counts.get(k, 0) + int(v)
+    assert all(counts.get(code, 0) == p.predicate_rows_as_origin for code, p in c.airports.items())
+
+
+def test_committed_anchor_rows_are_genuine_qualifying_extracts():
+    from airspace.data.scenario_suite import ANCHOR_ROW_INDEX, load_anchor_rows
+
+    rows = load_anchor_rows()
+    assert set(rows) == set(ANCHOR_ROW_INDEX)
+    for code, row in rows.items():
+        prov = row[PROVENANCE_KEY]
+        assert prov["row_index"] == ANCHOR_ROW_INDEX[code] and row["DESTINATION_AIRPORT"] == code
+        assert prov["row_hash"] == canonical_hash({c: row[c] for c in FLIGHT_COLUMNS})
+        assert row["WEATHER_DELAY"] > 15 or row["LATE_AIRCRAFT_DELAY"] > 20
+
+
+@real_data
+def test_real_anchor_rows_reproduce_from_flights_csv():
+    from airspace.data.scenario_suite import ANCHOR_ROW_INDEX, load_anchor_rows
+
+    rows = load_anchor_rows()
+    for code, idx in ANCHOR_ROW_INDEX.items():
+        assert select_flight(FLIGHTS, row_index=idx) == rows[code]
