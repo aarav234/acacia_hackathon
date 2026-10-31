@@ -7,6 +7,7 @@ to a genuine row for context only).
 from __future__ import annotations
 
 import collections
+from collections import Counter
 import json
 import math
 import random
@@ -487,7 +488,7 @@ def test_historical_and_clock_evidence_is_labelled_provenance(success):
 from airspace.data.scenario_suite import ScenarioSpec, build_suite, build_suite_scenario, suite_specs  # noqa: E402
 from airspace.engine.oracle import independent_oracle  # noqa: E402
 from airspace.engine import sensitivity as sens  # noqa: E402
-from airspace.contracts import ROLE_METRICS  # noqa: E402
+from airspace.contracts import CONTRACT_DEFAULT_WEIGHTS, ROLE_METRICS  # noqa: E402
 
 
 @pytest.fixture(scope="module")
@@ -607,3 +608,133 @@ def test_single_feasible_plan_is_the_fallback_and_no_bargain(tmp_path):
     assert [a.plan.plan_id for a in out.assessments] == ["P0010_R1_G2_T2"] == list(ref.feasible_ids)
     assert out.fallback.plan_id == "P0010_R1_G2_T2" and out.compromise is None and out.reason == "no_positive_bargain"
     assert ref.pareto_ids == ("P0010_R1_G2_T2",)
+
+
+# ---- research variants: metamorphic / property tests ----------------------------------
+from airspace.data.scenario_suite import PARTITION_BY_K, operations_fingerprint, stratified_specs  # noqa: E402
+from airspace.engine.research import selectors as rsel  # noqa: E402
+from airspace.engine.research.diagnosis import diagnose  # noqa: E402
+from airspace.engine.research.grid import event_candidates, refine, event_times, signature_starts  # noqa: E402
+
+
+def _suite_by_id(suite, sid):
+    return next(s for sp, s in suite if sp.scenario_id == sid)
+
+
+def test_candidate_order_does_not_change_production_selection(suite):
+    rng = random.Random(11)
+    for _, s in [(None, fx.load_fixture_scenario("success"))] + suite[:12]:
+        plans = generate_candidates(s)
+        base = evaluate_candidates(s, plans).assessments
+        shuffled = plans[:]
+        rng.shuffle(shuffled)
+        other = assess_candidates(s, shuffled)
+        fb1, fb2 = choose_fallback(base), choose_fallback(other)
+        assert fb1 == fb2
+        if fb1:
+            assert choose_compromise(base, fb1.plan_id) == choose_compromise(other, fb2.plan_id)
+
+
+def test_adding_a_strictly_dominated_candidate_never_changes_the_choice():
+    s = fx.load_fixture_scenario("success")
+    assessments = assess_candidates(s, generate_candidates(s))
+    fb = choose_fallback(assessments)
+    best = choose_compromise(assessments, fb.plan_id)
+    worst = {r: min(a.utilities[r] for a in assessments) - 0.25 for r in ROLES}
+    plan = Plan(plan_id="P0049_R9_G9_T9", scenario_id=s.scenario_id, state_hash=s.state_hash, landing_min=49,
+                runway_id="R9", gate_id="G9", taxi_route_id="T9", taxi_min=1, gate_in_min=50, service_end_min=80)
+    dominated = Assessment(plan=plan, validation=ValidationReport(plan_id=plan.plan_id, feasible=True, violations=[], metrics={}),
+                           utilities=worst, components={r: {"cost": 1.0 - worst[r]} for r in ROLES})
+    aug = assessments + [dominated]
+    assert choose_fallback(aug) == fb and choose_compromise(aug, fb.plan_id) == best
+
+
+def test_weights_never_change_physical_feasibility(suite):
+    fams = sens.weight_families(seed=3, n_dirichlet=4)
+    for _, s in suite[:8]:
+        ref = independent_oracle(s)
+        for w in fams["dirichlet_uniform_k1"] + fams["simplex_vertices"][:3]:
+            alt = independent_oracle(sens.reweighted(s, w))
+            assert {p: v["failed"] for p, v in alt.plans.items()} == {p: v["failed"] for p, v in ref.plans.items()}
+
+
+def test_event_grid_is_an_exact_reduction_of_the_integer_minute_grid(suite):
+    for _, s in [(None, fx.load_fixture_scenario("success"))] + suite[::6]:
+        s1 = refine(s, 1)
+        ref1 = independent_oracle(s1)
+        ev = {(r.route_id, L) for r in s1.operations.taxi_routes for L in event_times(s1, r)}
+        assert signature_starts(s1, ref1) <= ev
+        full = assess_candidates(s1, generate_candidates(s1))
+        sub = assess_candidates(s1, event_candidates(s1))
+        fb_full, fb_sub = choose_fallback(full), choose_fallback(sub)
+        assert fb_full == fb_sub
+        if fb_full:
+            assert choose_compromise(full, fb_full.plan_id) == choose_compromise(sub, fb_sub.plan_id)
+
+
+def test_research_strict_nash_equals_production(suite):
+    for _, s in [(None, fx.load_fixture_scenario(n)) for n in fx.SCENARIO_FILES] + suite:
+        out = solve_scenario(s)
+        assert rsel.strict_nash(rsel.Table.from_oracle(independent_oracle(s))) == (out.compromise.plan_id if out.compromise else None)
+
+
+def test_scaled_nash_is_invariant_to_role_specific_affine_maps_and_production_is_not():
+    order = {"X": (20, 25, "X"), "Y": (25, 30, "Y"), "F": (10, 15, "F")}
+    u = {"F": {"atc": Fraction(0), "pilot": Fraction(0), "ground": Fraction(0)},
+         "X": {"atc": Fraction(1, 2), "pilot": Fraction(1, 2), "ground": Fraction(1, 16)},
+         "Y": {"atc": Fraction(1, 4), "pilot": Fraction(1, 4), "ground": Fraction(1, 4)}}
+    t = rsel.Table(("F", "X", "Y"), u, order, "F", {})
+    a = {"atc": Fraction(1), "pilot": Fraction(1), "ground": Fraction(8)}
+    t2 = rsel.Table(t.ids, {p: {r: a[r] * v[r] + 3 for r in ROLES} for p, v in u.items()}, order, "F", {})
+    assert rsel.strict_nash(t) == "Y" and rsel.strict_nash(t2) == "X"  # production rule flips (min-gain tie-break)
+    assert rsel.strict_nash_scaled(t) == rsel.strict_nash_scaled(t2)  # normalised tie-break does not
+    tiny = rsel.Table(("F", "X"), {"F": u["F"], "X": {"atc": Fraction(5, 10**10), "pilot": Fraction(1), "ground": Fraction(1)}}, order, "F", {})
+    big = rsel.Table(tiny.ids, {p: {r: (10 if r == "atc" else 1) * v[r] for r in ROLES} for p, v in tiny.u.items()}, order, "F", {})
+    assert rsel.strict_nash(tiny) is None and rsel.strict_nash(big) == "X"  # absolute eps is not scale-invariant
+    assert rsel.strict_nash_scaled(tiny) == rsel.strict_nash_scaled(big) == "X"
+
+
+def test_weak_ir_handles_the_weakly_dominated_fallback(suite):
+    s = _suite_by_id(suite, "suite-den-tight_fuel")
+    t = rsel.Table.from_oracle(independent_oracle(s))
+    assert rsel.strict_nash(t) is None and not rsel.pareto_efficient(t, t.fallback)
+    for name in ("B_weak_ir_lex", "D1_kalai_smorodinsky", "D2_leximin_normalised", "E2_utilitarian_ir"):
+        pick = rsel.recommended(t, name)
+        assert pick != t.fallback and rsel.pareto_efficient(t, pick) and rsel.weakly_improves(t, pick, t.fallback), name
+
+
+def test_every_research_selector_returns_a_feasible_plan(suite):
+    for _, s in suite:
+        t = rsel.Table.from_oracle(independent_oracle(s))
+        for name in rsel.SELECTORS:
+            pick = rsel.recommended(t, name)
+            assert (pick is None) == (t.fallback is None) and (pick is None or pick in t.ids), name
+
+
+def test_decimal_tie_appears_as_binary_noise_and_eps_absorbs_it(suite):
+    s = _suite_by_id(suite, "suite-mia-large_delay")
+    tf = rsel.Table.from_oracle(independent_oracle(s))
+    wd = {r: {m: Fraction(str(w)) for m, w in CONTRACT_DEFAULT_WEIGHTS[r].items()} for r in ROLES}
+    td = rsel.Table.from_oracle(independent_oracle(s, weights=wd))
+    gf, gd = tf.gains("P0030_R1_G4_T14")["atc"], td.gains("P0030_R1_G4_T14")["atc"]
+    assert gd == 0 and 0 < gf < Fraction(1, 10**16)  # +10 min delay exactly offset by -5 spillover-min
+    assert gf <= rsel.EPS  # production eps treats it as no gain
+
+
+def test_diagnosis_labels_known_cases(suite):
+    assert diagnose(fx.load_fixture_scenario("success"))["labels"] == ["POSITIVE_BARGAIN"]
+    assert diagnose(fx.load_fixture_scenario("no_feasible"))["labels"] == ["NO_FEASIBLE"]
+    assert diagnose(_suite_by_id(suite, "suite-den-tight_fuel"))["labels"][:2] == ["WEAK_ONLY", "CONFLICT"]
+    npg = diagnose(fx.load_fixture_scenario("no_positive_gain"))["labels"]
+    assert npg[0] == "FALLBACK_EFFICIENT" and "ROLE_CANNOT_GAIN:atc" in npg
+
+
+def test_stratified_suite_partition_is_fixed_distinct_and_disjoint(suite):
+    specs = stratified_specs()
+    assert len(specs) == 160
+    assert Counter(sp.scenario_id.split("-")[1] for sp in specs) == {"dev": 64, "tuning": 32, "holdout": 64}
+    assert {k: PARTITION_BY_K[k] for k in range(5)} == {0: "dev", 1: "dev", 2: "tuning", 3: "holdout", 4: "holdout"}
+    fps = [operations_fingerprint(build_suite_scenario(sp)) for sp in specs[::4]]
+    assert len(set(fps)) == len(fps)
+    assert not set(fps) & {operations_fingerprint(s) for _, s in suite}
+    assert [sp.seed for sp in stratified_specs()] == [sp.seed for sp in specs]  # reproducible
