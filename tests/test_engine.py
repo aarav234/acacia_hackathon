@@ -481,3 +481,73 @@ def test_historical_and_clock_evidence_is_labelled_provenance(success):
         assert e.field_path.startswith(("historical_row", "historical_ref"))
     assert "not a decision input" in next(e.note for e in hist if e.evidence_id == "hist:row")
     assert all("display only" in e.note for e in hist if e.evidence_id.startswith("derived:clock."))
+
+
+# ---- challenge-calibrated suite + fully independent oracle -------------------------
+from airspace.data.scenario_suite import ScenarioSpec, build_suite, build_suite_scenario, suite_specs  # noqa: E402
+from airspace.engine.oracle import independent_oracle  # noqa: E402
+
+
+@pytest.fixture(scope="module")
+def suite():
+    return build_suite()
+
+
+def test_suite_is_deterministic_distinct_and_labelled(suite):
+    assert len(suite) == 40
+    again = build_suite()
+    assert [s.state_hash for _, s in suite] == [s.state_hash for _, s in again]
+    assert len({s.state_hash for _, s in suite}) == 40 and len({s.scenario_id for _, s in suite}) == 40
+    for spec, s in suite:
+        assert s.source_mode == "historical_anchor" and s.historical_ref["row_index"] in (70, 171, 682, 2845)
+        notes = " ".join(e.note for e in s.provenance)
+        assert "challenge workbook" in notes and "SIMULATED" in notes
+
+
+def test_suite_uses_workbook_values(suite):
+    from airspace.data.scenario_suite import ChallengeAssumptions
+
+    spec, s = next((sp, x) for sp, x in suite if sp.scenario_id == "suite-mia-baseline")
+    fuel = s.operations.fuel
+    assert fuel.airborne_burn_kg_per_min == 40.0 and fuel.min_reserve_kg == 1200.0  # 2400 kg/h, 30 min
+    assert fuel.snapshot_fuel_kg == 1800.0  # 45 min incl. reserve (labelled assumption)
+    assert s.operations.service.service_duration_min == 35 and len(s.operations.runways) == 3  # MIA medium hub
+    assert len(s.operations.gates) == 4  # assigned + 3 spare gates
+    alt = build_suite_scenario(ScenarioSpec(**{**spec.__dict__, "assumptions": ChallengeAssumptions(spare_fuel_includes_final_reserve=False)}))
+    assert alt.operations.fuel.snapshot_fuel_kg == 3000.0
+
+
+def test_suite_covers_required_outcome_categories(suite):
+    reasons = {solve_scenario(s).reason for _, s in suite}
+    assert reasons == {"compromise_found", "no_positive_bargain", "no_feasible_plan"}
+    cats = {sp.category for sp in suite_specs()}
+    assert {"runway_closure", "dense_traffic", "gate_restricted", "crew_restricted", "tight_fuel", "large_delay"} <= cats
+
+
+def test_independent_oracle_agrees_rule_by_rule(suite):
+    scenarios = [fx.load_fixture_scenario(n) for n in fx.SCENARIO_FILES] + [s for _, s in suite]
+    checked = 0
+    for s in scenarios:
+        out, ref = solve_scenario(s), independent_oracle(s)
+        for p in generate_candidates(s):
+            assert {v.rule_id for v in validate_plan(s, p).violations} == ref.plans[p.plan_id]["failed"], p.plan_id
+            checked += 1
+        assert {a.plan.plan_id for a in out.assessments} == set(ref.feasible_ids)
+        assert ref.fallback_id == (out.fallback.plan_id if out.fallback else None)
+        assert ref.compromise_id == (out.compromise.plan_id if out.compromise else None)
+        for a in out.assessments:
+            for r in ROLES:
+                assert abs(Fraction(a.utilities[r]) - ref.utilities[a.plan.plan_id][r]) < Fraction(1, 10**12)
+        if out.compromise:
+            assert out.compromise.plan_id in ref.pareto_ids
+    assert checked > 2500
+
+
+def test_single_feasible_plan_is_the_fallback_and_no_bargain(tmp_path):
+    cfg = fx.config_dict("success")
+    cfg["planning_horizon_min"] = 5  # one slot (minute 10): R2 fails lead separation, G1 occupied, G4 heavy-only
+    s = scenario_from(cfg, tmp_path)
+    out, ref = solve_scenario(s), independent_oracle(s)
+    assert [a.plan.plan_id for a in out.assessments] == ["P0010_R1_G2_T2"] == list(ref.feasible_ids)
+    assert out.fallback.plan_id == "P0010_R1_G2_T2" and out.compromise is None and out.reason == "no_positive_bargain"
+    assert ref.pareto_ids == ("P0010_R1_G2_T2",)
