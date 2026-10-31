@@ -1,0 +1,25 @@
+# Wayfind (Hallmark) — values mirror ui/tokens.css (oklch converted to hex for Streamlit).
+[theme]
+base = "light"
+primaryColor = "#2055e1"              # --color-accent (cobalt: the live / primary action)
+backgroundColor = "#edf0f4"           # --color-paper
+secondaryBackgroundColor = "#dde2e7"  # --color-paper-2
+textColor = "#0a0d13"                 # --color-ink
+borderColor = "#0a0d13"               # --color-ink (Wayfind is bordered)
+dataframeBorderColor = "#b9bec5"      # --color-rule
+dataframeHeaderBackgroundColor = "#edf0f4"
+linkColor = "#0a0d13"
+font = "Chivo Mono:https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@400;500;800&display=swap"
+headingFont = "Chivo Mono:https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@400;500;800&display=swap"
+codeFont = "Chivo Mono:https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@400;500;800&display=swap"
+headingFontWeights = [800, 800, 800, 800, 800, 800]
+baseFontSize = 16
+baseRadius = "none"
+buttonRadius = "none"
+showWidgetBorder = true
+
+[client]
+toolbarMode = "minimal"
+
+[browser]
+gatherUsageStats = false
