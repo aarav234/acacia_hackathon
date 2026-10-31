@@ -67,3 +67,29 @@ editable install. No root manifest was created on `feat/data-engine`, to avoid a
 Member 2 confirms Member 1's interpretation: consensus ⇒ `rounds_completed == 2` and
 `agent_message_count == 6` (count = agent requests issued, including invalid/timed-out ones;
 consensus is impossible unless all six were valid).
+
+## Integration flags from Member 2 (after running on feat/data-engine, 2026-10-31)
+
+All 151 tests pass together (3 skipped because `flights.csv` is not in the repo). Items to change:
+
+**For Member 1**
+1. **File-handle leak in `data/ingest.py::select_flight`.** The pandas chunk reader is closed
+   only after the loop completes (`reader.close()` near line 351). An early return or a raise
+   inside the loop leaves `flights.csv` open. Three `tests/test_data.py` tests fail under
+   `pytest -W error` with `ResourceWarning: unclosed file`. Suggested fix:
+   `with pd.read_csv(..., chunksize=chunk_rows) as reader:` (or `try/finally`).
+2. **Please confirm:** `hist:*` and `derived:clock.*` evidence (including `ARRIVAL_TIME` and
+   `WHEELS_ON`) are for provenance only. Member 2 sends none of them to any role context; a test asserts this.
+3. **Informational:** the ATC separation metrics are absent when no movement leads or follows.
+   The agents handle the missing keys. Ground has only `ground_covering_crew_count` in
+   `ValidationReport.metrics`; its cost drivers come through `components["ground"]["raw.*"]`, which is the intended route.
+
+**For Member 3 (packaging PR still missing)**
+1. No `pyproject.toml`, `src/airspace/__init__.py` or `.gitignore` exists on any branch yet.
+   Please add `[tool.pytest.ini_options] pythonpath = ["src", "tests"]`. `tests` is needed
+   because `tests/test_*.py` import the helper `tests/fixtures_negotiation.py`.
+2. `.gitignore` must include `__pycache__/`, `*.pyc`, `.env`, `runs/`, `*.csv` (but not the CSVs under `fixtures/`), `.venv/`.
+3. Dependencies: Member 1's list plus the optional extra `live = ["anthropic>=0.75"]` (CC-5).
+4. **There is still no `main` branch.** GitHub's default branch is currently
+   `feat/agents-negotiation`. Create `main` from Member 1's bootstrap commit `8d8d498`
+   (or your packaging PR) and make it the default.
