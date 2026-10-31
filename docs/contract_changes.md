@@ -51,3 +51,19 @@ Members 2/3: please confirm or object in review.
 Member 1 code needs Python ≥ 3.11, `pydantic>=2.6,<3`, `pandas>=2.0`, `numpy>=1.26`,
 and `pytest>=8` (dev). Please add `[tool.pytest.ini_options] pythonpath = ["src"]` or an
 editable install. No root manifest was created on `feat/data-engine`, to avoid a conflict.
+
+---
+
+# Member 2 proposals (feat/agents-negotiation) — status after rebase onto feat/data-engine
+
+| ID | Proposal | Status |
+|---|---|---|
+| CC-1 | optional kw-only `negotiate(..., engine=, state_probe=, epsilon=, clock=)` | Member 1 confirmed `EngineAPI.default()` imports; **Member 3 to confirm** |
+| CC-2 | `atc_`/`pilot_`/`ground_` metric prefixes | adopted by Member 1 (`METRIC_ROLE_PREFIXES`); Member 2 now imports it |
+| CC-3 | `compute_state_hash` export | adopted; coordinator recomputes it and calls `ensure_sealed` |
+| CC-4 | `RULE_IDS` | adopted; role contexts now list the domain-relevant subset of `RULE_IDS` |
+| CC-5 | optional `live = ["anthropic>=0.75"]` extra + env names `ANTHROPIC_API_KEY`, `AIRSPACE_LLM_MODEL`, `AIRSPACE_LLM_MAX_TOKENS`, `AIRSPACE_LLM_TIMEOUT_S`, `AIRSPACE_REPLAY_TRACE` | **Member 3 to confirm** |
+
+Member 2 confirms Member 1's interpretation: consensus ⇒ `rounds_completed == 2` and
+`agent_message_count == 6` (count = agent requests issued, including invalid/timed-out ones;
+consensus is impossible unless all six were valid).
