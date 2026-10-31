@@ -1,0 +1,163 @@
+{
+  "$defs": {
+    "Objection": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "hard_constraint",
+            "utility_below_fallback",
+            "missing_evidence",
+            "preference",
+            "protocol_error"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "evidence_ids": {
+          "items": {
+            "maxLength": 200,
+            "pattern": "^[a-z]+:[A-Za-z0-9_.\\[\\]-]+$",
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "plan_id": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Plan Id"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "rule_id": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Rule Id"
+        }
+      },
+      "required": [
+        "code",
+        "plan_id",
+        "rule_id",
+        "evidence_ids",
+        "reason"
+      ],
+      "title": "Objection",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "action": {
+      "enum": [
+        "propose",
+        "accept",
+        "reject"
+      ],
+      "title": "Action",
+      "type": "string"
+    },
+    "evidence_ids": {
+      "items": {
+        "maxLength": 200,
+        "pattern": "^[a-z]+:[A-Za-z0-9_.\\[\\]-]+$",
+        "type": "string"
+      },
+      "title": "Evidence Ids",
+      "type": "array"
+    },
+    "objections": {
+      "items": {
+        "$ref": "#/$defs/Objection"
+      },
+      "title": "Objections",
+      "type": "array"
+    },
+    "plan_id": {
+      "anyOf": [
+        {
+          "maxLength": 200,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Plan Id"
+    },
+    "ranked_plan_ids": {
+      "items": {
+        "maxLength": 200,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+        "type": "string"
+      },
+      "maxItems": 3,
+      "title": "Ranked Plan Ids",
+      "type": "array"
+    },
+    "rationale": {
+      "title": "Rationale",
+      "type": "string"
+    },
+    "role": {
+      "enum": [
+        "atc",
+        "pilot",
+        "ground"
+      ],
+      "title": "Role",
+      "type": "string"
+    },
+    "round": {
+      "maximum": 2,
+      "minimum": 1,
+      "title": "Round",
+      "type": "integer"
+    },
+    "scenario_id": {
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+      "title": "Scenario Id",
+      "type": "string"
+    },
+    "state_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "State Hash",
+      "type": "string"
+    }
+  },
+  "required": [
+    "scenario_id",
+    "state_hash",
+    "role",
+    "round",
+    "action",
+    "plan_id",
+    "ranked_plan_ids",
+    "objections",
+    "rationale",
+    "evidence_ids"
+  ],
+  "title": "AgentMessage",
+  "type": "object"
+}

@@ -1,0 +1,64 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "enum": [
+        "hard_constraint",
+        "utility_below_fallback",
+        "missing_evidence",
+        "preference",
+        "protocol_error"
+      ],
+      "title": "Code",
+      "type": "string"
+    },
+    "evidence_ids": {
+      "items": {
+        "maxLength": 200,
+        "pattern": "^[a-z]+:[A-Za-z0-9_.\\[\\]-]+$",
+        "type": "string"
+      },
+      "title": "Evidence Ids",
+      "type": "array"
+    },
+    "plan_id": {
+      "anyOf": [
+        {
+          "maxLength": 200,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Plan Id"
+    },
+    "reason": {
+      "title": "Reason",
+      "type": "string"
+    },
+    "rule_id": {
+      "anyOf": [
+        {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Rule Id"
+    }
+  },
+  "required": [
+    "code",
+    "plan_id",
+    "rule_id",
+    "evidence_ids",
+    "reason"
+  ],
+  "title": "Objection",
+  "type": "object"
+}

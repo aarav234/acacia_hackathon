@@ -1,0 +1,41 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "evidence_id": {
+      "maxLength": 200,
+      "pattern": "^[a-z]+:[A-Za-z0-9_.\\[\\]-]+$",
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "field_path": {
+      "title": "Field Path",
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "historical",
+        "derived",
+        "simulated"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "note": {
+      "title": "Note",
+      "type": "string"
+    },
+    "source_ref": {
+      "title": "Source Ref",
+      "type": "string"
+    }
+  },
+  "required": [
+    "evidence_id",
+    "kind",
+    "field_path",
+    "source_ref",
+    "note"
+  ],
+  "title": "Evidence",
+  "type": "object"
+}

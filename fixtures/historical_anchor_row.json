@@ -1,0 +1,116 @@
+{
+  "YEAR": 2015,
+  "MONTH": 1,
+  "DAY": 1,
+  "DAY_OF_WEEK": 4,
+  "AIRLINE": "AA",
+  "FLIGHT_NUMBER": 1057,
+  "TAIL_NUMBER": "N3ASAA",
+  "ORIGIN_AIRPORT": "DFW",
+  "DESTINATION_AIRPORT": "MIA",
+  "SCHEDULED_DEPARTURE": "0515",
+  "DEPARTURE_TIME": "0703",
+  "DEPARTURE_DELAY": 108,
+  "TAXI_OUT": 15,
+  "WHEELS_OFF": "0718",
+  "SCHEDULED_TIME": 161,
+  "ELAPSED_TIME": 155,
+  "AIR_TIME": 133,
+  "DISTANCE": 1121,
+  "WHEELS_ON": "1031",
+  "TAXI_IN": 7,
+  "SCHEDULED_ARRIVAL": "0856",
+  "ARRIVAL_TIME": "1038",
+  "ARRIVAL_DELAY": 102,
+  "DIVERTED": 0,
+  "CANCELLED": 0,
+  "CANCELLATION_REASON": null,
+  "AIR_SYSTEM_DELAY": 0,
+  "SECURITY_DELAY": 0,
+  "AIRLINE_DELAY": 0,
+  "LATE_AIRCRAFT_DELAY": 0,
+  "WEATHER_DELAY": 102,
+  "__airspace_provenance__": {
+    "namespace": "airspace.ingest/v1",
+    "mode": "historical",
+    "source_file": "flights.csv",
+    "source_sha256": "afa4e42188b113dd69427a3fbd00a4b6979c6235c866f963c2899d18a3403a83",
+    "row_index": 70,
+    "row_index_basis": "zero-based data row index in the original file, header excluded",
+    "selection_method": "first_qualifying_in_file_order",
+    "selection_predicate": "WEATHER_DELAY > 15 OR LATE_AIRCRAFT_DELAY > 20",
+    "suitability_rule": "CANCELLED == 0 AND DIVERTED == 0 AND SCHEDULED_ARRIVAL, WHEELS_ON, ARRIVAL_TIME, ARRIVAL_DELAY present",
+    "predicate_values": {
+      "WEATHER_DELAY": 102,
+      "LATE_AIRCRAFT_DELAY": 0
+    },
+    "row_hash": "7cf14bd0edabd01f9745294ef19b7c5c9bae12732414a246a5d1bd666b9e14e5",
+    "skipped_invalid_candidate_rows": 0,
+    "joins": {
+      "airline": {
+        "source_id": "AA",
+        "status": "resolved",
+        "name": "American Airlines Inc."
+      },
+      "origin_airport": {
+        "source_id": "DFW",
+        "status": "resolved",
+        "iata_code": "DFW",
+        "airport": "Dallas/Fort Worth International Airport",
+        "city": "Dallas-Fort Worth",
+        "state": "TX",
+        "country": "USA",
+        "latitude": 32.89595,
+        "longitude": -97.0372
+      },
+      "destination_airport": {
+        "source_id": "MIA",
+        "status": "resolved",
+        "iata_code": "MIA",
+        "airport": "Miami International Airport",
+        "city": "Miami",
+        "state": "FL",
+        "country": "USA",
+        "latitude": 25.79325,
+        "longitude": -80.29056
+      }
+    },
+    "derived_local_clock_times": {
+      "ARRIVAL_TIME": {
+        "local_clock": "10:38",
+        "minutes_after_local_midnight": 638,
+        "day_offset": 0
+      },
+      "DEPARTURE_TIME": {
+        "local_clock": "07:03",
+        "minutes_after_local_midnight": 423,
+        "day_offset": 0
+      },
+      "SCHEDULED_ARRIVAL": {
+        "local_clock": "08:56",
+        "minutes_after_local_midnight": 536,
+        "day_offset": 0
+      },
+      "SCHEDULED_DEPARTURE": {
+        "local_clock": "05:15",
+        "minutes_after_local_midnight": 315,
+        "day_offset": 0
+      },
+      "WHEELS_OFF": {
+        "local_clock": "07:18",
+        "minutes_after_local_midnight": 438,
+        "day_offset": 0
+      },
+      "WHEELS_ON": {
+        "local_clock": "10:31",
+        "minutes_after_local_midnight": 631,
+        "day_offset": 0
+      }
+    },
+    "lookup_files_sha256": {
+      "airlines.csv": "ec54f453260c2a46fc76d497ab0eb0a4c13724b566fba8a7ce3bb8ad712acca3",
+      "airports.csv": "23c4cea98c318225bd923b2068ead8af089845071f79fd9ea0037ba6a61cd4e2"
+    },
+    "time_semantics": "HHMM values are historical local clock text (2400 = midnight next day). They are contextual display only; SCHEDULED_ARRIVAL is gate-in, not a landing timestamp."
+  }
+}

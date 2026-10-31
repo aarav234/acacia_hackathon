@@ -1,0 +1,325 @@
+{
+  "schema_version": "1.0",
+  "config_version": "sim-no-positive-gain-v1",
+  "scenario_id": "synthetic-no-positive-gain-v1",
+  "simulation_epoch_utc": "2000-01-01T00:00:00Z",
+  "earliest_landing_min": 10,
+  "planning_horizon_min": 20,
+  "slot_step_min": 5,
+  "operations": {
+    "schema_version": "1.0",
+    "subject": {
+      "flight_label": "Disrupted inbound (simulated operating state; historical row is context only)",
+      "wake_category": "medium",
+      "runway_occupancy_min": 2,
+      "assigned_gate_id": "G1",
+      "scheduled_gate_in_min": 16
+    },
+    "separation": {
+      "categories": [
+        "heavy",
+        "light",
+        "medium"
+      ],
+      "rules": [
+        {
+          "leader_category": "heavy",
+          "follower_category": "heavy",
+          "min_separation_min": 2
+        },
+        {
+          "leader_category": "heavy",
+          "follower_category": "light",
+          "min_separation_min": 4
+        },
+        {
+          "leader_category": "heavy",
+          "follower_category": "medium",
+          "min_separation_min": 3
+        },
+        {
+          "leader_category": "light",
+          "follower_category": "heavy",
+          "min_separation_min": 2
+        },
+        {
+          "leader_category": "light",
+          "follower_category": "light",
+          "min_separation_min": 2
+        },
+        {
+          "leader_category": "light",
+          "follower_category": "medium",
+          "min_separation_min": 2
+        },
+        {
+          "leader_category": "medium",
+          "follower_category": "heavy",
+          "min_separation_min": 2
+        },
+        {
+          "leader_category": "medium",
+          "follower_category": "light",
+          "min_separation_min": 3
+        },
+        {
+          "leader_category": "medium",
+          "follower_category": "medium",
+          "min_separation_min": 2
+        }
+      ]
+    },
+    "runways": [
+      {
+        "runway_id": "R1",
+        "open_windows": [
+          {
+            "start_min": 0,
+            "end_min": 120
+          }
+        ]
+      },
+      {
+        "runway_id": "R2",
+        "open_windows": [
+          {
+            "start_min": 0,
+            "end_min": 120
+          }
+        ]
+      }
+    ],
+    "runway_movements": [],
+    "gates": [
+      {
+        "gate_id": "G1",
+        "compatible_categories": [
+          "heavy",
+          "medium"
+        ],
+        "open_windows": [
+          {
+            "start_min": 0,
+            "end_min": 180
+          }
+        ],
+        "turnover_buffer_min": 5
+      },
+      {
+        "gate_id": "G2",
+        "compatible_categories": [
+          "light",
+          "medium"
+        ],
+        "open_windows": [
+          {
+            "start_min": 0,
+            "end_min": 180
+          }
+        ],
+        "turnover_buffer_min": 5
+      },
+      {
+        "gate_id": "G3",
+        "compatible_categories": [
+          "medium"
+        ],
+        "open_windows": [
+          {
+            "start_min": 0,
+            "end_min": 180
+          }
+        ],
+        "turnover_buffer_min": 5
+      },
+      {
+        "gate_id": "G4",
+        "compatible_categories": [
+          "heavy"
+        ],
+        "open_windows": [
+          {
+            "start_min": 0,
+            "end_min": 180
+          }
+        ],
+        "turnover_buffer_min": 5
+      }
+    ],
+    "gate_occupancy": [],
+    "taxi_routes": [
+      {
+        "route_id": "T1",
+        "runway_id": "R1",
+        "gate_id": "G1",
+        "taxi_min": 6,
+        "segment_ids": [
+          "TWA",
+          "TWB"
+        ]
+      },
+      {
+        "route_id": "T2",
+        "runway_id": "R1",
+        "gate_id": "G2",
+        "taxi_min": 4,
+        "segment_ids": [
+          "TWA",
+          "TWC"
+        ]
+      },
+      {
+        "route_id": "T3",
+        "runway_id": "R2",
+        "gate_id": "G1",
+        "taxi_min": 5,
+        "segment_ids": [
+          "TWD",
+          "TWB"
+        ]
+      },
+      {
+        "route_id": "T4",
+        "runway_id": "R2",
+        "gate_id": "G3",
+        "taxi_min": 3,
+        "segment_ids": [
+          "TWD",
+          "TWE"
+        ]
+      },
+      {
+        "route_id": "T5",
+        "runway_id": "R2",
+        "gate_id": "G2",
+        "taxi_min": 8,
+        "segment_ids": [
+          "TWD",
+          "TWF",
+          "TWC"
+        ]
+      },
+      {
+        "route_id": "T6",
+        "runway_id": "R1",
+        "gate_id": "G4",
+        "taxi_min": 5,
+        "segment_ids": [
+          "TWA",
+          "TWG"
+        ]
+      }
+    ],
+    "taxi_blockages": [],
+    "service": {
+      "service_duration_min": 30
+    },
+    "fuel": {
+      "snapshot_fuel_kg": 6000.0,
+      "approach_burn_kg": 1500.0,
+      "airborne_burn_kg_per_min": 30.0,
+      "taxi_burn_kg_per_min": 15.0,
+      "min_reserve_kg": 3400.0
+    },
+    "crew": [
+      {
+        "crew_id": "C1",
+        "available": {
+          "start_min": 0,
+          "end_min": 200
+        },
+        "regular_end_min": 200,
+        "busy": []
+      }
+    ],
+    "connections": [
+      {
+        "group_id": "CX1",
+        "passenger_count": 40,
+        "deadline_gate_in_min": 22
+      },
+      {
+        "group_id": "CX2",
+        "passenger_count": 60,
+        "deadline_gate_in_min": 34
+      }
+    ],
+    "turbulence": {
+      "runway_exposure": [
+        {
+          "runway_id": "R1",
+          "exposure_index": 0.0
+        },
+        {
+          "runway_id": "R2",
+          "exposure_index": 0.0
+        }
+      ],
+      "holding_exposure_per_min": 0.05
+    },
+    "utility": {
+      "atc": {
+        "metrics": [
+          {
+            "metric": "landing_delay_min",
+            "weight": 0.6,
+            "scale": 30.0
+          },
+          {
+            "metric": "spillover_proxy_min",
+            "weight": 0.4,
+            "scale": 10.0
+          }
+        ]
+      },
+      "pilot": {
+        "metrics": [
+          {
+            "metric": "incremental_fuel_kg",
+            "weight": 0.6,
+            "scale": 500.0
+          },
+          {
+            "metric": "connection_penalty_pax",
+            "weight": 0.3,
+            "scale": 100.0
+          },
+          {
+            "metric": "turbulence_exposure_index",
+            "weight": 0.1,
+            "scale": 0.5
+          }
+        ]
+      },
+      "ground": {
+        "metrics": [
+          {
+            "metric": "turnaround_delay_min",
+            "weight": 0.5,
+            "scale": 30.0
+          },
+          {
+            "metric": "crew_overtime_min",
+            "weight": 0.3,
+            "scale": 30.0
+          },
+          {
+            "metric": "gate_change_indicator",
+            "weight": 0.2,
+            "scale": 1.0
+          }
+        ]
+      },
+      "spillover_window_min": 10
+    },
+    "planning": {
+      "candidate_cap": 2000
+    }
+  },
+  "assumptions": [
+    {
+      "field_path": "operations",
+      "note": "SYNTHETIC edge case: no background traffic/occupancy; earliest plan to the assigned gate dominates."
+    }
+  ]
+}

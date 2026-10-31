@@ -1,0 +1,85 @@
+{
+  "$defs": {
+    "Violation": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_ids": {
+          "items": {
+            "maxLength": 200,
+            "pattern": "^[a-z]+:[A-Za-z0-9_.\\[\\]-]+$",
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "observed": {
+          "title": "Observed",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "required": {
+          "title": "Required",
+          "type": "string"
+        },
+        "rule_id": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Rule Id",
+          "type": "string"
+        },
+        "units": {
+          "title": "Units",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rule_id",
+        "reason",
+        "observed",
+        "required",
+        "units",
+        "evidence_ids"
+      ],
+      "title": "Violation",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "feasible": {
+      "title": "Feasible",
+      "type": "boolean"
+    },
+    "metrics": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Metrics",
+      "type": "object"
+    },
+    "plan_id": {
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+      "title": "Plan Id",
+      "type": "string"
+    },
+    "violations": {
+      "items": {
+        "$ref": "#/$defs/Violation"
+      },
+      "title": "Violations",
+      "type": "array"
+    }
+  },
+  "required": [
+    "plan_id",
+    "feasible",
+    "violations",
+    "metrics"
+  ],
+  "title": "ValidationReport",
+  "type": "object"
+}

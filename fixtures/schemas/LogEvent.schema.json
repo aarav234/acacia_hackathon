@@ -1,0 +1,56 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "actor": {
+      "title": "Actor",
+      "type": "string"
+    },
+    "event_type": {
+      "title": "Event Type",
+      "type": "string"
+    },
+    "payload": {
+      "additionalProperties": true,
+      "title": "Payload",
+      "type": "object"
+    },
+    "round": {
+      "maximum": 2,
+      "minimum": 0,
+      "title": "Round",
+      "type": "integer"
+    },
+    "scenario_id": {
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+      "title": "Scenario Id",
+      "type": "string"
+    },
+    "sequence": {
+      "minimum": 0,
+      "title": "Sequence",
+      "type": "integer"
+    },
+    "state_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "State Hash",
+      "type": "string"
+    },
+    "timestamp_utc": {
+      "title": "Timestamp Utc",
+      "type": "string"
+    }
+  },
+  "required": [
+    "sequence",
+    "timestamp_utc",
+    "scenario_id",
+    "state_hash",
+    "round",
+    "actor",
+    "event_type",
+    "payload"
+  ],
+  "title": "LogEvent",
+  "type": "object"
+}

@@ -1,0 +1,1532 @@
+[
+  {
+    "plan": {
+      "plan_id": "P0010_R1_G2_T2",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 10,
+      "runway_id": "R1",
+      "gate_id": "G2",
+      "taxi_route_id": "T2",
+      "taxi_min": 4,
+      "gate_in_min": 14,
+      "service_end_min": 44
+    },
+    "validation": {
+      "plan_id": "P0010_R1_G2_T2",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 4440.0,
+        "pilot_reserve_margin_kg": 1040.0,
+        "pilot_holding_min": 0.0,
+        "atc_min_follow_separation_margin_min": 0.0,
+        "ground_covering_crew_count": 1.0
+      }
+    },
+    "utilities": {
+      "atc": 0.6799999999999999,
+      "pilot": 0.32799999999999996,
+      "ground": 0.76
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 0.0,
+        "normalized.landing_delay_min": 0.0,
+        "weighted.landing_delay_min": 0.0,
+        "raw.spillover_proxy_min": 8.0,
+        "normalized.spillover_proxy_min": 0.8,
+        "weighted.spillover_proxy_min": 0.32000000000000006,
+        "cost": 0.32000000000000006
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 60.0,
+        "normalized.incremental_fuel_kg": 0.12,
+        "weighted.incremental_fuel_kg": 0.072,
+        "raw.connection_penalty_pax": 0.0,
+        "normalized.connection_penalty_pax": 0.0,
+        "weighted.connection_penalty_pax": 0.0,
+        "raw.turbulence_exposure_index": 3.0,
+        "normalized.turbulence_exposure_index": 6.0,
+        "weighted.turbulence_exposure_index": 0.6000000000000001,
+        "cost": 0.672
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 0.0,
+        "normalized.turnaround_delay_min": 0.0,
+        "weighted.turnaround_delay_min": 0.0,
+        "raw.crew_overtime_min": 4.0,
+        "normalized.crew_overtime_min": 0.13333333333333333,
+        "weighted.crew_overtime_min": 0.04,
+        "raw.gate_change_indicator": 1.0,
+        "normalized.gate_change_indicator": 1.0,
+        "weighted.gate_change_indicator": 0.2,
+        "cost": 0.24000000000000002
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0015_R1_G1_T1",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 15,
+      "runway_id": "R1",
+      "gate_id": "G1",
+      "taxi_route_id": "T1",
+      "taxi_min": 6,
+      "gate_in_min": 21,
+      "service_end_min": 51
+    },
+    "validation": {
+      "plan_id": "P0015_R1_G1_T1",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 4260.0,
+        "pilot_reserve_margin_kg": 860.0,
+        "pilot_holding_min": 5.0,
+        "atc_min_lead_separation_margin_min": 0.0,
+        "atc_min_follow_separation_margin_min": 13.0,
+        "ground_covering_crew_count": 1.0
+      }
+    },
+    "utilities": {
+      "atc": 0.9,
+      "pilot": 0.062000000000000055,
+      "ground": 0.8733333333333333
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 5.0,
+        "normalized.landing_delay_min": 0.16666666666666666,
+        "weighted.landing_delay_min": 0.09999999999999999,
+        "raw.spillover_proxy_min": 0.0,
+        "normalized.spillover_proxy_min": 0.0,
+        "weighted.spillover_proxy_min": 0.0,
+        "cost": 0.09999999999999999
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 240.0,
+        "normalized.incremental_fuel_kg": 0.48,
+        "weighted.incremental_fuel_kg": 0.288,
+        "raw.connection_penalty_pax": 0.0,
+        "normalized.connection_penalty_pax": 0.0,
+        "weighted.connection_penalty_pax": 0.0,
+        "raw.turbulence_exposure_index": 3.25,
+        "normalized.turbulence_exposure_index": 6.5,
+        "weighted.turbulence_exposure_index": 0.65,
+        "cost": 0.938
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 1.0,
+        "normalized.turnaround_delay_min": 0.03333333333333333,
+        "weighted.turnaround_delay_min": 0.016666666666666666,
+        "raw.crew_overtime_min": 11.0,
+        "normalized.crew_overtime_min": 0.36666666666666664,
+        "weighted.crew_overtime_min": 0.10999999999999999,
+        "raw.gate_change_indicator": 0.0,
+        "normalized.gate_change_indicator": 0.0,
+        "weighted.gate_change_indicator": 0.0,
+        "cost": 0.12666666666666665
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0015_R1_G2_T2",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 15,
+      "runway_id": "R1",
+      "gate_id": "G2",
+      "taxi_route_id": "T2",
+      "taxi_min": 4,
+      "gate_in_min": 19,
+      "service_end_min": 49
+    },
+    "validation": {
+      "plan_id": "P0015_R1_G2_T2",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 4290.0,
+        "pilot_reserve_margin_kg": 890.0,
+        "pilot_holding_min": 5.0,
+        "atc_min_lead_separation_margin_min": 0.0,
+        "atc_min_follow_separation_margin_min": 13.0,
+        "ground_covering_crew_count": 1.0
+      }
+    },
+    "utilities": {
+      "atc": 0.9,
+      "pilot": 0.09799999999999998,
+      "ground": 0.71
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 5.0,
+        "normalized.landing_delay_min": 0.16666666666666666,
+        "weighted.landing_delay_min": 0.09999999999999999,
+        "raw.spillover_proxy_min": 0.0,
+        "normalized.spillover_proxy_min": 0.0,
+        "weighted.spillover_proxy_min": 0.0,
+        "cost": 0.09999999999999999
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 210.0,
+        "normalized.incremental_fuel_kg": 0.42,
+        "weighted.incremental_fuel_kg": 0.252,
+        "raw.connection_penalty_pax": 0.0,
+        "normalized.connection_penalty_pax": 0.0,
+        "weighted.connection_penalty_pax": 0.0,
+        "raw.turbulence_exposure_index": 3.25,
+        "normalized.turbulence_exposure_index": 6.5,
+        "weighted.turbulence_exposure_index": 0.65,
+        "cost": 0.902
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 0.0,
+        "normalized.turnaround_delay_min": 0.0,
+        "weighted.turnaround_delay_min": 0.0,
+        "raw.crew_overtime_min": 9.0,
+        "normalized.crew_overtime_min": 0.3,
+        "weighted.crew_overtime_min": 0.09,
+        "raw.gate_change_indicator": 1.0,
+        "normalized.gate_change_indicator": 1.0,
+        "weighted.gate_change_indicator": 0.2,
+        "cost": 0.29000000000000004
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0015_R2_G1_T3",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 15,
+      "runway_id": "R2",
+      "gate_id": "G1",
+      "taxi_route_id": "T3",
+      "taxi_min": 5,
+      "gate_in_min": 20,
+      "service_end_min": 50
+    },
+    "validation": {
+      "plan_id": "P0015_R2_G1_T3",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 4275.0,
+        "pilot_reserve_margin_kg": 875.0,
+        "pilot_holding_min": 5.0,
+        "atc_min_lead_separation_margin_min": 4.0,
+        "atc_min_follow_separation_margin_min": 5.0,
+        "ground_covering_crew_count": 1.0
+      }
+    },
+    "utilities": {
+      "atc": 0.78,
+      "pilot": 0.6799999999999999,
+      "ground": 0.9
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 5.0,
+        "normalized.landing_delay_min": 0.16666666666666666,
+        "weighted.landing_delay_min": 0.09999999999999999,
+        "raw.spillover_proxy_min": 3.0,
+        "normalized.spillover_proxy_min": 0.3,
+        "weighted.spillover_proxy_min": 0.12,
+        "cost": 0.21999999999999997
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 225.0,
+        "normalized.incremental_fuel_kg": 0.45,
+        "weighted.incremental_fuel_kg": 0.27,
+        "raw.connection_penalty_pax": 0.0,
+        "normalized.connection_penalty_pax": 0.0,
+        "weighted.connection_penalty_pax": 0.0,
+        "raw.turbulence_exposure_index": 0.25,
+        "normalized.turbulence_exposure_index": 0.5,
+        "weighted.turbulence_exposure_index": 0.05,
+        "cost": 0.32
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 0.0,
+        "normalized.turnaround_delay_min": 0.0,
+        "weighted.turnaround_delay_min": 0.0,
+        "raw.crew_overtime_min": 10.0,
+        "normalized.crew_overtime_min": 0.3333333333333333,
+        "weighted.crew_overtime_min": 0.09999999999999999,
+        "raw.gate_change_indicator": 0.0,
+        "normalized.gate_change_indicator": 0.0,
+        "weighted.gate_change_indicator": 0.0,
+        "cost": 0.09999999999999999
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0015_R2_G2_T5",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 15,
+      "runway_id": "R2",
+      "gate_id": "G2",
+      "taxi_route_id": "T5",
+      "taxi_min": 8,
+      "gate_in_min": 23,
+      "service_end_min": 53
+    },
+    "validation": {
+      "plan_id": "P0015_R2_G2_T5",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 4230.0,
+        "pilot_reserve_margin_kg": 830.0,
+        "pilot_holding_min": 5.0,
+        "atc_min_lead_separation_margin_min": 4.0,
+        "atc_min_follow_separation_margin_min": 5.0,
+        "ground_covering_crew_count": 1.0
+      }
+    },
+    "utilities": {
+      "atc": 0.78,
+      "pilot": 0.506,
+      "ground": 0.62
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 5.0,
+        "normalized.landing_delay_min": 0.16666666666666666,
+        "weighted.landing_delay_min": 0.09999999999999999,
+        "raw.spillover_proxy_min": 3.0,
+        "normalized.spillover_proxy_min": 0.3,
+        "weighted.spillover_proxy_min": 0.12,
+        "cost": 0.21999999999999997
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 270.0,
+        "normalized.incremental_fuel_kg": 0.54,
+        "weighted.incremental_fuel_kg": 0.324,
+        "raw.connection_penalty_pax": 40.0,
+        "normalized.connection_penalty_pax": 0.4,
+        "weighted.connection_penalty_pax": 0.12,
+        "raw.turbulence_exposure_index": 0.25,
+        "normalized.turbulence_exposure_index": 0.5,
+        "weighted.turbulence_exposure_index": 0.05,
+        "cost": 0.494
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 3.0,
+        "normalized.turnaround_delay_min": 0.1,
+        "weighted.turnaround_delay_min": 0.05,
+        "raw.crew_overtime_min": 13.0,
+        "normalized.crew_overtime_min": 0.43333333333333335,
+        "weighted.crew_overtime_min": 0.13,
+        "raw.gate_change_indicator": 1.0,
+        "normalized.gate_change_indicator": 1.0,
+        "weighted.gate_change_indicator": 0.2,
+        "cost": 0.38
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0015_R2_G3_T4",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 15,
+      "runway_id": "R2",
+      "gate_id": "G3",
+      "taxi_route_id": "T4",
+      "taxi_min": 3,
+      "gate_in_min": 18,
+      "service_end_min": 48
+    },
+    "validation": {
+      "plan_id": "P0015_R2_G3_T4",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 4305.0,
+        "pilot_reserve_margin_kg": 905.0,
+        "pilot_holding_min": 5.0,
+        "atc_min_lead_separation_margin_min": 4.0,
+        "atc_min_follow_separation_margin_min": 5.0,
+        "ground_covering_crew_count": 1.0
+      }
+    },
+    "utilities": {
+      "atc": 0.78,
+      "pilot": 0.716,
+      "ground": 0.72
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 5.0,
+        "normalized.landing_delay_min": 0.16666666666666666,
+        "weighted.landing_delay_min": 0.09999999999999999,
+        "raw.spillover_proxy_min": 3.0,
+        "normalized.spillover_proxy_min": 0.3,
+        "weighted.spillover_proxy_min": 0.12,
+        "cost": 0.21999999999999997
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 195.0,
+        "normalized.incremental_fuel_kg": 0.39,
+        "weighted.incremental_fuel_kg": 0.23399999999999999,
+        "raw.connection_penalty_pax": 0.0,
+        "normalized.connection_penalty_pax": 0.0,
+        "weighted.connection_penalty_pax": 0.0,
+        "raw.turbulence_exposure_index": 0.25,
+        "normalized.turbulence_exposure_index": 0.5,
+        "weighted.turbulence_exposure_index": 0.05,
+        "cost": 0.284
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 0.0,
+        "normalized.turnaround_delay_min": 0.0,
+        "weighted.turnaround_delay_min": 0.0,
+        "raw.crew_overtime_min": 8.0,
+        "normalized.crew_overtime_min": 0.26666666666666666,
+        "weighted.crew_overtime_min": 0.08,
+        "raw.gate_change_indicator": 1.0,
+        "normalized.gate_change_indicator": 1.0,
+        "weighted.gate_change_indicator": 0.2,
+        "cost": 0.28
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0020_R1_G1_T1",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 20,
+      "runway_id": "R1",
+      "gate_id": "G1",
+      "taxi_route_id": "T1",
+      "taxi_min": 6,
+      "gate_in_min": 26,
+      "service_end_min": 56
+    },
+    "validation": {
+      "plan_id": "P0020_R1_G1_T1",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 4110.0,
+        "pilot_reserve_margin_kg": 710.0,
+        "pilot_holding_min": 10.0,
+        "atc_min_lead_separation_margin_min": 5.0,
+        "atc_min_follow_separation_margin_min": 8.0,
+        "ground_covering_crew_count": 2.0
+      }
+    },
+    "utilities": {
+      "atc": 0.8,
+      "pilot": -0.28800000000000003,
+      "ground": 0.9
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 10.0,
+        "normalized.landing_delay_min": 0.3333333333333333,
+        "weighted.landing_delay_min": 0.19999999999999998,
+        "raw.spillover_proxy_min": 0.0,
+        "normalized.spillover_proxy_min": 0.0,
+        "weighted.spillover_proxy_min": 0.0,
+        "cost": 0.19999999999999998
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 390.0,
+        "normalized.incremental_fuel_kg": 0.78,
+        "weighted.incremental_fuel_kg": 0.46799999999999997,
+        "raw.connection_penalty_pax": 40.0,
+        "normalized.connection_penalty_pax": 0.4,
+        "weighted.connection_penalty_pax": 0.12,
+        "raw.turbulence_exposure_index": 3.5,
+        "normalized.turbulence_exposure_index": 7.0,
+        "weighted.turbulence_exposure_index": 0.7000000000000001,
+        "cost": 1.288
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 6.0,
+        "normalized.turnaround_delay_min": 0.2,
+        "weighted.turnaround_delay_min": 0.1,
+        "raw.crew_overtime_min": 0.0,
+        "normalized.crew_overtime_min": 0.0,
+        "weighted.crew_overtime_min": 0.0,
+        "raw.gate_change_indicator": 0.0,
+        "normalized.gate_change_indicator": 0.0,
+        "weighted.gate_change_indicator": 0.0,
+        "cost": 0.1
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0020_R1_G2_T2",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 20,
+      "runway_id": "R1",
+      "gate_id": "G2",
+      "taxi_route_id": "T2",
+      "taxi_min": 4,
+      "gate_in_min": 24,
+      "service_end_min": 54
+    },
+    "validation": {
+      "plan_id": "P0020_R1_G2_T2",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 4140.0,
+        "pilot_reserve_margin_kg": 740.0,
+        "pilot_holding_min": 10.0,
+        "atc_min_lead_separation_margin_min": 5.0,
+        "atc_min_follow_separation_margin_min": 8.0,
+        "ground_covering_crew_count": 1.0
+      }
+    },
+    "utilities": {
+      "atc": 0.8,
+      "pilot": -0.2520000000000002,
+      "ground": 0.5933333333333333
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 10.0,
+        "normalized.landing_delay_min": 0.3333333333333333,
+        "weighted.landing_delay_min": 0.19999999999999998,
+        "raw.spillover_proxy_min": 0.0,
+        "normalized.spillover_proxy_min": 0.0,
+        "weighted.spillover_proxy_min": 0.0,
+        "cost": 0.19999999999999998
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 360.0,
+        "normalized.incremental_fuel_kg": 0.72,
+        "weighted.incremental_fuel_kg": 0.432,
+        "raw.connection_penalty_pax": 40.0,
+        "normalized.connection_penalty_pax": 0.4,
+        "weighted.connection_penalty_pax": 0.12,
+        "raw.turbulence_exposure_index": 3.5,
+        "normalized.turbulence_exposure_index": 7.0,
+        "weighted.turbulence_exposure_index": 0.7000000000000001,
+        "cost": 1.2520000000000002
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 4.0,
+        "normalized.turnaround_delay_min": 0.13333333333333333,
+        "weighted.turnaround_delay_min": 0.06666666666666667,
+        "raw.crew_overtime_min": 14.0,
+        "normalized.crew_overtime_min": 0.4666666666666667,
+        "weighted.crew_overtime_min": 0.13999999999999999,
+        "raw.gate_change_indicator": 1.0,
+        "normalized.gate_change_indicator": 1.0,
+        "weighted.gate_change_indicator": 0.2,
+        "cost": 0.4066666666666667
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0020_R2_G1_T3",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 20,
+      "runway_id": "R2",
+      "gate_id": "G1",
+      "taxi_route_id": "T3",
+      "taxi_min": 5,
+      "gate_in_min": 25,
+      "service_end_min": 55
+    },
+    "validation": {
+      "plan_id": "P0020_R2_G1_T3",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 4125.0,
+        "pilot_reserve_margin_kg": 725.0,
+        "pilot_holding_min": 10.0,
+        "atc_min_lead_separation_margin_min": 9.0,
+        "atc_min_follow_separation_margin_min": 0.0,
+        "ground_covering_crew_count": 2.0
+      }
+    },
+    "utilities": {
+      "atc": 0.48,
+      "pilot": 0.33000000000000007,
+      "ground": 0.9166666666666666
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 10.0,
+        "normalized.landing_delay_min": 0.3333333333333333,
+        "weighted.landing_delay_min": 0.19999999999999998,
+        "raw.spillover_proxy_min": 8.0,
+        "normalized.spillover_proxy_min": 0.8,
+        "weighted.spillover_proxy_min": 0.32000000000000006,
+        "cost": 0.52
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 375.0,
+        "normalized.incremental_fuel_kg": 0.75,
+        "weighted.incremental_fuel_kg": 0.44999999999999996,
+        "raw.connection_penalty_pax": 40.0,
+        "normalized.connection_penalty_pax": 0.4,
+        "weighted.connection_penalty_pax": 0.12,
+        "raw.turbulence_exposure_index": 0.5,
+        "normalized.turbulence_exposure_index": 1.0,
+        "weighted.turbulence_exposure_index": 0.1,
+        "cost": 0.6699999999999999
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 5.0,
+        "normalized.turnaround_delay_min": 0.16666666666666666,
+        "weighted.turnaround_delay_min": 0.08333333333333333,
+        "raw.crew_overtime_min": 0.0,
+        "normalized.crew_overtime_min": 0.0,
+        "weighted.crew_overtime_min": 0.0,
+        "raw.gate_change_indicator": 0.0,
+        "normalized.gate_change_indicator": 0.0,
+        "weighted.gate_change_indicator": 0.0,
+        "cost": 0.08333333333333333
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0020_R2_G2_T5",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 20,
+      "runway_id": "R2",
+      "gate_id": "G2",
+      "taxi_route_id": "T5",
+      "taxi_min": 8,
+      "gate_in_min": 28,
+      "service_end_min": 58
+    },
+    "validation": {
+      "plan_id": "P0020_R2_G2_T5",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 4080.0,
+        "pilot_reserve_margin_kg": 680.0,
+        "pilot_holding_min": 10.0,
+        "atc_min_lead_separation_margin_min": 9.0,
+        "atc_min_follow_separation_margin_min": 0.0,
+        "ground_covering_crew_count": 2.0
+      }
+    },
+    "utilities": {
+      "atc": 0.48,
+      "pilot": 0.276,
+      "ground": 0.6666666666666666
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 10.0,
+        "normalized.landing_delay_min": 0.3333333333333333,
+        "weighted.landing_delay_min": 0.19999999999999998,
+        "raw.spillover_proxy_min": 8.0,
+        "normalized.spillover_proxy_min": 0.8,
+        "weighted.spillover_proxy_min": 0.32000000000000006,
+        "cost": 0.52
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 420.0,
+        "normalized.incremental_fuel_kg": 0.84,
+        "weighted.incremental_fuel_kg": 0.504,
+        "raw.connection_penalty_pax": 40.0,
+        "normalized.connection_penalty_pax": 0.4,
+        "weighted.connection_penalty_pax": 0.12,
+        "raw.turbulence_exposure_index": 0.5,
+        "normalized.turbulence_exposure_index": 1.0,
+        "weighted.turbulence_exposure_index": 0.1,
+        "cost": 0.724
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 8.0,
+        "normalized.turnaround_delay_min": 0.26666666666666666,
+        "weighted.turnaround_delay_min": 0.13333333333333333,
+        "raw.crew_overtime_min": 0.0,
+        "normalized.crew_overtime_min": 0.0,
+        "weighted.crew_overtime_min": 0.0,
+        "raw.gate_change_indicator": 1.0,
+        "normalized.gate_change_indicator": 1.0,
+        "weighted.gate_change_indicator": 0.2,
+        "cost": 0.33333333333333337
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0020_R2_G3_T4",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 20,
+      "runway_id": "R2",
+      "gate_id": "G3",
+      "taxi_route_id": "T4",
+      "taxi_min": 3,
+      "gate_in_min": 23,
+      "service_end_min": 53
+    },
+    "validation": {
+      "plan_id": "P0020_R2_G3_T4",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 4155.0,
+        "pilot_reserve_margin_kg": 755.0,
+        "pilot_holding_min": 10.0,
+        "atc_min_lead_separation_margin_min": 9.0,
+        "atc_min_follow_separation_margin_min": 0.0,
+        "ground_covering_crew_count": 1.0
+      }
+    },
+    "utilities": {
+      "atc": 0.48,
+      "pilot": 0.366,
+      "ground": 0.62
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 10.0,
+        "normalized.landing_delay_min": 0.3333333333333333,
+        "weighted.landing_delay_min": 0.19999999999999998,
+        "raw.spillover_proxy_min": 8.0,
+        "normalized.spillover_proxy_min": 0.8,
+        "weighted.spillover_proxy_min": 0.32000000000000006,
+        "cost": 0.52
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 345.0,
+        "normalized.incremental_fuel_kg": 0.69,
+        "weighted.incremental_fuel_kg": 0.414,
+        "raw.connection_penalty_pax": 40.0,
+        "normalized.connection_penalty_pax": 0.4,
+        "weighted.connection_penalty_pax": 0.12,
+        "raw.turbulence_exposure_index": 0.5,
+        "normalized.turbulence_exposure_index": 1.0,
+        "weighted.turbulence_exposure_index": 0.1,
+        "cost": 0.634
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 3.0,
+        "normalized.turnaround_delay_min": 0.1,
+        "weighted.turnaround_delay_min": 0.05,
+        "raw.crew_overtime_min": 13.0,
+        "normalized.crew_overtime_min": 0.43333333333333335,
+        "weighted.crew_overtime_min": 0.13,
+        "raw.gate_change_indicator": 1.0,
+        "normalized.gate_change_indicator": 1.0,
+        "weighted.gate_change_indicator": 0.2,
+        "cost": 0.38
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0025_R1_G1_T1",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 25,
+      "runway_id": "R1",
+      "gate_id": "G1",
+      "taxi_route_id": "T1",
+      "taxi_min": 6,
+      "gate_in_min": 31,
+      "service_end_min": 61
+    },
+    "validation": {
+      "plan_id": "P0025_R1_G1_T1",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 3960.0,
+        "pilot_reserve_margin_kg": 560.0,
+        "pilot_holding_min": 15.0,
+        "atc_min_lead_separation_margin_min": 10.0,
+        "atc_min_follow_separation_margin_min": 3.0,
+        "ground_covering_crew_count": 1.0
+      }
+    },
+    "utilities": {
+      "atc": 0.5,
+      "pilot": -0.518,
+      "ground": 0.8166666666666667
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 15.0,
+        "normalized.landing_delay_min": 0.5,
+        "weighted.landing_delay_min": 0.3,
+        "raw.spillover_proxy_min": 5.0,
+        "normalized.spillover_proxy_min": 0.5,
+        "weighted.spillover_proxy_min": 0.2,
+        "cost": 0.5
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 540.0,
+        "normalized.incremental_fuel_kg": 1.08,
+        "weighted.incremental_fuel_kg": 0.648,
+        "raw.connection_penalty_pax": 40.0,
+        "normalized.connection_penalty_pax": 0.4,
+        "weighted.connection_penalty_pax": 0.12,
+        "raw.turbulence_exposure_index": 3.75,
+        "normalized.turbulence_exposure_index": 7.5,
+        "weighted.turbulence_exposure_index": 0.75,
+        "cost": 1.518
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 11.0,
+        "normalized.turnaround_delay_min": 0.36666666666666664,
+        "weighted.turnaround_delay_min": 0.18333333333333332,
+        "raw.crew_overtime_min": 0.0,
+        "normalized.crew_overtime_min": 0.0,
+        "weighted.crew_overtime_min": 0.0,
+        "raw.gate_change_indicator": 0.0,
+        "normalized.gate_change_indicator": 0.0,
+        "weighted.gate_change_indicator": 0.0,
+        "cost": 0.18333333333333332
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0025_R1_G2_T2",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 25,
+      "runway_id": "R1",
+      "gate_id": "G2",
+      "taxi_route_id": "T2",
+      "taxi_min": 4,
+      "gate_in_min": 29,
+      "service_end_min": 59
+    },
+    "validation": {
+      "plan_id": "P0025_R1_G2_T2",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 3990.0,
+        "pilot_reserve_margin_kg": 590.0,
+        "pilot_holding_min": 15.0,
+        "atc_min_lead_separation_margin_min": 10.0,
+        "atc_min_follow_separation_margin_min": 3.0,
+        "ground_covering_crew_count": 2.0
+      }
+    },
+    "utilities": {
+      "atc": 0.5,
+      "pilot": -0.482,
+      "ground": 0.65
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 15.0,
+        "normalized.landing_delay_min": 0.5,
+        "weighted.landing_delay_min": 0.3,
+        "raw.spillover_proxy_min": 5.0,
+        "normalized.spillover_proxy_min": 0.5,
+        "weighted.spillover_proxy_min": 0.2,
+        "cost": 0.5
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 510.0,
+        "normalized.incremental_fuel_kg": 1.02,
+        "weighted.incremental_fuel_kg": 0.612,
+        "raw.connection_penalty_pax": 40.0,
+        "normalized.connection_penalty_pax": 0.4,
+        "weighted.connection_penalty_pax": 0.12,
+        "raw.turbulence_exposure_index": 3.75,
+        "normalized.turbulence_exposure_index": 7.5,
+        "weighted.turbulence_exposure_index": 0.75,
+        "cost": 1.482
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 9.0,
+        "normalized.turnaround_delay_min": 0.3,
+        "weighted.turnaround_delay_min": 0.15,
+        "raw.crew_overtime_min": 0.0,
+        "normalized.crew_overtime_min": 0.0,
+        "weighted.crew_overtime_min": 0.0,
+        "raw.gate_change_indicator": 1.0,
+        "normalized.gate_change_indicator": 1.0,
+        "weighted.gate_change_indicator": 0.2,
+        "cost": 0.35
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0025_R2_G1_T3",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 25,
+      "runway_id": "R2",
+      "gate_id": "G1",
+      "taxi_route_id": "T3",
+      "taxi_min": 5,
+      "gate_in_min": 30,
+      "service_end_min": 60
+    },
+    "validation": {
+      "plan_id": "P0025_R2_G1_T3",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 3975.0,
+        "pilot_reserve_margin_kg": 575.0,
+        "pilot_holding_min": 15.0,
+        "atc_min_lead_separation_margin_min": 1.0,
+        "ground_covering_crew_count": 2.0
+      }
+    },
+    "utilities": {
+      "atc": 0.7,
+      "pilot": 0.09999999999999998,
+      "ground": 0.8333333333333334
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 15.0,
+        "normalized.landing_delay_min": 0.5,
+        "weighted.landing_delay_min": 0.3,
+        "raw.spillover_proxy_min": 0.0,
+        "normalized.spillover_proxy_min": 0.0,
+        "weighted.spillover_proxy_min": 0.0,
+        "cost": 0.3
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 525.0,
+        "normalized.incremental_fuel_kg": 1.05,
+        "weighted.incremental_fuel_kg": 0.63,
+        "raw.connection_penalty_pax": 40.0,
+        "normalized.connection_penalty_pax": 0.4,
+        "weighted.connection_penalty_pax": 0.12,
+        "raw.turbulence_exposure_index": 0.75,
+        "normalized.turbulence_exposure_index": 1.5,
+        "weighted.turbulence_exposure_index": 0.15000000000000002,
+        "cost": 0.9
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 10.0,
+        "normalized.turnaround_delay_min": 0.3333333333333333,
+        "weighted.turnaround_delay_min": 0.16666666666666666,
+        "raw.crew_overtime_min": 0.0,
+        "normalized.crew_overtime_min": 0.0,
+        "weighted.crew_overtime_min": 0.0,
+        "raw.gate_change_indicator": 0.0,
+        "normalized.gate_change_indicator": 0.0,
+        "weighted.gate_change_indicator": 0.0,
+        "cost": 0.16666666666666666
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0025_R2_G2_T5",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 25,
+      "runway_id": "R2",
+      "gate_id": "G2",
+      "taxi_route_id": "T5",
+      "taxi_min": 8,
+      "gate_in_min": 33,
+      "service_end_min": 63
+    },
+    "validation": {
+      "plan_id": "P0025_R2_G2_T5",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 3930.0,
+        "pilot_reserve_margin_kg": 530.0,
+        "pilot_holding_min": 15.0,
+        "atc_min_lead_separation_margin_min": 1.0,
+        "ground_covering_crew_count": 1.0
+      }
+    },
+    "utilities": {
+      "atc": 0.7,
+      "pilot": 0.04600000000000004,
+      "ground": 0.5833333333333333
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 15.0,
+        "normalized.landing_delay_min": 0.5,
+        "weighted.landing_delay_min": 0.3,
+        "raw.spillover_proxy_min": 0.0,
+        "normalized.spillover_proxy_min": 0.0,
+        "weighted.spillover_proxy_min": 0.0,
+        "cost": 0.3
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 570.0,
+        "normalized.incremental_fuel_kg": 1.14,
+        "weighted.incremental_fuel_kg": 0.6839999999999999,
+        "raw.connection_penalty_pax": 40.0,
+        "normalized.connection_penalty_pax": 0.4,
+        "weighted.connection_penalty_pax": 0.12,
+        "raw.turbulence_exposure_index": 0.75,
+        "normalized.turbulence_exposure_index": 1.5,
+        "weighted.turbulence_exposure_index": 0.15000000000000002,
+        "cost": 0.954
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 13.0,
+        "normalized.turnaround_delay_min": 0.43333333333333335,
+        "weighted.turnaround_delay_min": 0.21666666666666667,
+        "raw.crew_overtime_min": 0.0,
+        "normalized.crew_overtime_min": 0.0,
+        "weighted.crew_overtime_min": 0.0,
+        "raw.gate_change_indicator": 1.0,
+        "normalized.gate_change_indicator": 1.0,
+        "weighted.gate_change_indicator": 0.2,
+        "cost": 0.4166666666666667
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0025_R2_G3_T4",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 25,
+      "runway_id": "R2",
+      "gate_id": "G3",
+      "taxi_route_id": "T4",
+      "taxi_min": 3,
+      "gate_in_min": 28,
+      "service_end_min": 58
+    },
+    "validation": {
+      "plan_id": "P0025_R2_G3_T4",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 4005.0,
+        "pilot_reserve_margin_kg": 605.0,
+        "pilot_holding_min": 15.0,
+        "atc_min_lead_separation_margin_min": 1.0,
+        "ground_covering_crew_count": 2.0
+      }
+    },
+    "utilities": {
+      "atc": 0.7,
+      "pilot": 0.136,
+      "ground": 0.6666666666666666
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 15.0,
+        "normalized.landing_delay_min": 0.5,
+        "weighted.landing_delay_min": 0.3,
+        "raw.spillover_proxy_min": 0.0,
+        "normalized.spillover_proxy_min": 0.0,
+        "weighted.spillover_proxy_min": 0.0,
+        "cost": 0.3
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 495.0,
+        "normalized.incremental_fuel_kg": 0.99,
+        "weighted.incremental_fuel_kg": 0.594,
+        "raw.connection_penalty_pax": 40.0,
+        "normalized.connection_penalty_pax": 0.4,
+        "weighted.connection_penalty_pax": 0.12,
+        "raw.turbulence_exposure_index": 0.75,
+        "normalized.turbulence_exposure_index": 1.5,
+        "weighted.turbulence_exposure_index": 0.15000000000000002,
+        "cost": 0.864
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 8.0,
+        "normalized.turnaround_delay_min": 0.26666666666666666,
+        "weighted.turnaround_delay_min": 0.13333333333333333,
+        "raw.crew_overtime_min": 0.0,
+        "normalized.crew_overtime_min": 0.0,
+        "weighted.crew_overtime_min": 0.0,
+        "raw.gate_change_indicator": 1.0,
+        "normalized.gate_change_indicator": 1.0,
+        "weighted.gate_change_indicator": 0.2,
+        "cost": 0.33333333333333337
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0030_R2_G1_T3",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 30,
+      "runway_id": "R2",
+      "gate_id": "G1",
+      "taxi_route_id": "T3",
+      "taxi_min": 5,
+      "gate_in_min": 35,
+      "service_end_min": 65
+    },
+    "validation": {
+      "plan_id": "P0030_R2_G1_T3",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 3825.0,
+        "pilot_reserve_margin_kg": 425.0,
+        "pilot_holding_min": 20.0,
+        "atc_min_lead_separation_margin_min": 6.0,
+        "ground_covering_crew_count": 1.0
+      }
+    },
+    "utilities": {
+      "atc": 0.6000000000000001,
+      "pilot": -0.31000000000000005,
+      "ground": 0.75
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 20.0,
+        "normalized.landing_delay_min": 0.6666666666666666,
+        "weighted.landing_delay_min": 0.39999999999999997,
+        "raw.spillover_proxy_min": 0.0,
+        "normalized.spillover_proxy_min": 0.0,
+        "weighted.spillover_proxy_min": 0.0,
+        "cost": 0.39999999999999997
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 675.0,
+        "normalized.incremental_fuel_kg": 1.35,
+        "weighted.incremental_fuel_kg": 0.81,
+        "raw.connection_penalty_pax": 100.0,
+        "normalized.connection_penalty_pax": 1.0,
+        "weighted.connection_penalty_pax": 0.3,
+        "raw.turbulence_exposure_index": 1.0,
+        "normalized.turbulence_exposure_index": 2.0,
+        "weighted.turbulence_exposure_index": 0.2,
+        "cost": 1.31
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 15.0,
+        "normalized.turnaround_delay_min": 0.5,
+        "weighted.turnaround_delay_min": 0.25,
+        "raw.crew_overtime_min": 0.0,
+        "normalized.crew_overtime_min": 0.0,
+        "weighted.crew_overtime_min": 0.0,
+        "raw.gate_change_indicator": 0.0,
+        "normalized.gate_change_indicator": 0.0,
+        "weighted.gate_change_indicator": 0.0,
+        "cost": 0.25
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0030_R2_G2_T5",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 30,
+      "runway_id": "R2",
+      "gate_id": "G2",
+      "taxi_route_id": "T5",
+      "taxi_min": 8,
+      "gate_in_min": 38,
+      "service_end_min": 68
+    },
+    "validation": {
+      "plan_id": "P0030_R2_G2_T5",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 3780.0,
+        "pilot_reserve_margin_kg": 380.0,
+        "pilot_holding_min": 20.0,
+        "atc_min_lead_separation_margin_min": 6.0,
+        "ground_covering_crew_count": 1.0
+      }
+    },
+    "utilities": {
+      "atc": 0.6000000000000001,
+      "pilot": -0.3639999999999999,
+      "ground": 0.5
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 20.0,
+        "normalized.landing_delay_min": 0.6666666666666666,
+        "weighted.landing_delay_min": 0.39999999999999997,
+        "raw.spillover_proxy_min": 0.0,
+        "normalized.spillover_proxy_min": 0.0,
+        "weighted.spillover_proxy_min": 0.0,
+        "cost": 0.39999999999999997
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 720.0,
+        "normalized.incremental_fuel_kg": 1.44,
+        "weighted.incremental_fuel_kg": 0.864,
+        "raw.connection_penalty_pax": 100.0,
+        "normalized.connection_penalty_pax": 1.0,
+        "weighted.connection_penalty_pax": 0.3,
+        "raw.turbulence_exposure_index": 1.0,
+        "normalized.turbulence_exposure_index": 2.0,
+        "weighted.turbulence_exposure_index": 0.2,
+        "cost": 1.3639999999999999
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 18.0,
+        "normalized.turnaround_delay_min": 0.6,
+        "weighted.turnaround_delay_min": 0.3,
+        "raw.crew_overtime_min": 0.0,
+        "normalized.crew_overtime_min": 0.0,
+        "weighted.crew_overtime_min": 0.0,
+        "raw.gate_change_indicator": 1.0,
+        "normalized.gate_change_indicator": 1.0,
+        "weighted.gate_change_indicator": 0.2,
+        "cost": 0.5
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0030_R2_G3_T4",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 30,
+      "runway_id": "R2",
+      "gate_id": "G3",
+      "taxi_route_id": "T4",
+      "taxi_min": 3,
+      "gate_in_min": 33,
+      "service_end_min": 63
+    },
+    "validation": {
+      "plan_id": "P0030_R2_G3_T4",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 3855.0,
+        "pilot_reserve_margin_kg": 455.0,
+        "pilot_holding_min": 20.0,
+        "atc_min_lead_separation_margin_min": 6.0,
+        "ground_covering_crew_count": 1.0
+      }
+    },
+    "utilities": {
+      "atc": 0.6000000000000001,
+      "pilot": -0.09400000000000008,
+      "ground": 0.5833333333333333
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 20.0,
+        "normalized.landing_delay_min": 0.6666666666666666,
+        "weighted.landing_delay_min": 0.39999999999999997,
+        "raw.spillover_proxy_min": 0.0,
+        "normalized.spillover_proxy_min": 0.0,
+        "weighted.spillover_proxy_min": 0.0,
+        "cost": 0.39999999999999997
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 645.0,
+        "normalized.incremental_fuel_kg": 1.29,
+        "weighted.incremental_fuel_kg": 0.774,
+        "raw.connection_penalty_pax": 40.0,
+        "normalized.connection_penalty_pax": 0.4,
+        "weighted.connection_penalty_pax": 0.12,
+        "raw.turbulence_exposure_index": 1.0,
+        "normalized.turbulence_exposure_index": 2.0,
+        "weighted.turbulence_exposure_index": 0.2,
+        "cost": 1.094
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 13.0,
+        "normalized.turnaround_delay_min": 0.43333333333333335,
+        "weighted.turnaround_delay_min": 0.21666666666666667,
+        "raw.crew_overtime_min": 0.0,
+        "normalized.crew_overtime_min": 0.0,
+        "weighted.crew_overtime_min": 0.0,
+        "raw.gate_change_indicator": 1.0,
+        "normalized.gate_change_indicator": 1.0,
+        "weighted.gate_change_indicator": 0.2,
+        "cost": 0.4166666666666667
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0035_R1_G1_T1",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 35,
+      "runway_id": "R1",
+      "gate_id": "G1",
+      "taxi_route_id": "T1",
+      "taxi_min": 6,
+      "gate_in_min": 41,
+      "service_end_min": 71
+    },
+    "validation": {
+      "plan_id": "P0035_R1_G1_T1",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 3660.0,
+        "pilot_reserve_margin_kg": 260.0,
+        "pilot_holding_min": 25.0,
+        "atc_min_lead_separation_margin_min": 3.0,
+        "ground_covering_crew_count": 1.0
+      }
+    },
+    "utilities": {
+      "atc": 0.5,
+      "pilot": -1.1580000000000004,
+      "ground": 0.65
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 25.0,
+        "normalized.landing_delay_min": 0.8333333333333334,
+        "weighted.landing_delay_min": 0.5,
+        "raw.spillover_proxy_min": 0.0,
+        "normalized.spillover_proxy_min": 0.0,
+        "weighted.spillover_proxy_min": 0.0,
+        "cost": 0.5
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 840.0,
+        "normalized.incremental_fuel_kg": 1.68,
+        "weighted.incremental_fuel_kg": 1.008,
+        "raw.connection_penalty_pax": 100.0,
+        "normalized.connection_penalty_pax": 1.0,
+        "weighted.connection_penalty_pax": 0.3,
+        "raw.turbulence_exposure_index": 4.25,
+        "normalized.turbulence_exposure_index": 8.5,
+        "weighted.turbulence_exposure_index": 0.8500000000000001,
+        "cost": 2.1580000000000004
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 21.0,
+        "normalized.turnaround_delay_min": 0.7,
+        "weighted.turnaround_delay_min": 0.35,
+        "raw.crew_overtime_min": 0.0,
+        "normalized.crew_overtime_min": 0.0,
+        "weighted.crew_overtime_min": 0.0,
+        "raw.gate_change_indicator": 0.0,
+        "normalized.gate_change_indicator": 0.0,
+        "weighted.gate_change_indicator": 0.0,
+        "cost": 0.35
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0035_R2_G1_T3",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 35,
+      "runway_id": "R2",
+      "gate_id": "G1",
+      "taxi_route_id": "T3",
+      "taxi_min": 5,
+      "gate_in_min": 40,
+      "service_end_min": 70
+    },
+    "validation": {
+      "plan_id": "P0035_R2_G1_T3",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 3675.0,
+        "pilot_reserve_margin_kg": 275.0,
+        "pilot_holding_min": 25.0,
+        "atc_min_lead_separation_margin_min": 11.0,
+        "ground_covering_crew_count": 1.0
+      }
+    },
+    "utilities": {
+      "atc": 0.5,
+      "pilot": -0.5399999999999998,
+      "ground": 0.6666666666666667
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 25.0,
+        "normalized.landing_delay_min": 0.8333333333333334,
+        "weighted.landing_delay_min": 0.5,
+        "raw.spillover_proxy_min": 0.0,
+        "normalized.spillover_proxy_min": 0.0,
+        "weighted.spillover_proxy_min": 0.0,
+        "cost": 0.5
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 825.0,
+        "normalized.incremental_fuel_kg": 1.65,
+        "weighted.incremental_fuel_kg": 0.9899999999999999,
+        "raw.connection_penalty_pax": 100.0,
+        "normalized.connection_penalty_pax": 1.0,
+        "weighted.connection_penalty_pax": 0.3,
+        "raw.turbulence_exposure_index": 1.25,
+        "normalized.turbulence_exposure_index": 2.5,
+        "weighted.turbulence_exposure_index": 0.25,
+        "cost": 1.5399999999999998
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 20.0,
+        "normalized.turnaround_delay_min": 0.6666666666666666,
+        "weighted.turnaround_delay_min": 0.3333333333333333,
+        "raw.crew_overtime_min": 0.0,
+        "normalized.crew_overtime_min": 0.0,
+        "weighted.crew_overtime_min": 0.0,
+        "raw.gate_change_indicator": 0.0,
+        "normalized.gate_change_indicator": 0.0,
+        "weighted.gate_change_indicator": 0.0,
+        "cost": 0.3333333333333333
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0040_R1_G1_T1",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 40,
+      "runway_id": "R1",
+      "gate_id": "G1",
+      "taxi_route_id": "T1",
+      "taxi_min": 6,
+      "gate_in_min": 46,
+      "service_end_min": 76
+    },
+    "validation": {
+      "plan_id": "P0040_R1_G1_T1",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 3510.0,
+        "pilot_reserve_margin_kg": 110.0,
+        "pilot_holding_min": 30.0,
+        "atc_min_lead_separation_margin_min": 8.0,
+        "ground_covering_crew_count": 1.0
+      }
+    },
+    "utilities": {
+      "atc": 0.4,
+      "pilot": -1.388,
+      "ground": 0.5666666666666667
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 30.0,
+        "normalized.landing_delay_min": 1.0,
+        "weighted.landing_delay_min": 0.6,
+        "raw.spillover_proxy_min": 0.0,
+        "normalized.spillover_proxy_min": 0.0,
+        "weighted.spillover_proxy_min": 0.0,
+        "cost": 0.6
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 990.0,
+        "normalized.incremental_fuel_kg": 1.98,
+        "weighted.incremental_fuel_kg": 1.188,
+        "raw.connection_penalty_pax": 100.0,
+        "normalized.connection_penalty_pax": 1.0,
+        "weighted.connection_penalty_pax": 0.3,
+        "raw.turbulence_exposure_index": 4.5,
+        "normalized.turbulence_exposure_index": 9.0,
+        "weighted.turbulence_exposure_index": 0.9,
+        "cost": 2.388
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 26.0,
+        "normalized.turnaround_delay_min": 0.8666666666666667,
+        "weighted.turnaround_delay_min": 0.43333333333333335,
+        "raw.crew_overtime_min": 0.0,
+        "normalized.crew_overtime_min": 0.0,
+        "weighted.crew_overtime_min": 0.0,
+        "raw.gate_change_indicator": 0.0,
+        "normalized.gate_change_indicator": 0.0,
+        "weighted.gate_change_indicator": 0.0,
+        "cost": 0.43333333333333335
+      }
+    }
+  },
+  {
+    "plan": {
+      "plan_id": "P0040_R2_G1_T3",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "landing_min": 40,
+      "runway_id": "R2",
+      "gate_id": "G1",
+      "taxi_route_id": "T3",
+      "taxi_min": 5,
+      "gate_in_min": 45,
+      "service_end_min": 75
+    },
+    "validation": {
+      "plan_id": "P0040_R2_G1_T3",
+      "feasible": true,
+      "violations": [],
+      "metrics": {
+        "pilot_fuel_at_gate_in_kg": 3525.0,
+        "pilot_reserve_margin_kg": 125.0,
+        "pilot_holding_min": 30.0,
+        "atc_min_lead_separation_margin_min": 16.0,
+        "ground_covering_crew_count": 1.0
+      }
+    },
+    "utilities": {
+      "atc": 0.4,
+      "pilot": -0.77,
+      "ground": 0.5833333333333333
+    },
+    "components": {
+      "atc": {
+        "raw.landing_delay_min": 30.0,
+        "normalized.landing_delay_min": 1.0,
+        "weighted.landing_delay_min": 0.6,
+        "raw.spillover_proxy_min": 0.0,
+        "normalized.spillover_proxy_min": 0.0,
+        "weighted.spillover_proxy_min": 0.0,
+        "cost": 0.6
+      },
+      "pilot": {
+        "raw.incremental_fuel_kg": 975.0,
+        "normalized.incremental_fuel_kg": 1.95,
+        "weighted.incremental_fuel_kg": 1.17,
+        "raw.connection_penalty_pax": 100.0,
+        "normalized.connection_penalty_pax": 1.0,
+        "weighted.connection_penalty_pax": 0.3,
+        "raw.turbulence_exposure_index": 1.5,
+        "normalized.turbulence_exposure_index": 3.0,
+        "weighted.turbulence_exposure_index": 0.30000000000000004,
+        "cost": 1.77
+      },
+      "ground": {
+        "raw.turnaround_delay_min": 25.0,
+        "normalized.turnaround_delay_min": 0.8333333333333334,
+        "weighted.turnaround_delay_min": 0.4166666666666667,
+        "raw.crew_overtime_min": 0.0,
+        "normalized.crew_overtime_min": 0.0,
+        "weighted.crew_overtime_min": 0.0,
+        "raw.gate_change_indicator": 0.0,
+        "normalized.gate_change_indicator": 0.0,
+        "weighted.gate_change_indicator": 0.0,
+        "cost": 0.4166666666666667
+      }
+    }
+  }
+]

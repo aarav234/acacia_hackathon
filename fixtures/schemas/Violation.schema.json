@@ -1,0 +1,46 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "evidence_ids": {
+      "items": {
+        "maxLength": 200,
+        "pattern": "^[a-z]+:[A-Za-z0-9_.\\[\\]-]+$",
+        "type": "string"
+      },
+      "title": "Evidence Ids",
+      "type": "array"
+    },
+    "observed": {
+      "title": "Observed",
+      "type": "string"
+    },
+    "reason": {
+      "title": "Reason",
+      "type": "string"
+    },
+    "required": {
+      "title": "Required",
+      "type": "string"
+    },
+    "rule_id": {
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+      "title": "Rule Id",
+      "type": "string"
+    },
+    "units": {
+      "title": "Units",
+      "type": "string"
+    }
+  },
+  "required": [
+    "rule_id",
+    "reason",
+    "observed",
+    "required",
+    "units",
+    "evidence_ids"
+  ],
+  "title": "Violation",
+  "type": "object"
+}

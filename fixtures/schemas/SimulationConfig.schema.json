@@ -1,0 +1,785 @@
+{
+  "$defs": {
+    "Assumption": {
+      "additionalProperties": false,
+      "properties": {
+        "field_path": {
+          "title": "Field Path",
+          "type": "string"
+        },
+        "note": {
+          "title": "Note",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field_path",
+        "note"
+      ],
+      "title": "Assumption",
+      "type": "object"
+    },
+    "ConnectionGroup": {
+      "additionalProperties": false,
+      "description": "ASSUMED onward-connection group. The dataset has no passenger-level data.",
+      "properties": {
+        "deadline_gate_in_min": {
+          "title": "Deadline Gate In Min",
+          "type": "integer"
+        },
+        "group_id": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Group Id",
+          "type": "string"
+        },
+        "passenger_count": {
+          "minimum": 0,
+          "title": "Passenger Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "group_id",
+        "passenger_count",
+        "deadline_gate_in_min"
+      ],
+      "title": "ConnectionGroup",
+      "type": "object"
+    },
+    "CrewShift": {
+      "additionalProperties": false,
+      "properties": {
+        "available": {
+          "$ref": "#/$defs/TimeWindow"
+        },
+        "busy": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/TimeWindow"
+          },
+          "title": "Busy",
+          "type": "array"
+        },
+        "crew_id": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Crew Id",
+          "type": "string"
+        },
+        "regular_end_min": {
+          "title": "Regular End Min",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "crew_id",
+        "available",
+        "regular_end_min"
+      ],
+      "title": "CrewShift",
+      "type": "object"
+    },
+    "FuelConfig": {
+      "additionalProperties": false,
+      "description": "Toy fuel model. A SIMULATED rule, not an FAA/Airbus reserve standard.\n\nfuel_at_gate_in = snapshot - approach_burn\n                  - airborne_burn_rate * (landing_min - earliest_landing_min)\n                  - taxi_burn_rate * taxi_min",
+      "properties": {
+        "airborne_burn_kg_per_min": {
+          "minimum": 0,
+          "title": "Airborne Burn Kg Per Min",
+          "type": "number"
+        },
+        "approach_burn_kg": {
+          "minimum": 0,
+          "title": "Approach Burn Kg",
+          "type": "number"
+        },
+        "min_reserve_kg": {
+          "exclusiveMinimum": 0,
+          "title": "Min Reserve Kg",
+          "type": "number"
+        },
+        "snapshot_fuel_kg": {
+          "exclusiveMinimum": 0,
+          "title": "Snapshot Fuel Kg",
+          "type": "number"
+        },
+        "taxi_burn_kg_per_min": {
+          "minimum": 0,
+          "title": "Taxi Burn Kg Per Min",
+          "type": "number"
+        }
+      },
+      "required": [
+        "snapshot_fuel_kg",
+        "approach_burn_kg",
+        "airborne_burn_kg_per_min",
+        "taxi_burn_kg_per_min",
+        "min_reserve_kg"
+      ],
+      "title": "FuelConfig",
+      "type": "object"
+    },
+    "Gate": {
+      "additionalProperties": false,
+      "properties": {
+        "compatible_categories": {
+          "items": {
+            "maxLength": 64,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Compatible Categories",
+          "type": "array"
+        },
+        "gate_id": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Gate Id",
+          "type": "string"
+        },
+        "open_windows": {
+          "items": {
+            "$ref": "#/$defs/TimeWindow"
+          },
+          "title": "Open Windows",
+          "type": "array"
+        },
+        "turnover_buffer_min": {
+          "minimum": 0,
+          "title": "Turnover Buffer Min",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "gate_id",
+        "compatible_categories",
+        "open_windows",
+        "turnover_buffer_min"
+      ],
+      "title": "Gate",
+      "type": "object"
+    },
+    "GateOccupancy": {
+      "additionalProperties": false,
+      "description": "Existing gate use [start_min, end_min) BEFORE the gate's turnover buffer.",
+      "properties": {
+        "end_min": {
+          "title": "End Min",
+          "type": "integer"
+        },
+        "gate_id": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Gate Id",
+          "type": "string"
+        },
+        "occupancy_id": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Occupancy Id",
+          "type": "string"
+        },
+        "start_min": {
+          "title": "Start Min",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "occupancy_id",
+        "gate_id",
+        "start_min",
+        "end_min"
+      ],
+      "title": "GateOccupancy",
+      "type": "object"
+    },
+    "MetricSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "metric": {
+          "title": "Metric",
+          "type": "string"
+        },
+        "scale": {
+          "exclusiveMinimum": 0,
+          "title": "Scale",
+          "type": "number"
+        },
+        "weight": {
+          "minimum": 0,
+          "title": "Weight",
+          "type": "number"
+        }
+      },
+      "required": [
+        "metric",
+        "weight",
+        "scale"
+      ],
+      "title": "MetricSpec",
+      "type": "object"
+    },
+    "OperationalConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "connections": {
+          "items": {
+            "$ref": "#/$defs/ConnectionGroup"
+          },
+          "title": "Connections",
+          "type": "array"
+        },
+        "crew": {
+          "items": {
+            "$ref": "#/$defs/CrewShift"
+          },
+          "title": "Crew",
+          "type": "array"
+        },
+        "fuel": {
+          "$ref": "#/$defs/FuelConfig"
+        },
+        "gate_occupancy": {
+          "items": {
+            "$ref": "#/$defs/GateOccupancy"
+          },
+          "title": "Gate Occupancy",
+          "type": "array"
+        },
+        "gates": {
+          "items": {
+            "$ref": "#/$defs/Gate"
+          },
+          "minItems": 1,
+          "title": "Gates",
+          "type": "array"
+        },
+        "planning": {
+          "$ref": "#/$defs/PlanningConfig"
+        },
+        "runway_movements": {
+          "items": {
+            "$ref": "#/$defs/RunwayMovement"
+          },
+          "title": "Runway Movements",
+          "type": "array"
+        },
+        "runways": {
+          "items": {
+            "$ref": "#/$defs/Runway"
+          },
+          "minItems": 1,
+          "title": "Runways",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "separation": {
+          "$ref": "#/$defs/SeparationConfig"
+        },
+        "service": {
+          "$ref": "#/$defs/ServiceConfig"
+        },
+        "subject": {
+          "$ref": "#/$defs/SubjectAircraft"
+        },
+        "taxi_blockages": {
+          "items": {
+            "$ref": "#/$defs/TaxiBlockage"
+          },
+          "title": "Taxi Blockages",
+          "type": "array"
+        },
+        "taxi_routes": {
+          "items": {
+            "$ref": "#/$defs/TaxiRoute"
+          },
+          "minItems": 1,
+          "title": "Taxi Routes",
+          "type": "array"
+        },
+        "turbulence": {
+          "$ref": "#/$defs/TurbulenceConfig"
+        },
+        "utility": {
+          "$ref": "#/$defs/UtilityConfig"
+        }
+      },
+      "required": [
+        "subject",
+        "separation",
+        "runways",
+        "runway_movements",
+        "gates",
+        "gate_occupancy",
+        "taxi_routes",
+        "taxi_blockages",
+        "service",
+        "fuel",
+        "crew",
+        "connections",
+        "turbulence",
+        "utility",
+        "planning"
+      ],
+      "title": "OperationalConfig",
+      "type": "object"
+    },
+    "PlanningConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_cap": {
+          "default": 2000,
+          "exclusiveMinimum": 0,
+          "title": "Candidate Cap",
+          "type": "integer"
+        }
+      },
+      "title": "PlanningConfig",
+      "type": "object"
+    },
+    "RoleUtilityConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "metrics": {
+          "items": {
+            "$ref": "#/$defs/MetricSpec"
+          },
+          "title": "Metrics",
+          "type": "array"
+        }
+      },
+      "required": [
+        "metrics"
+      ],
+      "title": "RoleUtilityConfig",
+      "type": "object"
+    },
+    "Runway": {
+      "additionalProperties": false,
+      "properties": {
+        "open_windows": {
+          "items": {
+            "$ref": "#/$defs/TimeWindow"
+          },
+          "title": "Open Windows",
+          "type": "array"
+        },
+        "runway_id": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Runway Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "runway_id",
+        "open_windows"
+      ],
+      "title": "Runway",
+      "type": "object"
+    },
+    "RunwayExposure": {
+      "additionalProperties": false,
+      "properties": {
+        "exposure_index": {
+          "minimum": 0,
+          "title": "Exposure Index",
+          "type": "number"
+        },
+        "runway_id": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Runway Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "runway_id",
+        "exposure_index"
+      ],
+      "title": "RunwayExposure",
+      "type": "object"
+    },
+    "RunwayMovement": {
+      "additionalProperties": false,
+      "description": "A fixed background movement (not re-sequenced by the planner).",
+      "properties": {
+        "kind": {
+          "enum": [
+            "arrival",
+            "departure"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "movement_id": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Movement Id",
+          "type": "string"
+        },
+        "runway_id": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Runway Id",
+          "type": "string"
+        },
+        "time_min": {
+          "title": "Time Min",
+          "type": "integer"
+        },
+        "wake_category": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Wake Category",
+          "type": "string"
+        }
+      },
+      "required": [
+        "movement_id",
+        "runway_id",
+        "time_min",
+        "wake_category",
+        "kind"
+      ],
+      "title": "RunwayMovement",
+      "type": "object"
+    },
+    "SeparationConfig": {
+      "additionalProperties": false,
+      "description": "Complete leader x follower matrix of minimum runway time separation.",
+      "properties": {
+        "categories": {
+          "items": {
+            "maxLength": 64,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Categories",
+          "type": "array"
+        },
+        "rules": {
+          "items": {
+            "$ref": "#/$defs/SeparationRule"
+          },
+          "title": "Rules",
+          "type": "array"
+        }
+      },
+      "required": [
+        "categories",
+        "rules"
+      ],
+      "title": "SeparationConfig",
+      "type": "object"
+    },
+    "SeparationRule": {
+      "additionalProperties": false,
+      "properties": {
+        "follower_category": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Follower Category",
+          "type": "string"
+        },
+        "leader_category": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Leader Category",
+          "type": "string"
+        },
+        "min_separation_min": {
+          "minimum": 0,
+          "title": "Min Separation Min",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "leader_category",
+        "follower_category",
+        "min_separation_min"
+      ],
+      "title": "SeparationRule",
+      "type": "object"
+    },
+    "ServiceConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "service_duration_min": {
+          "exclusiveMinimum": 0,
+          "title": "Service Duration Min",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "service_duration_min"
+      ],
+      "title": "ServiceConfig",
+      "type": "object"
+    },
+    "SubjectAircraft": {
+      "additionalProperties": false,
+      "description": "The single disrupted inbound flight being planned.",
+      "properties": {
+        "assigned_gate_id": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Assigned Gate Id",
+          "type": "string"
+        },
+        "flight_label": {
+          "title": "Flight Label",
+          "type": "string"
+        },
+        "runway_occupancy_min": {
+          "exclusiveMinimum": 0,
+          "title": "Runway Occupancy Min",
+          "type": "integer"
+        },
+        "scheduled_gate_in_min": {
+          "title": "Scheduled Gate In Min",
+          "type": "integer"
+        },
+        "wake_category": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Wake Category",
+          "type": "string"
+        }
+      },
+      "required": [
+        "flight_label",
+        "wake_category",
+        "runway_occupancy_min",
+        "assigned_gate_id",
+        "scheduled_gate_in_min"
+      ],
+      "title": "SubjectAircraft",
+      "type": "object"
+    },
+    "TaxiBlockage": {
+      "additionalProperties": false,
+      "properties": {
+        "blockage_id": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Blockage Id",
+          "type": "string"
+        },
+        "end_min": {
+          "title": "End Min",
+          "type": "integer"
+        },
+        "segment_id": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Segment Id",
+          "type": "string"
+        },
+        "start_min": {
+          "title": "Start Min",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "blockage_id",
+        "segment_id",
+        "start_min",
+        "end_min"
+      ],
+      "title": "TaxiBlockage",
+      "type": "object"
+    },
+    "TaxiRoute": {
+      "additionalProperties": false,
+      "description": "A valid runway->gate taxi route; only listed pairs are connected.",
+      "properties": {
+        "gate_id": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Gate Id",
+          "type": "string"
+        },
+        "route_id": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Route Id",
+          "type": "string"
+        },
+        "runway_id": {
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+          "title": "Runway Id",
+          "type": "string"
+        },
+        "segment_ids": {
+          "items": {
+            "maxLength": 64,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Segment Ids",
+          "type": "array"
+        },
+        "taxi_min": {
+          "exclusiveMinimum": 0,
+          "title": "Taxi Min",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "route_id",
+        "runway_id",
+        "gate_id",
+        "taxi_min",
+        "segment_ids"
+      ],
+      "title": "TaxiRoute",
+      "type": "object"
+    },
+    "TimeWindow": {
+      "additionalProperties": false,
+      "description": "Half-open interval [start_min, end_min) on the simulation clock.",
+      "properties": {
+        "end_min": {
+          "title": "End Min",
+          "type": "integer"
+        },
+        "start_min": {
+          "title": "Start Min",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start_min",
+        "end_min"
+      ],
+      "title": "TimeWindow",
+      "type": "object"
+    },
+    "TurbulenceConfig": {
+      "additionalProperties": false,
+      "description": "Configured turbulence-exposure PROXY; no turbulence data exists in the CSVs.",
+      "properties": {
+        "holding_exposure_per_min": {
+          "minimum": 0,
+          "title": "Holding Exposure Per Min",
+          "type": "number"
+        },
+        "runway_exposure": {
+          "items": {
+            "$ref": "#/$defs/RunwayExposure"
+          },
+          "title": "Runway Exposure",
+          "type": "array"
+        }
+      },
+      "required": [
+        "runway_exposure",
+        "holding_exposure_per_min"
+      ],
+      "title": "TurbulenceConfig",
+      "type": "object"
+    },
+    "UtilityConfig": {
+      "additionalProperties": false,
+      "description": "normalized = raw / scale; C_i = sum(w * normalized); U_i = 1 - C_i (no clipping).",
+      "properties": {
+        "atc": {
+          "$ref": "#/$defs/RoleUtilityConfig"
+        },
+        "ground": {
+          "$ref": "#/$defs/RoleUtilityConfig"
+        },
+        "pilot": {
+          "$ref": "#/$defs/RoleUtilityConfig"
+        },
+        "spillover_window_min": {
+          "exclusiveMinimum": 0,
+          "title": "Spillover Window Min",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "atc",
+        "pilot",
+        "ground",
+        "spillover_window_min"
+      ],
+      "title": "UtilityConfig",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Versioned simulation config file (configs/*.json) consumed by build_scenario.",
+  "properties": {
+    "assumptions": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Assumption"
+      },
+      "title": "Assumptions",
+      "type": "array"
+    },
+    "config_version": {
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+      "title": "Config Version",
+      "type": "string"
+    },
+    "earliest_landing_min": {
+      "minimum": 0,
+      "title": "Earliest Landing Min",
+      "type": "integer"
+    },
+    "operations": {
+      "$ref": "#/$defs/OperationalConfig"
+    },
+    "planning_horizon_min": {
+      "exclusiveMinimum": 0,
+      "title": "Planning Horizon Min",
+      "type": "integer"
+    },
+    "scenario_id": {
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+      "title": "Scenario Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "simulation_epoch_utc": {
+      "title": "Simulation Epoch Utc",
+      "type": "string"
+    },
+    "slot_step_min": {
+      "exclusiveMinimum": 0,
+      "title": "Slot Step Min",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema_version",
+    "config_version",
+    "scenario_id",
+    "simulation_epoch_utc",
+    "earliest_landing_min",
+    "planning_horizon_min",
+    "slot_step_min",
+    "operations"
+  ],
+  "title": "SimulationConfig",
+  "type": "object"
+}

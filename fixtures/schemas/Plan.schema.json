@@ -1,0 +1,72 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "gate_id": {
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+      "title": "Gate Id",
+      "type": "string"
+    },
+    "gate_in_min": {
+      "title": "Gate In Min",
+      "type": "integer"
+    },
+    "landing_min": {
+      "minimum": 0,
+      "title": "Landing Min",
+      "type": "integer"
+    },
+    "plan_id": {
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+      "title": "Plan Id",
+      "type": "string"
+    },
+    "runway_id": {
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+      "title": "Runway Id",
+      "type": "string"
+    },
+    "scenario_id": {
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+      "title": "Scenario Id",
+      "type": "string"
+    },
+    "service_end_min": {
+      "title": "Service End Min",
+      "type": "integer"
+    },
+    "state_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "State Hash",
+      "type": "string"
+    },
+    "taxi_min": {
+      "exclusiveMinimum": 0,
+      "title": "Taxi Min",
+      "type": "integer"
+    },
+    "taxi_route_id": {
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$",
+      "title": "Taxi Route Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "plan_id",
+    "scenario_id",
+    "state_hash",
+    "landing_min",
+    "runway_id",
+    "gate_id",
+    "taxi_route_id",
+    "taxi_min",
+    "gate_in_min",
+    "service_end_min"
+  ],
+  "title": "Plan",
+  "type": "object"
+}

@@ -1,0 +1,114 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "demo-success-v1",
+  "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+  "status": "consensus",
+  "reason_code": "example_fixture_mock_not_a_run",
+  "selected_plan_id": "P0015_R2_G1_T3",
+  "fallback_plan_id": "P0010_R1_G2_T2",
+  "rounds_completed": 2,
+  "agent_message_count": 6,
+  "provider_mode": "mock",
+  "events": [
+    {
+      "sequence": 0,
+      "timestamp_utc": "2026-10-31T00:00:00Z",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "round": 0,
+      "actor": "engine",
+      "event_type": "engine_summary",
+      "payload": {
+        "note": "EXAMPLE FIXTURE - mock provider, not a live or real negotiation run",
+        "fallback_plan_id": "P0010_R1_G2_T2",
+        "compromise_plan_id": "P0015_R2_G1_T3"
+      }
+    },
+    {
+      "sequence": 1,
+      "timestamp_utc": "2026-10-31T00:00:00Z",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "round": 1,
+      "actor": "atc",
+      "event_type": "agent_message",
+      "payload": {
+        "mock": true,
+        "action": "propose",
+        "plan_id": null
+      }
+    },
+    {
+      "sequence": 2,
+      "timestamp_utc": "2026-10-31T00:00:00Z",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "round": 1,
+      "actor": "pilot",
+      "event_type": "agent_message",
+      "payload": {
+        "mock": true,
+        "action": "propose",
+        "plan_id": null
+      }
+    },
+    {
+      "sequence": 3,
+      "timestamp_utc": "2026-10-31T00:00:00Z",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "round": 1,
+      "actor": "ground",
+      "event_type": "agent_message",
+      "payload": {
+        "mock": true,
+        "action": "propose",
+        "plan_id": null
+      }
+    },
+    {
+      "sequence": 4,
+      "timestamp_utc": "2026-10-31T00:00:00Z",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "round": 2,
+      "actor": "atc",
+      "event_type": "agent_message",
+      "payload": {
+        "mock": true,
+        "action": "accept",
+        "plan_id": "P0015_R2_G1_T3"
+      }
+    },
+    {
+      "sequence": 5,
+      "timestamp_utc": "2026-10-31T00:00:00Z",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "round": 2,
+      "actor": "pilot",
+      "event_type": "agent_message",
+      "payload": {
+        "mock": true,
+        "action": "accept",
+        "plan_id": "P0015_R2_G1_T3"
+      }
+    },
+    {
+      "sequence": 6,
+      "timestamp_utc": "2026-10-31T00:00:00Z",
+      "scenario_id": "demo-success-v1",
+      "state_hash": "4073e238ebb0fa6a01da2e408f4b96d41b325ea5c7095fdb0592ce3408dac36f",
+      "round": 2,
+      "actor": "ground",
+      "event_type": "agent_message",
+      "payload": {
+        "mock": true,
+        "action": "accept",
+        "plan_id": "P0015_R2_G1_T3"
+      }
+    }
+  ],
+  "elapsed_ms": 0.0,
+  "human_approval_required": true
+}
