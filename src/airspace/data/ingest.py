@@ -307,48 +307,48 @@ def select_flight(
     if missing:
         raise MissingColumnsError(f"{csv_path.name} missing required columns {missing}")
 
-    reader = pd.read_csv(
+    selected: dict[str, str | int | None] | None = None
+    selected_index: int | None = None
+    skipped_invalid = 0
+    offset = 0
+    # Context manager: the file handle is released on success AND on every exception path.
+    with pd.read_csv(
         csv_path,
         dtype=str,
         keep_default_na=False,
         usecols=list(FLIGHT_COLUMNS),
         chunksize=chunk_rows,
-    )
-    selected: dict[str, str | int | None] | None = None
-    selected_index: int | None = None
-    skipped_invalid = 0
-    offset = 0
-    for chunk in reader:
-        n = len(chunk)
-        chunk = chunk.reset_index(drop=True)
-        if row_index is not None:
-            if row_index < offset + n:
-                raw = chunk.iloc[row_index - offset].to_dict()
-                try:
-                    norm = normalize_row(raw)
-                except IngestError as exc:
-                    raise NonQualifyingRowError(row_index, [f"invalid value: {exc}"]) from exc
-                reasons = predicate_reasons(norm)
-                if reasons:
-                    raise NonQualifyingRowError(row_index, reasons)
-                selected, selected_index = norm, row_index
-                break
-        else:
-            mask = _vector_candidates(chunk)
-            for local in mask[mask].index:
-                try:
-                    norm = normalize_row(chunk.iloc[local].to_dict())
-                except IngestError:
-                    skipped_invalid += 1
-                    continue
-                if predicate_reasons(norm):  # defensive: must agree with prefilter
-                    continue
-                selected, selected_index = norm, offset + int(local)
-                break
-            if selected is not None:
-                break
-        offset += n
-    reader.close()
+    ) as reader:
+        for chunk in reader:
+            n = len(chunk)
+            chunk = chunk.reset_index(drop=True)
+            if row_index is not None:
+                if row_index < offset + n:
+                    raw = chunk.iloc[row_index - offset].to_dict()
+                    try:
+                        norm = normalize_row(raw)
+                    except IngestError as exc:
+                        raise NonQualifyingRowError(row_index, [f"invalid value: {exc}"]) from exc
+                    reasons = predicate_reasons(norm)
+                    if reasons:
+                        raise NonQualifyingRowError(row_index, reasons)
+                    selected, selected_index = norm, row_index
+                    break
+            else:
+                mask = _vector_candidates(chunk)
+                for local in mask[mask].index:
+                    try:
+                        norm = normalize_row(chunk.iloc[local].to_dict())
+                    except IngestError:
+                        skipped_invalid += 1
+                        continue
+                    if predicate_reasons(norm):  # defensive: must agree with prefilter
+                        continue
+                    selected, selected_index = norm, offset + int(local)
+                    break
+                if selected is not None:
+                    break
+            offset += n
 
     if selected is None:
         if row_index is not None:

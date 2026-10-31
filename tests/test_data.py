@@ -290,3 +290,79 @@ def test_real_october_numeric_airport_ids_flagged_unresolved():
     assert row["ORIGIN_AIRPORT"] == "14057" and row["WEATHER_DELAY"] == 26
     assert joins["origin_airport"]["status"] == "unresolved"
     assert joins["destination_airport"]["status"] == "unresolved"
+
+
+# ---- reader resource management (regression: handle leaked on exception paths) ----
+@pytest.fixture
+def tracked_readers(monkeypatch):
+    """Record every chunked reader select_flight opens; closure is then checked directly,
+    independent of garbage collection."""
+    import airspace.data.ingest as ingest
+
+    real = ingest.pd.read_csv
+    readers = []
+
+    def spy(*args, **kwargs):
+        result = real(*args, **kwargs)
+        if kwargs.get("chunksize"):
+            readers.append(result)
+        return result
+
+    monkeypatch.setattr(ingest.pd, "read_csv", spy)
+    return readers
+
+
+def _assert_all_closed(readers, expected_count):
+    assert len(readers) == expected_count
+    assert all(r.handles.handle.closed for r in readers), "chunked flights.csv reader left open"
+
+
+def test_reader_closed_after_early_return(tmp_path, tracked_readers):
+    row = select_flight(write_csv(tmp_path, THRESHOLD_ROWS), chunk_rows=2)  # match in chunk 3 of 3
+    assert row[PROVENANCE_KEY]["row_index"] == 4
+    _assert_all_closed(tracked_readers, 1)
+
+
+def test_reader_closed_when_chunk_processing_raises(tmp_path, tracked_readers, monkeypatch):
+    import airspace.data.ingest as ingest
+
+    def boom(chunk):
+        raise RuntimeError("simulated failure while processing a chunk")
+
+    monkeypatch.setattr(ingest, "_vector_candidates", boom)
+    with pytest.raises(RuntimeError, match="simulated"):
+        select_flight(write_csv(tmp_path, THRESHOLD_ROWS), chunk_rows=2)
+    _assert_all_closed(tracked_readers, 1)
+
+
+@pytest.mark.parametrize("index", [0, 1, 2, 3])  # predicate false / nulls / cancelled / diverted
+def test_reader_closed_when_explicit_row_fails_validation(tmp_path, tracked_readers, index):
+    with pytest.raises(NonQualifyingRowError):
+        select_flight(write_csv(tmp_path, THRESHOLD_ROWS), row_index=index, chunk_rows=2)
+    _assert_all_closed(tracked_readers, 1)
+
+
+def test_reader_closed_when_explicit_row_has_malformed_value(tmp_path, tracked_readers):
+    path = write_csv(tmp_path, [{"LATE_AIRCRAFT_DELAY": "21", "ARRIVAL_TIME": "2460"}])
+    with pytest.raises(NonQualifyingRowError, match="invalid value"):
+        select_flight(path, row_index=0)
+    _assert_all_closed(tracked_readers, 1)
+
+
+def test_reader_closed_when_requested_row_missing(tmp_path, tracked_readers):
+    with pytest.raises(NonQualifyingRowError, match="out of range"):
+        select_flight(write_csv(tmp_path, THRESHOLD_ROWS), row_index=99, chunk_rows=2)
+    _assert_all_closed(tracked_readers, 1)
+
+
+def test_reader_closed_after_normal_exhaustion(tmp_path, tracked_readers):
+    with pytest.raises(NoQualifyingRowError):
+        select_flight(write_csv(tmp_path, THRESHOLD_ROWS[:4]), chunk_rows=2)
+    _assert_all_closed(tracked_readers, 1)
+
+
+def test_repeated_sequential_ingestion_is_closed_and_identical(tmp_path, tracked_readers):
+    path = write_csv(tmp_path, THRESHOLD_ROWS)
+    results = [select_flight(path, chunk_rows=2) for _ in range(5)]
+    assert all(r == results[0] for r in results)
+    _assert_all_closed(tracked_readers, 5)
