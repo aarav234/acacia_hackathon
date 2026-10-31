@@ -53,7 +53,8 @@ def test_round1_has_exactly_three_different_role_contexts():
 def test_round1_independent_choices_differ_on_conflict_fixture():
     r = run_mock()
     props = {t["role"]: t["plan_id"] for t in build_transcript(r) if t["round"] == 1}
-    assert len(set(props.values())) >= 2  # modeled interests conflict
+    assert len(set(props.values())) == 3  # Member 1's success fixture: three different preferences
+    assert r.selected_plan_id not in props.values()  # the engine's compromise is a fourth plan
     assert all("MOCK" in t["mode"] for t in build_transcript(r))
 
 
@@ -86,14 +87,14 @@ def test_malformed_reply_cannot_become_acceptance(behavior, kind):
     ("accept_other_plan", "vote_not_for_exact_compromise"),
     ("wrong_hash", "state_hash_mismatch"),
     ("wrong_role", "role_mismatch"),
-    ("wrong_round", "round_mismatch"),
+    ("wrong_round", "schema_invalid"),  # Member 1 AgentMessage rejects round-1 accept at parse
     ("unknown_plan", "vote_not_for_exact_compromise"),
 ])
 def test_round2_wrong_plan_hash_role_round_fail(behavior, problem):
     r = run_mock({"ground": {1: "success", 2: behavior}})
     assert r.status != "consensus"
     ev = next(e for e in r.events if e.event_type == "agent_response_invalid")
-    assert problem in ev.payload["problems"]
+    assert problem in (ev.payload.get("problems") or [ev.payload["error_kind"]])
 
 
 def test_round1_unknown_plan_is_invalid_and_stops_before_round2():
@@ -165,14 +166,17 @@ def test_no_feasible_plan_calls_no_model():
     assert r.selected_plan_id is None and r.agent_message_count == 0 and _calls(agents) == 0
 
 
-def test_no_feasible_plan_with_real_engine_config():
-    from airspace.engine._stub_fixture import build_conflict_scenario
-    s = build_conflict_scenario(fuel={"snapshot_kg": 3000.0, "approach_burn_kg": 600.0,
-                                      "airborne_burn_kg_per_min": 45.0, "taxi_burn_kg_per_min": 12.0,
-                                      "min_reserve_kg": 3200.0})
+def test_no_feasible_plan_with_real_fixture():
     agents = build_agents("mock")
-    r = asyncio.run(negotiate(s, agents))
-    assert r.reason_code == "no_feasible_plan" and _calls(agents) == 0
+    r = asyncio.run(negotiate(conflict_scenario("no_feasible"), agents))
+    assert r.status == "human_review" and r.reason_code == "no_feasible_plan" and _calls(agents) == 0
+
+
+def test_no_positive_gain_with_real_fixture_skips_round2():
+    agents = build_agents("mock")
+    r = asyncio.run(negotiate(conflict_scenario("no_positive_gain"), agents))
+    assert r.status == "fallback" and r.reason_code == "no_positive_bargain"
+    assert r.rounds_completed == 1 and _calls(agents) == 3
 
 
 def test_three_accepts_cannot_override_engine_violation():
@@ -218,9 +222,17 @@ def test_no_actionable_plan_when_fallback_invalid():
     real = base.validate_plan
     seen = {"r2": False}
 
+    fb_id = {}
+
+    def choose_fb(assessments):
+        from airspace.engine.fallback import choose_fallback
+        p = choose_fallback(assessments)
+        fb_id["id"] = p.plan_id
+        return p
+
     def validate(s, p):
-        if seen["r2"] and p.plan_id.startswith("P010"):
-            return infeasible(p, "R-FUEL-RESERVE")
+        if seen["r2"] and p.plan_id == fb_id.get("id"):
+            return infeasible(p, "FUEL-RESERVE")
         return real(s, p)
 
     agents = build_agents("mock", mock_behaviors={"ground": {1: "success", 2: "reject"}})
@@ -232,7 +244,8 @@ def test_no_actionable_plan_when_fallback_invalid():
         return await orig(ctx)
 
     agents["atc"].respond = mark
-    r = asyncio.run(negotiate(conflict_scenario(), agents, engine=engine_with(validate_plan=validate)))
+    r = asyncio.run(negotiate(conflict_scenario(), agents,
+                              engine=engine_with(validate_plan=validate, choose_fallback=choose_fb)))
     assert r.status == "human_review" and r.reason_code == "fallback_invalid"
     assert r.selected_plan_id is None
 

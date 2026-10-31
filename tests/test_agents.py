@@ -99,8 +99,8 @@ class FakeProvider:
 
 
 def _msg(role="atc", rnd=1, **kw):
-    m = {"scenario_id": "S", "state_hash": "H", "role": role, "round": rnd, "action": "propose",
-         "plan_id": "P1", "ranked_plan_ids": ["P1"], "objections": [], "rationale": "ok", "evidence_ids": []}
+    m = {"scenario_id": "S", "state_hash": "a" * 64, "role": role, "round": rnd, "action": "propose",
+         "plan_id": "P0010_R1_G1_T1", "ranked_plan_ids": ["P0010_R1_G1_T1"], "objections": [], "rationale": "ok", "evidence_ids": []}
     m.update(kw)
     return json.dumps(m)
 
@@ -190,7 +190,10 @@ def test_role_contexts_scoped_by_domain():
             assert set(p) >= {"plan_id", "your_utility", "your_gain_vs_fallback"}
             assert "utilities" not in p  # other roles' utilities are not in round 1
     paths = lambda r: " ".join(e["field_path"] for e in agents[r].contexts[0]["evidence"])  # noqa: E731
-    assert "fuel" not in paths("ground") and "gates" not in paths("pilot") and "fuel" not in paths("atc")
+    assert "fuel" not in paths("ground") and "gate" not in paths("pilot") and "fuel" not in paths("atc")
+    for r in ROLES:  # historical row (incl. actual arrival) never reaches a role context
+        assert "historical_row" not in paths(r)
+        assert set(agents[r].contexts[0]["rule_ids"]) <= set(__import__("airspace.contracts", fromlist=["x"]).RULE_IDS)
 
 
 def test_shortlist_contains_fallback_and_each_role_best():

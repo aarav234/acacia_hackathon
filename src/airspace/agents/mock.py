@@ -110,8 +110,8 @@ class MockAgent:
                             objections=[{"code": "preference", "plan_id": target, "rule_id": None,
                                          "evidence_ids": ev, "reason": f"{MOCK_LABEL} prefers own round-1 plan"}])
         if b == "unknown_plan":
-            base["plan_id"] = "P999-NOPE"
-            base["ranked_plan_ids"] = ["P999-NOPE"]
+            base["plan_id"] = "P9999_NOPE_NOPE_NOPE"
+            base["ranked_plan_ids"] = ["P9999_NOPE_NOPE_NOPE"]
         elif b == "wrong_role":
             base["role"] = next(r for r in ("atc", "pilot", "ground") if r != self.role)
         elif b == "wrong_hash":

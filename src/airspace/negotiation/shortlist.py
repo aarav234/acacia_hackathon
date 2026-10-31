@@ -8,6 +8,8 @@ tie-breaking throughout.
 from __future__ import annotations
 
 from airspace.contracts import ROLES, Assessment
+from airspace.engine.bargaining import pareto_front as _engine_pareto_front
+from airspace.engine.bargaining import role_best as _engine_role_best
 
 MAX_SHORTLIST = 12
 
@@ -17,19 +19,13 @@ def _order(a: Assessment) -> tuple:
 
 
 def role_best(assessments: list[Assessment], role: str) -> Assessment:
-    return min(assessments, key=lambda a: (-a.utilities[role], *_order(a)))
+    best = _engine_role_best(assessments, role)  # Member 1's helper (fallback tie-break order)
+    assert best is not None
+    return best
 
 
 def pareto_front(assessments: list[Assessment]) -> list[Assessment]:
-    front = []
-    for a in assessments:
-        dominated = any(
-            all(b.utilities[r] >= a.utilities[r] for r in ROLES)
-            and any(b.utilities[r] > a.utilities[r] for r in ROLES)
-            for b in assessments if b is not a)
-        if not dominated:
-            front.append(a)
-    return sorted(front, key=_order)
+    return sorted(_engine_pareto_front(assessments), key=_order)
 
 
 def build_shortlist(assessments: list[Assessment], fallback_id: str,

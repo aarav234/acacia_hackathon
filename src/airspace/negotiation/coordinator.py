@@ -79,7 +79,8 @@ class EngineAPI:
     assess_candidates: Callable[[Scenario, list[Plan]], list[Assessment]]
     choose_fallback: Callable[[list[Assessment]], Plan | None]
     choose_compromise: Callable[..., Plan | None]
-    state_hash_fn: Callable[[dict], str] | None = None
+    state_hash_fn: Callable[[Any], str] | None = None
+    sealed_check: Callable[[Scenario], None] | None = None
     name: str = "airspace.engine"
 
     @classmethod
@@ -98,7 +99,8 @@ class EngineAPI:
                    assess_candidates=scoring.assess_candidates,
                    choose_fallback=fallback.choose_fallback,
                    choose_compromise=bargaining.choose_compromise,
-                   state_hash_fn=getattr(contracts, "compute_state_hash", None))
+                   state_hash_fn=contracts.compute_state_hash,
+                   sealed_check=contracts.ensure_sealed)
 
 
 class _Budget:
@@ -314,11 +316,14 @@ class _Run:
 
         # 1. validate / hash scenario
         try:
-            Scenario.model_validate(s.model_dump())
+            Scenario.model_validate_json(s.model_dump_json())  # strict re-validation + hash re-check
+            if eng.sealed_check is not None:
+                eng.sealed_check(s)  # Member 1's ensure_sealed: detects in-place mutation
             if eng.state_hash_fn is not None and eng.state_hash_fn(s.model_dump()) != s.state_hash:
                 return self._finish("human_review", "scenario_hash_mismatch", None)
         except Exception as exc:
-            return self._finish("human_review", "invalid_scenario", None, error=type(exc).__name__)
+            reason = "stale_state" if type(exc).__name__ == "StaleStateError" else "invalid_scenario"
+            return self._finish("human_review", reason, None, error=type(exc).__name__)
         if self._stale():
             return self._finish("human_review", "stale_state", None)
 
@@ -357,18 +362,13 @@ class _Run:
             "rule": "first feasible by (landing_min, gate_in_min, plan_id)"})
 
         short, tags = build_shortlist(good, fb.plan.plan_id)
-        rule_evidence: dict[str, list[str]] = {}
-        for r in reports.values():
-            for v in r.violations:
-                rule_evidence.setdefault(v.rule_id, [])
-                rule_evidence[v.rule_id] = sorted(set(rule_evidence[v.rule_id]) | set(v.evidence_ids))
         self.log.add(0, "coordinator", "shortlist_published", {
             "plan_ids": [a.plan.plan_id for a in short], "tags": tags,
             "full_feasible_count": len(good), "note": "prompt shortlist only; optimizer searches full catalogue"})
 
         # 2. round 1
         ctx1 = {r: build_round1_context(role=r, scenario=s, shortlist=short, tags=tags, fallback=fb,
-                                        rule_ids=role_rule_ids(r, rule_evidence, s.provenance))
+                                        rule_ids=role_rule_ids(r))
                 for r in ROLES}
         out1 = await self._round(1, ctx1)
         self.rounds_completed = 1

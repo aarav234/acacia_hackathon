@@ -1,8 +1,8 @@
 """Shared helpers for Member 2 tests.
 
-``conflict_scenario`` is the ONE place that obtains the scenario fixture. It
-currently uses the bootstrap stub's labelled simulation fixture; on rebase,
-point it at Member 1's canonical fixture loader.
+Scenarios come from Member 1's canonical fixtures (``airspace.data.fixtures``):
+``success`` (historical anchor + simulated ops, three different role preferences
+and a distinct Nash compromise), ``no_feasible`` and ``no_positive_gain``.
 """
 from __future__ import annotations
 
@@ -14,9 +14,9 @@ from airspace.contracts import Plan, ValidationReport, Violation
 from airspace.negotiation import EngineAPI, negotiate
 
 
-def conflict_scenario():
-    from airspace.engine._stub_fixture import build_conflict_scenario  # TODO(M1): canonical fixture
-    return build_conflict_scenario()
+def conflict_scenario(name: str = "success"):
+    from airspace.data.fixtures import load_fixture_scenario
+    return load_fixture_scenario(name)
 
 
 def run_mock(behaviors: dict[str, Any] | None = None, **kw):
@@ -33,7 +33,8 @@ def engine_with(**overrides) -> EngineAPI:
     return base
 
 
-def infeasible(plan: Plan, rule: str = "R-TEST") -> ValidationReport:
+def infeasible(plan: Plan, rule: str = "FUEL-RESERVE") -> ValidationReport:
     return ValidationReport(plan_id=plan.plan_id, feasible=False, metrics={},
                             violations=[Violation(rule_id=rule, reason="forced by test", observed="x",
-                                                  required="y", units="n/a", evidence_ids=[])])
+                                                  required="y", units="kg",
+                                                  evidence_ids=["sim:operations.fuel"])])

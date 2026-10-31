@@ -5,7 +5,7 @@
     python -m airspace.negotiation.example --mode replay --trace runs/trace.json
     ANTHROPIC_API_KEY=... python -m airspace.negotiation.example --mode live
 
-The scenario comes from ``_load_fixture`` — swap in Member 1's canonical fixture.
+Scenarios come from Member 1's ``airspace.data.fixtures.load_fixture_scenario``.
 """
 from __future__ import annotations
 
@@ -19,13 +19,14 @@ from airspace.agents.replay import export_trace
 from airspace.negotiation import agent_votes, build_transcript, negotiate
 
 
-def _load_fixture():
-    from airspace.engine._stub_fixture import build_conflict_scenario  # TODO(M1): canonical fixture
-    return build_conflict_scenario()
+def _load_fixture(name: str = "success"):
+    from airspace.data.fixtures import load_fixture_scenario  # Member 1's canonical fixtures
+    return load_fixture_scenario(name)
 
 
-async def main(mode: str, trace: str | None, save_trace: str | None, timeout: float) -> int:
-    scenario = _load_fixture()
+async def main(mode: str, trace: str | None, save_trace: str | None, timeout: float,
+               fixture: str = "success") -> int:
+    scenario = _load_fixture(fixture)
     try:
         agents = build_agents(mode, replay_path=trace)
     except LiveProviderUnavailable as exc:
@@ -55,5 +56,6 @@ if __name__ == "__main__":
     ap.add_argument("--trace")
     ap.add_argument("--save-trace")
     ap.add_argument("--timeout", type=float, default=15.0)
+    ap.add_argument("--fixture", choices=["success", "no_feasible", "no_positive_gain"], default="success")
     a = ap.parse_args()
-    raise SystemExit(asyncio.run(main(a.mode, a.trace, a.save_trace, a.timeout)))
+    raise SystemExit(asyncio.run(main(a.mode, a.trace, a.save_trace, a.timeout, a.fixture)))

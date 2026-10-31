@@ -77,30 +77,34 @@ All three roles get the public plan IDs and schedule fields (`landing_min, runwa
 gate_id, taxi_route_id, taxi_min, gate_in_min, service_end_min`), the fallback ID, and the
 protocol limits. Each role also gets **only its own** items:
 
-| Role | metrics (prefix) | evidence field paths | sees |
-|---|---|---|---|
-| atc | `atc_*` (holding, landing delay, separation margin, spillover **proxy**) | runway, separation, movement, taxi | own utility, own gain vs fallback, own cost components |
-| pilot | `pilot_*` (extra fuel, fuel at gate, reserve margin, connections, turbulence proxy) | fuel, reserve, connection, turbulence | same |
-| ground | `ground_*` (turnaround delay, crew overtime, gate change, gate buffer margin) | gate, crew, service, turnaround, taxi | same |
+| Role | validation metrics (`METRIC_ROLE_PREFIXES`) | cost components (`components[role]`) | evidence (Member 1 IDs) | rule IDs (subset of `RULE_IDS`) |
+|---|---|---|---|---|
+| atc | `atc_min_lead/follow_separation_margin_min` | landing delay, spillover **proxy** | `sim:scenario.planning`, `sim:operations.{subject,separation,runways,runway_movements,taxi_routes,taxi_blockages,utility}` | `PLAN-*`, `RWY-*`, `TAXI-BLOCK` |
+| pilot | `pilot_fuel_at_gate_in_kg`, `pilot_reserve_margin_kg`, `pilot_holding_min` | incremental fuel, connection penalty, turbulence index | `sim:scenario.planning`, `sim:operations.{fuel,connections,turbulence,utility}` | `PLAN-*`, `FUEL-RESERVE` |
+| ground | `ground_covering_crew_count` | turnaround delay, crew overtime, gate change | `sim:operations.{subject,gates,gate_occupancy,taxi_routes,taxi_blockages,service,crew,utility}` | `PLAN-*`, `GATE-*`, `TAXI-BLOCK`, `CREW-COVERAGE` |
+
+Every role also sees its own utility, its own gain against the fallback, and its own `raw./normalized./weighted./cost` components.
+`hist:*` and `derived:clock.*` evidence, including the historical actual arrival, goes to **no** role,
+so the source row cannot leak into the simulated decision.
 
 Round 1 does not show the other roles' utilities. Round 2 adds the other two roles' validated
 offers, the compromise with `verified_gains_all_roles` (engine-computed), the fallback,
 and the claim-check verdicts.
 
 ### Shortlist (≤ 12, deterministic)
-Fallback → each role's utility maximiser (tie-break `(-U, landing, gate_in, plan_id)`) →
-Pareto-optimal plans spaced evenly along `(landing, gate_in, plan_id)` → highest total
+Fallback → each role's utility maximiser (Member 1's `engine.bargaining.role_best`) →
+Pareto-optimal plans (`engine.bargaining.pareto_front`) spaced evenly along `(landing, gate_in, plan_id)` → highest total
 utility, if there is still room. Every plan is tagged (`fallback`, `best_for_<role>`, `pareto`, …).
 The full feasible catalogue, with utilities and metrics, is logged as `feasible_catalogue`.
 
 ### Shared-offer envelope `airspace-offer-v1`
 ```json
 {"envelope": "airspace-offer-v1", "from_role": "pilot", "round": 1, "valid": true,
- "action": "propose", "plan_id": "P015-27L-B4-T2",
- "ranked_plan_ids": ["P015-27L-B4-T2", "P010-27R-B4-T4", "P025-27L-B4-T2"],
- "objections": [{"code": "preference", "plan_id": "P010-27R-B4-T4", "rule_id": null,
-                 "evidence_ids": ["EV-fuel"], "reason": "...", "check": "preference_logged"}],
- "evidence_ids": ["EV-fuel"], "rationale_untrusted": "..."}
+ "action": "propose", "plan_id": "P0015_R2_G3_T4",
+ "ranked_plan_ids": ["P0015_R2_G3_T4", "P0010_R1_G2_T2", "P0015_R2_G1_T3"],
+ "objections": [{"code": "preference", "plan_id": "P0010_R1_G2_T2", "rule_id": null,
+                 "evidence_ids": ["sim:operations.fuel"], "reason": "...", "check": "preference_logged"}],
+ "evidence_ids": ["sim:operations.fuel"], "rationale_untrusted": "..."}
 ```
 Only validated offers are broadcast. Another agent's rationale is labelled untrusted.
 
@@ -220,8 +224,8 @@ async def run(scenario, mode="mock"):
 result, transcript, votes = asyncio.run(run(scenario))
 approved = record_human_decision(result, approver_id="duty-mgr", decision="approved")
 ```
-CLI: `python -m airspace.negotiation.example --mode mock [--save-trace runs/t.json]` and
-`--mode replay --trace runs/t.json`.
+CLI: `python -m airspace.negotiation.example --mode mock [--fixture success|no_feasible|no_positive_gain] [--save-trace runs/t.json]` and
+`--mode replay --trace runs/t.json`. Scenarios: `airspace.data.fixtures.load_fixture_scenario(name)`.
 
 Optional keyword-only additions to `negotiate` (proposed in contract_changes.md CC-1):
 `engine=EngineAPI(...)` for test injection, `state_probe=lambda: current_hash` for
@@ -239,9 +243,10 @@ stale-run detection, `epsilon`, `clock`.
 | State hash changed | `human_review / stale_state`; start a new run |
 
 ## 11. Known limitations
-* Developed against **bootstrap stubs** of Member 1's contracts and engine (marked DO NOT MERGE).
-  The metric prefix convention (`atc_`/`pilot_`/`ground_`) and evidence field-path keywords
-  need confirming against the real engine (CC-2).
+* Rebased onto Member 1's `feat/data-engine`, and the stub commit is gone. Imports resolve to
+  the real `airspace.contracts` and `airspace.engine`; the coordinator also calls `compute_state_hash`
+  and `ensure_sealed`. Member 3's packaging (`pyproject.toml`, `src/airspace/__init__.py`)
+  is still pending, so run with `PYTHONPATH=src:tests` for now.
 * **Live validation is outstanding.** No API key or permission was available, so no genuine
   live trace has been captured, and the AI-coordination claim is not yet demonstrated.
 * `unverified_numbers` is a heuristic and only advisory.
