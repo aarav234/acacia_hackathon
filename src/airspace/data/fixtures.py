@@ -45,6 +45,12 @@ ANCHOR_ROW_FILE = "historical_anchor_row.json"
 SIMULATION_EPOCH = "2000-01-01T00:00:00Z"  # labelled simulation epoch, NOT a historical instant
 
 FixtureName = Literal["success", "no_feasible", "no_positive_gain"]
+FixtureVersion = Literal["v1", "v2"]
+# v1: published 5-minute landing grid (unchanged, reproducible baseline).
+# v2: same scenarios on the contract's full integer-minute grid (preferred resolution).
+SLOT_STEP_BY_VERSION: dict[str, int] = {"v1": 5, "v2": 1}
+DEFAULT_FIXTURE_VERSION: FixtureVersion = "v1"  # teammate-facing default; switching is a coordinated change
+PREFERRED_FIXTURE_VERSION: FixtureVersion = "v2"
 CONFIG_FILES: dict[str, str] = {
     "success": "sim_success_v1.json",
     "no_feasible": "sim_no_feasible_v1.json",
@@ -232,16 +238,38 @@ BUILDERS = {
 }
 
 
-def config_dict(name: FixtureName) -> dict:
-    return copy.deepcopy(BUILDERS[name]())
+def config_dict(name: FixtureName, version: FixtureVersion = "v1") -> dict:
+    cfg = copy.deepcopy(BUILDERS[name]())
+    if version == "v1":
+        return cfg
+    if version != "v2":
+        raise ValueError(f"unknown fixture version {version!r}")
+    cfg["slot_step_min"] = SLOT_STEP_BY_VERSION["v2"]
+    cfg["config_version"] = cfg["config_version"].removesuffix("-v1") + "-v2"
+    cfg["scenario_id"] = cfg["scenario_id"].removesuffix("-v1") + "-v2"
+    cfg["assumptions"] = list(cfg.get("assumptions", [])) + [
+        {"field_path": "planning", "note": "v2: 1-minute landing resolution (the contract's integer-minute decision "
+                                           "space); all operating values identical to v1."}]
+    return cfg
 
 
-def build_config(name: FixtureName) -> SimulationConfig:
-    return SimulationConfig.model_validate_json(json.dumps(config_dict(name)))
+def build_config(name: FixtureName, version: FixtureVersion = "v1") -> SimulationConfig:
+    return SimulationConfig.model_validate_json(json.dumps(config_dict(name, version)))
 
 
-def config_path(name: FixtureName) -> Path:
-    return CONFIGS_DIR / CONFIG_FILES[name]
+def _versioned(filename: str, version: FixtureVersion) -> str:
+    if version == "v1":
+        return filename
+    stem, ext = filename.rsplit(".", 1)
+    return f"{stem.removesuffix('_v1')}_{version}.{ext}"
+
+
+def config_path(name: FixtureName, version: FixtureVersion = "v1") -> Path:
+    return CONFIGS_DIR / _versioned(CONFIG_FILES[name], version)
+
+
+def scenario_path(name: FixtureName, version: FixtureVersion = DEFAULT_FIXTURE_VERSION) -> Path:
+    return FIXTURES_DIR / _versioned(SCENARIO_FILES[name], version)
 
 
 def load_anchor_row() -> dict[str, object] | None:
@@ -262,12 +290,12 @@ def fixture_row(name: FixtureName) -> dict[str, object]:
     return synthetic_row(f"SYNTHETIC edge-case fixture '{name}'; no historical row is claimed.")
 
 
-def load_fixture_scenario(name: FixtureName) -> Scenario:
-    return load_scenario(FIXTURES_DIR / SCENARIO_FILES[name])
+def load_fixture_scenario(name: FixtureName, version: FixtureVersion = DEFAULT_FIXTURE_VERSION) -> Scenario:
+    return load_scenario(scenario_path(name, version))
 
 
-def load_example_assessments() -> list[Assessment]:
-    text = (FIXTURES_DIR / "example_assessments.json").read_text(encoding="utf-8")
+def load_example_assessments(version: FixtureVersion = DEFAULT_FIXTURE_VERSION) -> list[Assessment]:
+    text = (FIXTURES_DIR / _versioned("example_assessments.json", version)).read_text(encoding="utf-8")
     return TypeAdapter(list[Assessment]).validate_json(text)
 
 
@@ -320,16 +348,21 @@ def write_all(refresh_anchor: bool = False) -> list[Path]:
         path = FIXTURES_DIR / ANCHOR_ROW_FILE
         path.write_text(json.dumps(row, indent=2) + "\n", encoding="utf-8")
         written.append(path)
-    for name in BUILDERS:
-        cfg = build_config(name)  # validates
-        cpath = config_path(name)
+    for version, name in ((v, n) for v in SLOT_STEP_BY_VERSION for n in BUILDERS):
+        cfg = build_config(name, version)  # validates
+        cpath = config_path(name, version)
         cpath.write_text(json.dumps(cfg.model_dump(mode="json"), indent=2) + "\n", encoding="utf-8")
         written.append(cpath)
         scenario = build_scenario(fixture_row(name), cpath)
-        spath = FIXTURES_DIR / SCENARIO_FILES[name]
+        spath = scenario_path(name, version)
         dump_scenario(scenario, spath)
         written.append(spath)
-        if name == "success":
+        if name == "success" and version == "v2":
+            apath = FIXTURES_DIR / _versioned("example_assessments.json", version)
+            apath.write_text(json.dumps([a.model_dump(mode="json") for a in solve_scenario(scenario).assessments], indent=2) + "\n",
+                             encoding="utf-8")
+            written.append(apath)
+        if name == "success" and version == "v1":
             outcome = solve_scenario(scenario)
             apath = FIXTURES_DIR / "example_assessments.json"
             apath.write_text(

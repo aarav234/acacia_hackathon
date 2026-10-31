@@ -24,6 +24,11 @@ from airspace.data.fixtures import DEMO_SCALES, FIXTURES_DIR, SIMULATION_EPOCH, 
 from airspace.data.scenario import scenario_from_config, synthetic_row
 
 ANCHOR_ROWS_FILE = "challenge_anchor_rows.json"
+# Landing-time resolution. Production scenario generation uses the contract's full integer-minute
+# decision space. The frozen research suites (suite_specs, stratified_specs) pin the published
+# 5-minute baseline so every reported result stays reproducible.
+PRODUCTION_SLOT_STEP_MIN = 1
+BASELINE_SLOT_STEP_MIN = 5
 # First qualifying completed row (file order) per destination size class.
 ANCHOR_ROW_INDEX = {"MIA": 70, "DEN": 171, "SJC": 682, "ITO": 2845}
 SUITE_SEED = 20261031
@@ -41,7 +46,7 @@ class ChallengeAssumptions:
     turnover_buffer_min: int = 5  # not in workbook
     earliest_landing_min: int = 20  # decision at minute 0 => 20-min gate-change notice holds by construction
     planning_horizon_min: int = 45
-    slot_step_min: int = 5
+    slot_step_min: int = PRODUCTION_SLOT_STEP_MIN
 
 
 @dataclass(frozen=True)
@@ -137,11 +142,15 @@ def challenge_config_dict(c: ChallengeConstraints, spec: ScenarioSpec) -> dict:
     typical_taxi = 6
     scheduled_gate_in = earliest + typical_taxi - spec.delay_behind_schedule_min
     shift = fc.ground_crew_shift_h * 60
-    crews = []
+    crews, off_shift = [], []
     for i, (off, avail_from) in enumerate(zip(spec.crew_regular_end_offsets, spec.crew_available_from)):
         regular_end = scheduled_gate_in + off
         start = max(regular_end - shift, avail_from)
-        crews.append({"crew_id": f"C{i + 1}", "available": {"start_min": start, "end_min": regular_end + a.max_overtime_min},
+        end = regular_end + a.max_overtime_min
+        if end <= start:  # shift (incl. overtime cap) is over before it starts: crew unavailable, not an empty window
+            off_shift.append(f"C{i + 1}")
+            continue
+        crews.append({"crew_id": f"C{i + 1}", "available": {"start_min": start, "end_min": end},
                       "regular_end_min": max(start, regular_end), "busy": []})
 
     return {
@@ -192,7 +201,8 @@ def challenge_config_dict(c: ChallengeConstraints, spec: ScenarioSpec) -> dict:
             {"field_path": "operations.runways", "note": f"Workbook active_runways={prof.active_runways} for {spec.airport}; closures are simulated: {list(spec.closed_runways)}."},
             {"field_path": "operations.runway_movements", "note": f"SIMULATED (seed {spec.seed}): utilisation {spec.traffic_utilisation} of workbook max_runway_ops_per_hour={prof.max_runway_ops_per_hour}."},
             {"field_path": "operations.gates", "note": f"Assigned gate + workbook spare_gates_at_any_time={prof.spare_gates_at_any_time}; the other {prof.gates - len(gates)} gates are not modelled."},
-            {"field_path": "operations.crew", "note": f"Workbook ground crew shift {fc.ground_crew_shift_h} h (overtime after it). Shift timing and the {a.max_overtime_min} min hard overtime cap are simulated. The 1.5x overtime cost multiplier is not representable as a cross-metric weight."},
+            {"field_path": "operations.crew", "note": f"Workbook ground crew shift {fc.ground_crew_shift_h} h (overtime after it). Shift timing and the {a.max_overtime_min} min hard overtime cap are simulated. The 1.5x overtime cost multiplier is not representable as a cross-metric weight."
+                     + (f" Off shift for the whole scenario (omitted): {off_shift}." if off_shift else "")},
             {"field_path": "planning", "note": f"Earliest landing {earliest} min after the decision, so the workbook {fc.gate_change_notice_min}-min gate-change notice holds by construction."},
         ],
     }
@@ -218,14 +228,19 @@ SUITE_CATEGORIES: dict[str, dict] = {
 }
 
 
+def _baseline(spec: ScenarioSpec) -> ScenarioSpec:
+    return replace(spec, assumptions=replace(spec.assumptions, slot_step_min=BASELINE_SLOT_STEP_MIN))
+
+
 def suite_specs() -> list[ScenarioSpec]:
+    """The published 40-scenario suite, pinned to the 5-minute baseline grid."""
     specs = []
     for i, (airport, cat) in enumerate((a, c) for a in ANCHOR_ROW_INDEX for c in SUITE_CATEGORIES):
         kw = dict(SUITE_CATEGORIES[cat])
         if "closed_runways" in kw:  # drop closures for runways the airport does not have
             n = {"MIA": 3, "DEN": 4, "SJC": 2, "ITO": 1}[airport]
             kw["closed_runways"] = tuple(cr for cr in kw["closed_runways"] if cr[0] < n)
-        specs.append(_spec(airport, cat, i, **kw))
+        specs.append(_baseline(_spec(airport, cat, i, **kw)))
     return specs
 
 
@@ -296,7 +311,11 @@ COMMON_FACTORS = "all families: groundspeed U{120,140,160} kt, max overtime U{30
 
 
 def _stratified_spec(airport: str, family: str, k: int, cell: int) -> ScenarioSpec:
-    seed = STRATIFIED_BASE_SEED + 1000 * cell + k
+    spec = _stratified_spec_seeded(airport, family, STRATIFIED_BASE_SEED + 1000 * cell + k)
+    return replace(spec, scenario_id=f"strat-{PARTITION_BY_K[k]}-{airport.lower()}-{family}-k{k}")
+
+
+def _stratified_spec_seeded(airport: str, family: str, seed: int) -> ScenarioSpec:
     rng = random.Random(seed)
     a = replace(ChallengeAssumptions(), approach_groundspeed_kt=float(rng.choice([120, 140, 160])),
                 max_overtime_min=rng.choice([30, 60, 90]))
@@ -318,7 +337,7 @@ def _stratified_spec(airport: str, family: str, k: int, cell: int) -> ScenarioSp
         kw["crew_regular_end_offsets"] = (rng.randint(30, 60), rng.randint(10, 40))
     elif family == "tight_fuel":
         a = replace(a, taxi_burn_kg_per_min=float(rng.randint(20, 35)))
-    return ScenarioSpec(scenario_id=f"strat-{PARTITION_BY_K[k]}-{airport.lower()}-{family}-k{k}", airport=airport,
+    return ScenarioSpec(scenario_id=f"seeded-{airport.lower()}-{family}-{seed}", airport=airport,
                         category=family, seed=seed, assumptions=a, **kw)
 
 
@@ -328,7 +347,29 @@ def stratified_specs(partition: str | None = None) -> list[ScenarioSpec]:
         for fi, family in enumerate(STRATIFIED_FAMILIES):
             for k in range(5):
                 if partition is None or PARTITION_BY_K[k] == partition:
-                    specs.append(_stratified_spec(airport, family, k, cell=ai * len(STRATIFIED_FAMILIES) + fi))
+                    specs.append(_baseline(_stratified_spec(airport, family, k, cell=ai * len(STRATIFIED_FAMILIES) + fi)))
+    return specs
+
+
+def at_resolution(spec: ScenarioSpec, slot_step_min: int) -> ScenarioSpec:
+    """Same scenario at another landing-time resolution (labelled in the scenario id)."""
+    return replace(spec, scenario_id=f"{spec.scenario_id}-step{slot_step_min}",
+                   assumptions=replace(spec.assumptions, slot_step_min=slot_step_min))
+
+
+# Independent final evaluation set for the candidate-generator change (never used before):
+# 4 tiers x 8 families x 2 seeds, new seed base, fixed before any result is inspected.
+FINAL_BASE_SEED = 9_100_000
+
+
+def final_evaluation_specs() -> list[ScenarioSpec]:
+    specs = []
+    for ai, airport in enumerate(ANCHOR_ROW_INDEX):
+        for fi, family in enumerate(STRATIFIED_FAMILIES):
+            for j in range(2):
+                seed = FINAL_BASE_SEED + 1000 * (ai * len(STRATIFIED_FAMILIES) + fi) + j
+                sp = _stratified_spec_seeded(airport, family, seed)
+                specs.append(_baseline(replace(sp, scenario_id=f"final-{airport.lower()}-{family}-j{j}")))
     return specs
 
 
