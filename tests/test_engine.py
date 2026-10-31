@@ -486,6 +486,8 @@ def test_historical_and_clock_evidence_is_labelled_provenance(success):
 # ---- challenge-calibrated suite + fully independent oracle -------------------------
 from airspace.data.scenario_suite import ScenarioSpec, build_suite, build_suite_scenario, suite_specs  # noqa: E402
 from airspace.engine.oracle import independent_oracle  # noqa: E402
+from airspace.engine import sensitivity as sens  # noqa: E402
+from airspace.contracts import ROLE_METRICS  # noqa: E402
 
 
 @pytest.fixture(scope="module")
@@ -541,6 +543,60 @@ def test_independent_oracle_agrees_rule_by_rule(suite):
         if out.compromise:
             assert out.compromise.plan_id in ref.pareto_ids
     assert checked > 2500
+
+
+def test_independent_oracle_under_reweighting(suite):
+    fams = sens.weight_families(seed=7, n_dirichlet=3)
+    configs = fams["simplex_vertices"][::5] + fams["dirichlet_uniform_k1"]
+    for _, base in suite[:10]:
+        for w in configs:
+            s = sens.reweighted(base, w)
+            out, ref = solve_scenario(s), independent_oracle(s)
+            assert ref.compromise_id == (out.compromise.plan_id if out.compromise else None)
+            assert ref.fallback_id == (out.fallback.plan_id if out.fallback else None)
+
+
+def test_weight_families_lie_on_the_simplex():
+    for fam, configs in sens.weight_families(seed=1, n_dirichlet=10).items():
+        for w in configs:
+            for role in ROLES:
+                vals = list(w[role].values())
+                assert all(v >= 0 for v in vals) and abs(sum(vals) - 1) <= 1e-12, (fam, role)
+
+
+def test_reweighting_reseals_and_recomputes_disagreement(success):
+    vertex = {r: {m: float(i == 0) for i, m in enumerate(ROLE_METRICS[r])} for r in ROLES}
+    s2 = sens.reweighted(success, vertex)
+    assert s2.state_hash != success.state_hash
+    a1 = solve_scenario(success)
+    a2 = solve_scenario(s2)
+    assert a1.fallback.plan_id == a2.fallback.plan_id  # fallback is weight-independent ...
+    d1, d2 = a1.assessment(a1.fallback.plan_id).utilities, a2.assessment(a2.fallback.plan_id).utilities
+    assert d1 != d2  # ... but the disagreement utilities are recomputed per weight vector
+
+
+def test_common_positive_affine_transform_preserves_selection_without_epsilon(suite):
+    for _, s in [(None, fx.load_fixture_scenario("success"))] + suite:
+        ref = independent_oracle(s)
+        if ref.fallback_id is None:
+            continue
+        order = {p: (ref.plans[p]["landing"], ref.plans[p]["gate_in"], p) for p in ref.feasible_ids}
+        u = {p: ref.utilities[p] for p in ref.feasible_ids}
+        base = sens.select_exact(u, u[ref.fallback_id], order, Fraction(0))
+        for a, b in ((Fraction(3), Fraction(-2)), (Fraction(1, 7), Fraction(5))):
+            u2 = {p: {r: a * v[r] + b for r in ROLES} for p, v in u.items()}
+            c2 = {p: {r: 1 - v[r] for r in ROLES} for p, v in u2.items()}
+            assert sens.select_exact(u2, u2[ref.fallback_id], order, Fraction(0), c2) == base
+
+
+def test_select_exact_matches_engine_at_contract_weights(suite):
+    for _, s in suite:
+        ref = independent_oracle(s)
+        if ref.fallback_id is None:
+            continue
+        order = {p: (ref.plans[p]["landing"], ref.plans[p]["gate_in"], p) for p in ref.feasible_ids}
+        u = {p: ref.utilities[p] for p in ref.feasible_ids}
+        assert sens.select_exact(u, u[ref.fallback_id], order, Fraction(1e-9)) == ref.compromise_id
 
 
 def test_single_feasible_plan_is_the_fallback_and_no_bargain(tmp_path):

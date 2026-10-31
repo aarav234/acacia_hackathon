@@ -27,6 +27,10 @@ from airspace.engine.bargaining import choose_compromise     # (assessments, fal
 from airspace.engine.bargaining import pareto_front, role_best, gains   # shortlist helpers
 from airspace.engine.pipeline import solve_scenario          # composition of the APIs above
 
+# Challenge-calibrated suite and independent checks (Member 1 analysis; no contract change)
+from airspace.data.scenario_suite import build_suite, suite_specs   # 40 scenarios, deterministic
+from airspace.engine.oracle import independent_oracle                # exact re-implementation for evaluation
+
 # Fixtures (no flights.csv needed)
 from airspace.data.fixtures import (
     load_fixture_scenario,      # "success" | "no_feasible" | "no_positive_gain"

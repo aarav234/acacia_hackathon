@@ -255,3 +255,19 @@ PYTHONPATH=src python -m airspace.engine.report fixtures/success_scenario.json
 
 Set `AIRSPACE_DATA_DIR` if the CSVs are not at the repository root. The real-data
 tests skip, with a visible reason, when `flights.csv` is absent.
+
+## 11. Challenge workbook, validation suite and analysis reports
+
+* `airspace.data.challenge` loads `challenge2_operational_constraints.xlsx` strictly. The values are challenge-supplied planning rules, not measurements.
+* `airspace.data.scenario_suite` builds 40 workbook-calibrated scenarios anchored to four genuine `flights.csv` rows.
+* `airspace.engine.oracle.independent_oracle` re-implements enumeration, every hard rule, the raw metrics and the selection in exact rationals.
+* `airspace.engine.sensitivity` and `airspace.engine.benchmark` produce the experiments.
+
+Reports: `docs/reports/01_bugfix_and_provenance.md`, `02_dataset_assessment.md`,
+`03_calibration_and_optimisation.md`, `04_validation.md`; small result files are in `docs/reports/results/`.
+
+```bash
+PYTHONPATH=src python -m airspace.data.scenario_suite                  # rebuild extract + anchor rows (needs xlsx + flights.csv)
+PYTHONPATH=src python -m airspace.engine.sensitivity --out runs/sens   # 11,481 runs, ~4 min, seed 20261031
+PYTHONPATH=src python -m airspace.engine.benchmark --out runs/bench --flights flights.csv
+```
