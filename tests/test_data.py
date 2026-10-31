@@ -71,17 +71,17 @@ BASE_ROW = {
 
 def write_csv(dir_: Path, rows: list[dict], *, airports: list[dict] | None = None) -> Path:
     path = dir_ / "flights.csv"
-    with path.open("w", newline="") as fh:
+    with path.open("w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=list(FLIGHT_COLUMNS))
         w.writeheader()
         for r in rows:
             w.writerow({**BASE_ROW, **r})
-    (dir_ / "airlines.csv").write_text("IATA_CODE,AIRLINE\nAA,American Airlines Inc.\n")
+    (dir_ / "airlines.csv").write_text("IATA_CODE,AIRLINE\nAA,American Airlines Inc.\n", encoding="utf-8")
     airports = airports if airports is not None else [
         {"IATA_CODE": "AAA", "AIRPORT": "Alpha", "CITY": "A", "STATE": "AA", "COUNTRY": "USA", "LATITUDE": "1.5", "LONGITUDE": "-2.5"},
         {"IATA_CODE": "BBB", "AIRPORT": "Bravo", "CITY": "B", "STATE": "BB", "COUNTRY": "USA", "LATITUDE": "", "LONGITUDE": ""},
     ]
-    with (dir_ / "airports.csv").open("w", newline="") as fh:
+    with (dir_ / "airports.csv").open("w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=["IATA_CODE", "AIRPORT", "CITY", "STATE", "COUNTRY", "LATITUDE", "LONGITUDE"])
         w.writeheader()
         w.writerows(airports)
@@ -148,7 +148,7 @@ def test_malformed_values_rejected_for_explicit_row_and_skipped_counted_otherwis
 
 def test_missing_required_column(tmp_path):
     path = tmp_path / "flights.csv"
-    path.write_text("YEAR,MONTH\n2015,1\n")
+    path.write_text("YEAR,MONTH\n2015,1\n", encoding="utf-8")
     with pytest.raises(MissingColumnsError):
         select_flight(path)
 
@@ -163,7 +163,7 @@ def test_numeric_airport_ids_unresolved_unless_explicitly_mapped(tmp_path):
     assert dest["status"] == "resolved" and dest["latitude"] is None and dest["longitude"] is None
 
     mapping = tmp_path / "airport_id_map.csv"
-    mapping.write_text("SOURCE_ID,IATA_CODE\n10397,AAA\n")
+    mapping.write_text("SOURCE_ID,IATA_CODE\n10397,AAA\n", encoding="utf-8")
     row = select_flight(path, airport_id_map_path=mapping)
     origin = row[PROVENANCE_KEY]["joins"]["origin_airport"]
     assert origin["status"] == "mapped_explicit" and origin["iata_code"] == "AAA"
@@ -178,7 +178,7 @@ def test_airport_ids_read_as_text(tmp_path):
 # ---- scenario builder ------------------------------------------------------
 def _write_config(tmp_path: Path, cfg: dict, name: str = "cfg.json") -> Path:
     p = tmp_path / name
-    p.write_text(json.dumps(cfg))
+    p.write_text(json.dumps(cfg), encoding="utf-8")
     return p
 
 
@@ -380,7 +380,7 @@ EXTRACT = fx.FIXTURES_DIR / ch.EXTRACT_NAME
 def _make_workbook(path: Path, mutate=None) -> Path:
     """Write a structurally faithful workbook from the committed extract (SYNTHETIC test copy)."""
     openpyxl = pytest.importorskip("openpyxl")
-    data = json.loads(EXTRACT.read_text())
+    data = json.loads(EXTRACT.read_text(encoding="utf-8"))
     sheets = {
         "airport_capacity": [[data["sheet_notes"]["airport_capacity"]], [], list(ch.CAPACITY_COLUMNS)]
         + [[a["iata_code"], a["airport"], "c", "ST", a["predicate_rows_as_origin"], a["size_class"], a["active_runways"],
@@ -459,7 +459,7 @@ def test_wake_wildcard_and_conversion():
 def test_real_workbook_matches_committed_extract():
     pytest.importorskip("openpyxl")
     c = ch.load_workbook(WORKBOOK)
-    data = json.loads(EXTRACT.read_text())
+    data = json.loads(EXTRACT.read_text(encoding="utf-8"))
     assert data["source_sha256"] == c.source_sha256
     assert data == ch.to_extract(c, list(data["airports"]))
     assert len(c.airports) == 322

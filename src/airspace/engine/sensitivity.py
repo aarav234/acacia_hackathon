@@ -265,8 +265,8 @@ def main(argv=None) -> int:
         "disagreement_counterfactuals": {sid: disagreement_counterfactuals(s) for sid, _, s in scenarios},
         "affine": {sid: affine_check(s, rng) for sid, _, s in scenarios},
     }
-    (args.out / "sensitivity_runs.json").write_text(json.dumps(rows, default=str) + "\n")
-    (args.out / "sensitivity_summary.json").write_text(json.dumps(result, indent=1, default=str) + "\n")
+    (args.out / "sensitivity_runs.json").write_text(json.dumps(rows, default=str) + "\n", encoding="utf-8")
+    (args.out / "sensitivity_summary.json").write_text(json.dumps(result, indent=1, default=str) + "\n", encoding="utf-8")
     print(json.dumps({k: result[k] for k in ("scenario_count", "config_counts", "total_runs", "elapsed_s", "engine_ms_per_run")}, indent=1))
     return 0
 
