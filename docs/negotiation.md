@@ -189,21 +189,34 @@ deterministic status.
 
 | Mode | What runs | Label |
 |---|---|---|
-| `live` | `AnthropicProvider` (Messages API, `output_config.format = json_schema`), one provider shared by three `LLMAgent`s with separate system prompts and histories | `LIVE provider calls` |
+| `live` | `OpenAIProvider` (Responses API, `text.format = json_schema, strict: true`, `store=false`; default `gpt-5.4-mini`) or `AnthropicProvider` (Messages API, `output_config.format = json_schema`). One provider is shared by three `LLMAgent`s, each with its own system prompt and history | `LIVE provider calls` |
 | `mock` | `MockAgent`, deterministic. It picks by its own supplied utility, so disagreement comes from the labelled simulation fixture and is not scripted | `MOCK deterministic simulation - not an LLM` |
 | `replay` | `ReplayAgent` over a sanitized `airspace-negotiation-trace-v1` trace; no LLM call | `REPLAY of a saved <mode> trace - not live` |
 
 Environment variables (for Member 3's `.env.example`):
 ```
-ANTHROPIC_API_KEY=            # live only; never logged
-AIRSPACE_LLM_MODEL=claude-sonnet-5-5
-AIRSPACE_LLM_MAX_TOKENS=700
+AIRSPACE_LLM_PROVIDER=openai          # openai | anthropic; required if both keys are set
+OPENAI_API_KEY=                       # live (openai) only; never logged
+ANTHROPIC_API_KEY=                    # live (anthropic) only; never logged
+AIRSPACE_LLM_MODEL=gpt-5.4-mini       # anthropic default: claude-sonnet-5-5
+AIRSPACE_LLM_MAX_TOKENS=1500          # OpenAI max_output_tokens (includes reasoning tokens); anthropic default 700
 AIRSPACE_LLM_TIMEOUT_S=15
+AIRSPACE_LLM_REASONING_EFFORT=low     # OpenAI only; set empty to omit the parameter
 AIRSPACE_REPLAY_TRACE=runs/trace.json
 ```
-Dependency for Member 3's `pyproject.toml`: `anthropic>=0.75` as an optional `[live]` extra
-(developed against 2.3.0). Without a key, `build_agents("live")` raises
-`LiveProviderUnavailable`. It never switches to mock on its own.
+Optional dependencies for Member 3's `pyproject.toml`: `openai = ["openai>=1.60"]` (developed
+against 3.42.0) and `anthropic = ["anthropic>=0.75"]` (developed against 2.3.0).
+
+OpenAI reply handling: `refusal` content parts and `content_filter` become `refusal`, and
+`status=incomplete` with reason `max_output_tokens` becomes `truncated`. Both are invalid replies, never votes.
+Reasoning items are neither requested nor stored. Without a key, `build_agents("live")` raises
+`LiveProviderUnavailable`; it never switches to mock.
+
+Live run (from a machine with internet access and Python 3.11+):
+```
+PYTHONPATH=src:tests OPENAI_API_KEY=... AIRSPACE_LLM_PROVIDER=openai \
+  python -m airspace.negotiation.example --mode live --save-trace runs/live_openai.json
+```
 
 MockAgent behaviours for tests and demos: `success, reject, malformed, schema_invalid,
 unknown_plan, wrong_role, wrong_hash, wrong_round, accept_other_plan, timeout,

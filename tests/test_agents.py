@@ -31,7 +31,11 @@ def test_build_agents_mock_three_distinct_labelled():
 
 
 def test_live_without_key_is_explicit_error_not_mock(monkeypatch):
-    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    for k in ("ANTHROPIC_API_KEY", "OPENAI_API_KEY", "AIRSPACE_LLM_PROVIDER"):
+        monkeypatch.delenv(k, raising=False)
+    with pytest.raises(LiveProviderUnavailable):
+        build_agents("live")
+    monkeypatch.setenv("AIRSPACE_LLM_PROVIDER", "openai")
     with pytest.raises(LiveProviderUnavailable):
         build_agents("live")
 

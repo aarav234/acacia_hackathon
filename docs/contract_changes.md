@@ -62,7 +62,7 @@ editable install. No root manifest was created on `feat/data-engine`, to avoid a
 | CC-2 | `atc_`/`pilot_`/`ground_` metric prefixes | adopted by Member 1 (`METRIC_ROLE_PREFIXES`); Member 2 now imports it |
 | CC-3 | `compute_state_hash` export | adopted; coordinator recomputes it and calls `ensure_sealed` |
 | CC-4 | `RULE_IDS` | adopted; role contexts now list the domain-relevant subset of `RULE_IDS` |
-| CC-5 | optional `live = ["anthropic>=0.75"]` extra + env names `ANTHROPIC_API_KEY`, `AIRSPACE_LLM_MODEL`, `AIRSPACE_LLM_MAX_TOKENS`, `AIRSPACE_LLM_TIMEOUT_S`, `AIRSPACE_REPLAY_TRACE` | **Member 3 to confirm** |
+| CC-5 | optional extras `openai = ["openai>=1.60"]` (team's live provider, default model `gpt-5.4-mini`) and `anthropic = ["anthropic>=0.75"]`; env names `AIRSPACE_LLM_PROVIDER`, `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `AIRSPACE_LLM_MODEL`, `AIRSPACE_LLM_MAX_TOKENS`, `AIRSPACE_LLM_TIMEOUT_S`, `AIRSPACE_LLM_REASONING_EFFORT`, `AIRSPACE_REPLAY_TRACE` | **Member 3 to confirm** |
 
 Member 2 confirms Member 1's interpretation: consensus ⇒ `rounds_completed == 2` and
 `agent_message_count == 6` (count = agent requests issued, including invalid/timed-out ones;
@@ -89,7 +89,7 @@ All 151 tests pass together (3 skipped because `flights.csv` is not in the repo)
    Please add `[tool.pytest.ini_options] pythonpath = ["src", "tests"]`. `tests` is needed
    because `tests/test_*.py` import the helper `tests/fixtures_negotiation.py`.
 2. `.gitignore` must include `__pycache__/`, `*.pyc`, `.env`, `runs/`, `*.csv` (but not the CSVs under `fixtures/`), `.venv/`.
-3. Dependencies: Member 1's list plus the optional extra `live = ["anthropic>=0.75"]` (CC-5).
+3. Dependencies: Member 1's list plus the optional extras `openai` (the team's live provider) and `anthropic` (CC-5).
 4. **There is still no `main` branch.** GitHub's default branch is currently
    `feat/agents-negotiation`. Create `main` from Member 1's bootstrap commit `8d8d498`
    (or your packaging PR) and make it the default.
