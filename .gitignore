@@ -1,0 +1,8 @@
+# BOOTSTRAP STUB — OWNED BY MEMBER 3. DO NOT MERGE.
+.env
+*.csv
+runs/
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/

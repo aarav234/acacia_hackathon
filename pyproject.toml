@@ -1,0 +1,21 @@
+# BOOTSTRAP STUB — OWNED BY MEMBER 3. DO NOT MERGE. Lets Member 2's slice run locally.
+[project]
+name = "airspace"
+version = "0.0.0-stub"
+requires-python = ">=3.11"
+dependencies = ["pydantic>=2.6"]
+
+[project.optional-dependencies]
+live = ["anthropic>=0.75"]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "tests"]
+testpaths = ["tests"]
