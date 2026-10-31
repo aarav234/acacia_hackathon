@@ -141,7 +141,7 @@ def main(argv=None) -> int:
         result["ingestion"] = ingestion(args.flights)
     rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
     result["peak_rss_mb"] = round(rss / (1024 * 1024 if sys.platform == "darwin" else 1024), 1)
-    (args.out / "benchmark.json").write_text(json.dumps(result, indent=1) + "\n")
+    (args.out / "benchmark.json").write_text(json.dumps(result, indent=1) + "\n", encoding="utf-8")
     print(json.dumps(result, indent=1))
     return 0
 

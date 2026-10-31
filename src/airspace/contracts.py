@@ -904,7 +904,7 @@ def export_json_schemas(out_dir: Path) -> list[Path]:
     written = []
     for name, model in PUBLIC_MODELS.items():
         path = out_dir / f"{name}.schema.json"
-        path.write_text(json.dumps(model.model_json_schema(), indent=2, sort_keys=True) + "\n")
+        path.write_text(json.dumps(model.model_json_schema(), indent=2, sort_keys=True) + "\n", encoding="utf-8")
         written.append(path)
     return written
 

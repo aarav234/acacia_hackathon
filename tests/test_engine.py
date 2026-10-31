@@ -45,7 +45,7 @@ from airspace.engine.scoring import assess_candidates, evaluate_candidates
 
 def scenario_from(cfg: dict, tmp_path: Path, name: str = "cfg.json") -> Scenario:
     path = tmp_path / name
-    path.write_text(json.dumps(cfg))
+    path.write_text(json.dumps(cfg), encoding="utf-8")
     return build_scenario(synthetic_row("engine unit test"), path)
 
 
@@ -430,7 +430,7 @@ def test_example_assessments_fixture_matches_engine(success):
 def test_documented_worked_example_is_current_engine_output(success):
     from airspace.engine.report import worked_example
 
-    doc = (fx.REPO_ROOT / "docs" / "data_and_model.md").read_text()
+    doc = (fx.REPO_ROOT / "docs" / "data_and_model.md").read_text(encoding="utf-8")
     begin, end = "<!-- BEGIN GENERATED WORKED EXAMPLE -->\n", "<!-- END GENERATED WORKED EXAMPLE -->"
     assert doc[doc.index(begin) + len(begin): doc.index(end)] == worked_example(success)
 
@@ -468,7 +468,7 @@ def test_engine_source_never_reads_historical_fields():
 
     forbidden = {"historical_row", "historical_ref", "provenance"}
     for path in Path(engine_pkg.__path__[0]).glob("*.py"):
-        tree = ast.parse(path.read_text())
+        tree = ast.parse(path.read_text(encoding="utf-8"))
         names = {n.attr for n in ast.walk(tree) if isinstance(n, ast.Attribute)}
         names |= {n.value for n in ast.walk(tree) if isinstance(n, ast.Constant) and isinstance(n.value, str)}
         assert not (names & forbidden), (path.name, names & forbidden)
