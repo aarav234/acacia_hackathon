@@ -784,7 +784,7 @@ def test_v2_profile_differs_from_v1_only_in_resolution_and_labels():
         assert v2["planning_horizon_min"] == v1["planning_horizon_min"]
         assert (v1["slot_step_min"], v2["slot_step_min"]) == (5, 1)
         assert v2["scenario_id"].endswith("-v2") and v2["config_version"].endswith("-v2")
-        assert fx.build_config(name, "v2") == SimulationConfig.model_validate_json(fx.config_path(name, "v2").read_text())
+        assert fx.build_config(name, "v2") == SimulationConfig.model_validate_json(fx.config_path(name, "v2").read_text(encoding="utf-8"))
 
 
 def test_one_minute_slots_cover_every_integer_minute_and_route(success_v2):
@@ -898,7 +898,7 @@ def test_v2_provenance_and_hash_stable(tmp_path, success_v2):
 
     for i in range(3):
         p = tmp_path / f"s{i}.json"
-        p.write_text(json.dumps(shuffled(cfg)))
+        p.write_text(json.dumps(shuffled(cfg)), encoding="utf-8")
         assert build_scenario(fx.load_anchor_row(), p).state_hash == success_v2.state_hash
     assert success_v2.source_mode == "historical_anchor"
     assert any("1-minute landing resolution" in e.note for e in success_v2.provenance)

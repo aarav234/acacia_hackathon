@@ -198,7 +198,7 @@ def main(argv=None) -> int:
            "affine": affine(items), "perturbation_stability": perturbation_stability(dev_like[:43] + dev_like[43:43 + 64:2]),
            "decision_maps": decision_maps(sensitive)}
     res["elapsed_s"] = round(time.perf_counter() - t0, 1)
-    (args.out / "weights_numerics.json").write_text(json.dumps(res, indent=1, default=str) + "\n")
+    (args.out / "weights_numerics.json").write_text(json.dumps(res, indent=1, default=str) + "\n", encoding="utf-8")
     print(json.dumps(res, indent=1, default=str))
     return 0
 

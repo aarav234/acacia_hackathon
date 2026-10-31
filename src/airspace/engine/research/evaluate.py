@@ -220,8 +220,8 @@ def main(argv=None) -> int:
     result = {"environment": {"python": sys.version.split()[0], "platform": platform.platform()},
               "partition": args.partition, "seed": SEED, "weight_samples_per_family": args.weight_samples,
               "elapsed_s": round(elapsed, 1), "python_heap_peak_mb": round(peak / 2**20, 1), "summary": summarise(rows)}
-    (args.out / f"eval_{args.partition}_rows.json").write_text(json.dumps(rows, default=str) + "\n")
-    (args.out / f"eval_{args.partition}_summary.json").write_text(json.dumps(result, indent=1, default=str) + "\n")
+    (args.out / f"eval_{args.partition}_rows.json").write_text(json.dumps(rows, default=str) + "\n", encoding="utf-8")
+    (args.out / f"eval_{args.partition}_summary.json").write_text(json.dumps(result, indent=1, default=str) + "\n", encoding="utf-8")
     print(json.dumps(result, indent=1, default=str))
     return 0
 
