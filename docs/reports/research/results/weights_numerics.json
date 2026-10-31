@@ -1,0 +1,168 @@
+{
+ "scenario_count": 235,
+ "seed": 20261102,
+ "eps_sweep": {
+  "changes_vs_1e-9": {
+   "0": 0,
+   "1e-15": 0,
+   "1e-12": 0,
+   "1e-09": 0,
+   "1e-06": 0,
+   "0.001": 0,
+   "0.01": 0
+  },
+  "bargains": {
+   "0": 8,
+   "1e-15": 8,
+   "1e-12": 8,
+   "1e-09": 8,
+   "1e-06": 8,
+   "0.001": 8,
+   "0.01": 8
+  }
+ },
+ "decimal_weights": {
+  "exact_decimal_ties_seen_as_nonzero_in_binary": 30,
+  "gain_sign_flips_at_eps0": 30,
+  "eps0_selection_changes": 0
+ },
+ "near_ties": {
+  "tables_with_2plus_eligible": 28,
+  "min_relative_gap": 0.5390912287832874,
+  "share_gap_below_1e-6": 0.0,
+  "median_relative_gap": 0.819227686737984,
+  "exact_ties": 0
+ },
+ "affine": {
+  "trials": 468,
+  "A_changed": 0,
+  "A2_changed": 0
+ },
+ "perturbation_stability": {
+  "ofat_pm50": {
+   "slot": {
+    "runs": 1008,
+    "stability": 0.9911
+   },
+   "integer_minute": {
+    "runs": 1024,
+    "stability": 0.9893
+   }
+  },
+  "joint_scale_loguniform_x0.5_x2": {
+   "slot": {
+    "runs": 3780,
+    "stability": 0.9759
+   },
+   "integer_minute": {
+    "runs": 3840,
+    "stability": 0.9734
+   }
+  }
+ },
+ "decision_maps": {
+  "success": {
+   "atc": {
+    "grid_points": 21,
+    "distinct_selections": 2,
+    "baseline_selection_share": 0.7142857142857143
+   },
+   "pilot": {
+    "grid_points": 231,
+    "distinct_selections": 2,
+    "baseline_selection_share": 0.8961038961038961
+   },
+   "ground": {
+    "grid_points": 231,
+    "distinct_selections": 2,
+    "baseline_selection_share": 0.7922077922077922
+   }
+  },
+  "suite-mia-large_delay": {
+   "atc": {
+    "grid_points": 21,
+    "distinct_selections": 1,
+    "baseline_selection_share": 1.0
+   },
+   "pilot": {
+    "grid_points": 231,
+    "distinct_selections": 1,
+    "baseline_selection_share": 1.0
+   },
+   "ground": {
+    "grid_points": 231,
+    "distinct_selections": 1,
+    "baseline_selection_share": 1.0
+   }
+  },
+  "suite-mia-tight_fuel": {
+   "atc": {
+    "grid_points": 21,
+    "distinct_selections": 2,
+    "baseline_selection_share": 0.9523809523809523
+   },
+   "pilot": {
+    "grid_points": 231,
+    "distinct_selections": 2,
+    "baseline_selection_share": 0.8571428571428571
+   },
+   "ground": {
+    "grid_points": 231,
+    "distinct_selections": 2,
+    "baseline_selection_share": 0.8398268398268398
+   }
+  },
+  "suite-mia-generous_fuel": {
+   "atc": {
+    "grid_points": 21,
+    "distinct_selections": 1,
+    "baseline_selection_share": 1.0
+   },
+   "pilot": {
+    "grid_points": 231,
+    "distinct_selections": 1,
+    "baseline_selection_share": 1.0
+   },
+   "ground": {
+    "grid_points": 231,
+    "distinct_selections": 1,
+    "baseline_selection_share": 1.0
+   }
+  },
+  "suite-den-tight_fuel": {
+   "atc": {
+    "grid_points": 21,
+    "distinct_selections": 1,
+    "baseline_selection_share": 1.0
+   },
+   "pilot": {
+    "grid_points": 231,
+    "distinct_selections": 2,
+    "baseline_selection_share": 0.36363636363636365
+   },
+   "ground": {
+    "grid_points": 231,
+    "distinct_selections": 1,
+    "baseline_selection_share": 1.0
+   }
+  },
+  "suite-sjc-crew_restricted": {
+   "atc": {
+    "grid_points": 21,
+    "distinct_selections": 1,
+    "baseline_selection_share": 1.0
+   },
+   "pilot": {
+    "grid_points": 231,
+    "distinct_selections": 1,
+    "baseline_selection_share": 1.0
+   },
+   "ground": {
+    "grid_points": 231,
+    "distinct_selections": 1,
+    "baseline_selection_share": 1.0
+   }
+  }
+ },
+ "elapsed_s": 75.7
+}
