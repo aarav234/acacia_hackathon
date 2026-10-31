@@ -1,0 +1,14 @@
+# Minimal ignore list so main is safe to commit to (Member 3 owns this file; extend freely).
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+runs/
+.pytest_cache/
+.hallmark/
+# raw datasets stay local (590 MB flights.csv); the repo's fixtures/ JSON are tracked
+/*.csv
+/data/raw/
