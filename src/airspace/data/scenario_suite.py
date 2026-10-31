@@ -271,3 +271,78 @@ if __name__ == "__main__":
     d = default_data_dir()
     for p in write_suite_fixtures(d / "challenge2_operational_constraints.xlsx", d / "flights.csv"):
         print(p)
+
+
+# --------------------------------------------------------------------------------------
+# Stratified expanded suite (research evaluation; the 40-scenario suite above is unchanged)
+# --------------------------------------------------------------------------------------
+# 4 destination tiers x 8 families x 5 seeds = 160 distinct configurations. The partition
+# is fixed by seed index BEFORE any result is inspected: k in {0,1} -> "dev",
+# k == 2 -> "tuning", k in {3,4} -> "holdout". Parameter ranges are documented in
+# STRATIFIED_FAMILIES; draws use random.Random(seed) so every scenario is reproducible.
+STRATIFIED_BASE_SEED = 7_000_000
+PARTITION_BY_K = {0: "dev", 1: "dev", 2: "tuning", 3: "holdout", 4: "holdout"}
+STRATIFIED_FAMILIES: dict[str, str] = {
+    "normal": "delay U[5,25] min, utilisation U[0.4,0.7]",
+    "short_delay": "delay U[0,10] min",
+    "long_delay": "delay U[45,90] min",
+    "runway_reduced": "runway R1 closed from minute 0 for U[20,60] min",
+    "wake_dense": "utilisation U[0.85,1.0], heavy share U[0.3,0.5]",
+    "gate_conflict": "assigned gate busy until U[25,50], U{1..3} spare gates busy",
+    "tight_ground": "crew C1 available from U[40,70]; regular-end offsets U[30,60] / U[10,40]",
+    "tight_fuel": "taxi burn U[20,35] kg/min",
+}
+COMMON_FACTORS = "all families: groundspeed U{120,140,160} kt, max overtime U{30,60,90} min, seeded background traffic"
+
+
+def _stratified_spec(airport: str, family: str, k: int, cell: int) -> ScenarioSpec:
+    seed = STRATIFIED_BASE_SEED + 1000 * cell + k
+    rng = random.Random(seed)
+    a = replace(ChallengeAssumptions(), approach_groundspeed_kt=float(rng.choice([120, 140, 160])),
+                max_overtime_min=rng.choice([30, 60, 90]))
+    kw: dict = {"delay_behind_schedule_min": rng.randint(5, 25), "traffic_utilisation": round(rng.uniform(0.4, 0.7), 3)}
+    if family == "short_delay":
+        kw["delay_behind_schedule_min"] = rng.randint(0, 10)
+    elif family == "long_delay":
+        kw["delay_behind_schedule_min"] = rng.randint(45, 90)
+    elif family == "runway_reduced":
+        kw["closed_runways"] = ((0, 0, rng.randint(20, 60)),)
+    elif family == "wake_dense":
+        kw["traffic_utilisation"] = round(rng.uniform(0.85, 1.0), 3)
+        kw["heavy_share"] = round(rng.uniform(0.3, 0.5), 3)
+    elif family == "gate_conflict":
+        kw["assigned_gate_busy_until"] = rng.randint(25, 50)
+        kw["spare_gates_busy"] = rng.randint(1, 3)
+    elif family == "tight_ground":
+        kw["crew_available_from"] = (rng.randint(40, 70), 0)
+        kw["crew_regular_end_offsets"] = (rng.randint(30, 60), rng.randint(10, 40))
+    elif family == "tight_fuel":
+        a = replace(a, taxi_burn_kg_per_min=float(rng.randint(20, 35)))
+    return ScenarioSpec(scenario_id=f"strat-{PARTITION_BY_K[k]}-{airport.lower()}-{family}-k{k}", airport=airport,
+                        category=family, seed=seed, assumptions=a, **kw)
+
+
+def stratified_specs(partition: str | None = None) -> list[ScenarioSpec]:
+    specs = []
+    for ai, airport in enumerate(ANCHOR_ROW_INDEX):
+        for fi, family in enumerate(STRATIFIED_FAMILIES):
+            for k in range(5):
+                if partition is None or PARTITION_BY_K[k] == partition:
+                    specs.append(_stratified_spec(airport, family, k, cell=ai * len(STRATIFIED_FAMILIES) + fi))
+    return specs
+
+
+def with_fuel_reading(spec: ScenarioSpec, includes_reserve: bool) -> ScenarioSpec:
+    """Paired fuel-interpretation variant (labelled sensitivity case, same seed)."""
+    tag = "fuelA" if includes_reserve else "fuelB"
+    return replace(spec, scenario_id=f"{spec.scenario_id}-{tag}",
+                   assumptions=replace(spec.assumptions, spare_fuel_includes_final_reserve=includes_reserve))
+
+
+def operations_fingerprint(s: Scenario) -> str:
+    """Hash of the decision inputs only (ignores ids/labels) for near-duplicate detection."""
+    from airspace.contracts import canonical_hash
+
+    ops = s.model_dump(mode="json")["operations"]
+    ops["subject"].pop("flight_label")
+    return canonical_hash({"ops": ops, "grid": [s.earliest_landing_min, s.planning_horizon_min, s.slot_step_min]})
