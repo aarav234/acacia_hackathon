@@ -101,6 +101,10 @@ is `{namespace, mode:"synthetic", note}` with no flight values.
   `service_end = gate_in + service_duration_min`.
 * **Cap.** If `slots × routes > candidate_cap`, `CandidateCapExceededError` is raised.
   The list is never truncated.
+* **Resolution.** Production scenario generation uses `slot_step_min = 1`, the contract's full integer-minute
+  decision space. The v1 fixtures and the published research suites keep the 5-minute baseline.
+  At 1 minute the cap allows a horizon of ⌊2000 / routes⌋ minutes: 333 min with 6 routes, 133 min with 15.
+  Longer horizons raise the cap error. Evidence: `docs/reports/research/I_candidate_generator_improvement.md`.
 
 ## 5. Hard constraints (`airspace.engine.constraints`)
 

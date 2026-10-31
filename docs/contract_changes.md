@@ -36,6 +36,32 @@ Members 2/3: please confirm or object in review.
   or `build_config(...)`, drop stub commit `c9f326b` when rebasing, and use real 64-hex
   state hashes in tests (the contract validates the format).
 
+## Candidate-generator resolution (feat/candidate-generator-improvement)
+
+No contract field, public signature, rule, weight, fallback or bargaining semantic changes.
+
+* **Production scenario generation uses 1-minute landing resolution.**
+  `scenario_suite.ChallengeAssumptions.slot_step_min` defaults to `PRODUCTION_SLOT_STEP_MIN = 1`.
+  The published research suites pin `BASELINE_SLOT_STEP_MIN = 5`, so their results stay bit-for-bit reproducible.
+* **v2 fixtures** (`load_fixture_scenario(name, "v2")`) put the three demo scenarios on the 1-minute grid.
+  `load_fixture_scenario(name)` **still returns v1**: switching the default changes demo outcomes and needs team agreement.
+* **Plan-ID mapping v1 → v2 is the identity** for every v1 plan. IDs encode
+  `P{landing:04d}_{runway}_{gate}_{route}`, and every 5-minute landing minute exists in the 1-minute grid
+  with identical metrics (tested). v2 adds plans at the in-between minutes. `scenario_id` and `state_hash` differ
+  (`demo-success-v1` → `demo-success-v2`).
+* **Demo outcome changes (success fixture):**
+
+  | | v1 | v2 |
+  |---|---|---|
+  | Fallback | `P0010_R1_G2_T2` | `P0010_R1_G2_T2` (unchanged) |
+  | Compromise | `P0015_R2_G1_T3` | `P0015_R2_G1_T3` (unchanged) |
+  | ATC-best | `P0015_R1_G2_T2` | `P0011_R2_G3_T4` |
+  | Pilot-best | `P0015_R2_G3_T4` | `P0011_R2_G3_T4` |
+  | Ground-best | `P0020_R2_G1_T3` | `P0019_R1_G1_T1` |
+
+  At 1 minute, ATC and the pilot prefer the **same** plan, so v1's "three distinct role preferences" was partly
+  an artefact of the 5-minute grid. `no_feasible` and `no_positive_gain` outcomes are unchanged.
+
 ## Interpretations needing confirmation
 
 * **RunResult consensus ⇒ `rounds_completed == 2` and `agent_message_count == 6`.**

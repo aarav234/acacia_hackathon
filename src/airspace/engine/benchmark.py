@@ -15,7 +15,8 @@ import time
 from dataclasses import replace
 from pathlib import Path
 
-from airspace.data.scenario_suite import ChallengeAssumptions, ScenarioSpec, build_suite_scenario
+from airspace.data.scenario_suite import BASELINE_SLOT_STEP_MIN, ChallengeAssumptions, ScenarioSpec, build_suite_scenario
+from airspace.engine.candidates import candidate_count
 from airspace.engine.oracle import independent_oracle
 from airspace.engine.pipeline import solve_scenario
 
@@ -29,17 +30,22 @@ def _time(fn, repeat: int = 5) -> dict:
     return {"median_ms": round(1000 * statistics.median(samples), 3), "min_ms": round(1000 * min(samples), 3), "result": out}
 
 
-def engine_scaling() -> list[dict]:
+def engine_scaling(slot_step_min: int = BASELINE_SLOT_STEP_MIN) -> list[dict]:
+    """Solve time vs candidate count. Default = the published 5-minute baseline probe."""
     rows = []
     for horizon in (15, 45, 90, 180, 360):
         spec = ScenarioSpec(scenario_id=f"bench-den-h{horizon}", airport="DEN", category="benchmark", seed=1,
-                            assumptions=replace(ChallengeAssumptions(), planning_horizon_min=horizon,
+                            assumptions=replace(ChallengeAssumptions(), planning_horizon_min=horizon, slot_step_min=slot_step_min,
                                                 spare_fuel_includes_final_reserve=False))
         s = build_suite_scenario(spec)
+        if candidate_count(s) > s.operations.planning.candidate_cap:  # explicit cap: recorded, never truncated
+            rows.append({"horizon_min": horizon, "slot_step_min": slot_step_min, "candidates": candidate_count(s),
+                         "cap_error": f"{candidate_count(s)} > {s.operations.planning.candidate_cap}"})
+            continue
         r = _time(lambda: solve_scenario(s))
         o = r.pop("result")
         sel = [solve_scenario(s).summary() for _ in range(3)]
-        rows.append({"horizon_min": horizon, "candidates": o.candidate_count, "feasible": len(o.assessments),
+        rows.append({"horizon_min": horizon, "slot_step_min": slot_step_min, "candidates": o.candidate_count, "feasible": len(o.assessments),
                      **r, "deterministic_over_3_runs": all(x == sel[0] for x in sel),
                      "oracle_ms": _time(lambda: independent_oracle(s), repeat=3)["median_ms"]})
     return rows
@@ -98,6 +104,29 @@ def grid_stage_comparison(repeat: int = 5) -> list[dict]:
     return rows
 
 
+def fixture_resolution_comparison(repeat: int = 7) -> list[dict]:
+    """End-to-end solve of the demo fixtures at v1 (5-min) and v2 (1-min) resolution."""
+    import tracemalloc
+
+    from airspace.data.fixtures import load_fixture_scenario
+
+    rows = []
+    for name in ("success", "no_feasible", "no_positive_gain"):
+        for version in ("v1", "v2"):
+            s = load_fixture_scenario(name, version)
+            r = _time(lambda: solve_scenario(s), repeat=repeat)
+            o = r.pop("result")
+            tracemalloc.start()
+            solve_scenario(s)
+            peak = tracemalloc.get_traced_memory()[1]
+            tracemalloc.stop()
+            rows.append({"fixture": name, "version": version, "slot_step_min": s.slot_step_min, "candidates": o.candidate_count,
+                         "feasible": len(o.assessments), **r, "heap_peak_mb": round(peak / 2**20, 2),
+                         "fallback": o.fallback.plan_id if o.fallback else None,
+                         "compromise": o.compromise.plan_id if o.compromise else None})
+    return rows
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", type=Path, required=True)
@@ -106,7 +135,8 @@ def main(argv=None) -> int:
     args.out.mkdir(parents=True, exist_ok=True)
     result = {"environment": {"python": sys.version.split()[0], "platform": platform.platform(),
                               "machine": platform.machine()},
-              "engine_scaling": engine_scaling(), "grid_stage_comparison": grid_stage_comparison()}
+              "engine_scaling": engine_scaling(), "engine_scaling_1min": engine_scaling(1), "grid_stage_comparison": grid_stage_comparison(),
+              "fixture_resolution_comparison": fixture_resolution_comparison()}
     if args.flights and args.flights.exists():
         result["ingestion"] = ingestion(args.flights)
     rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
