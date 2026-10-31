@@ -265,6 +265,9 @@ tests skip, with a visible reason, when `flights.csv` is absent.
 
 Reports: `docs/reports/01_bugfix_and_provenance.md`, `02_dataset_assessment.md`,
 `03_calibration_and_optimisation.md`, `04_validation.md`; small result files are in `docs/reports/results/`.
+The mathematical-assurance pass (reproducibility, model audit, candidate coverage, calibration,
+bargaining alternatives, stratified held-out validation, recommendations, handoff) is in
+`docs/reports/research/` (Reports A–H and `preregistration.md`).
 
 ```bash
 PYTHONPATH=src python -m airspace.data.scenario_suite                  # rebuild extract + anchor rows (needs xlsx + flights.csv)

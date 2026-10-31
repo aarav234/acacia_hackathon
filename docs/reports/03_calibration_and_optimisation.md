@@ -163,6 +163,8 @@ Results:
   taxi saving (9 min × 15 kg/min = 135 kg). The pilot can therefore only gain
   through the turbulence or connection terms.
 * The **ATC** fallback is ATC-optimal in 19/34 scenarios (zero delay, low spillover).
+  *Erratum (m1/math-assurance):* this count used no tolerance. With the engine's ε = 1e-9, ATC
+  cannot gain in 20/34; the difference is one binary-float tie. See `research/A_reproducibility_audit.md`.
 
 Roles unable to gain over the fallback (count of scenarios):
 
