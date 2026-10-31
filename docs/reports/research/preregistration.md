@@ -38,3 +38,31 @@ The git history of this file is the evidence for that ordering.
 | H6 | Selector comparison (Pareto share, IR share, raw metrics, weight stability) | descriptive; **no selector is declared "best" by consensus rate** |
 
 Failures of H1–H3 are reported as found and are not re-run with changed definitions.
+
+## Addendum — candidate-generator change (written before the `final` set is evaluated)
+
+The decision to make 1-minute resolution the production profile used dev, tuning **and the
+already-disclosed holdout**. The holdout is therefore no longer pristine for this decision.
+A new set, `final_evaluation_specs()`, was generated and has not been inspected:
+
+* 64 configurations: 4 tiers × 8 families × 2 seeds; seed base 9,100,000.
+* Disjoint fingerprints from every earlier suite.
+* Both fuel readings, giving 128 variants.
+
+Grids compared:
+* **A:** 5-minute baseline (`slot_step_min = 5`)
+* **B:** 1-minute production profile
+* **C:** event grid on B
+
+Pass criteria:
+
+| ID | Criterion |
+|---|---|
+| F1 | B selection = the independent oracle on the 1-minute scenario, in 100% of variants |
+| F2 | B and C selections pass the hard-constraint validator, in 100% of variants |
+| F3 | C fallback and compromise = B, in 100% of variants |
+| F4 | C covers 100% of B's Pareto utility vectors |
+| F5 | A's Pareto coverage and the raw-metric differences A → B (descriptive; no threshold) |
+| F6 | no cap errors at the 45-minute horizon |
+
+Run once; failures are reported, not re-run with changed definitions.

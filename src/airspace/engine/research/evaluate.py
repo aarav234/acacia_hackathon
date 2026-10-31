@@ -22,7 +22,7 @@ from fractions import Fraction
 from pathlib import Path
 
 from airspace.contracts import CONTRACT_DEFAULT_WEIGHTS, ROLE_METRICS
-from airspace.data.scenario_suite import build_suite_scenario, stratified_specs, with_fuel_reading
+from airspace.data.scenario_suite import build_suite_scenario, final_evaluation_specs, stratified_specs, with_fuel_reading
 from airspace.engine.bargaining import choose_compromise
 from airspace.engine.candidates import generate_candidates
 from airspace.engine.constraints import validate_plan
@@ -102,6 +102,11 @@ def evaluate_spec(spec, weight_samples: int = 30) -> dict:
             "pareto_vectors_covered": {
                 "slot_grid": len({tuple(t1.u[p][r] for r in ROLES) for p in par1 if p in ids5}) / len(par1_vecs) if par1_vecs else None,
                 "event": len({tuple(t1.u[p][r] for r in ROLES) for p in par1 if p in ev_ids}) / len(par1_vecs) if par1_vecs else None},
+            "integer_minute_oracle_agrees": (ref1.fallback_id == (fb1.plan_id if fb1 else None)
+                                             and ref1.compromise_id == (cp1.plan_id if cp1 else None)
+                                             and set(ref1.feasible_ids) == {a.plan.plan_id for a in ev1.assessments}),
+            "integer_minute_selected_feasible": (validate_plan(s1, cp1 or fb1).feasible if fb1 else None),
+            "event_selected_feasible": (validate_plan(s1, cpe or fbe).feasible if fbe else None),
             "event_matches_integer_minute": ((fbe.plan_id if fbe else None) == (fb1.plan_id if fb1 else None)
                                              and (cpe.plan_id if cpe else None) == (cp1.plan_id if cp1 else None)),
             "integer_minute_fallback": fb1.plan_id if fb1 else None,
@@ -157,6 +162,10 @@ def summarise(rows: list[dict]) -> dict:
     summ["grids"] = {
         "cap_errors": sum("cap_error" in r.get("grids", {}) for r in rows),
         "event_matches_integer_minute": f"{sum(x['event_matches_integer_minute'] for x in g)}/{len(g)}",
+        "integer_minute_oracle_agreement": f"{sum(x.get('integer_minute_oracle_agrees', False) for x in g)}/{len(g)}",
+        "integer_minute_selected_feasible": f"{sum(1 for x in g if x.get('integer_minute_selected_feasible'))}/{sum(1 for x in g if x.get('integer_minute_selected_feasible') is not None)}",
+        "event_selected_feasible": f"{sum(1 for x in g if x.get('event_selected_feasible'))}/{sum(1 for x in g if x.get('event_selected_feasible') is not None)}",
+        "integer_minute_compromise_differs": sum(1 for r in rows if "candidates" in r.get("grids", {}) and r["grids"]["integer_minute_compromise"] != r["production"]["compromise"]),
         "candidates_total": {k: sum(x["candidates"][k] for x in g) for k in ("slot_grid", "integer_minute", "event")},
         "feasible_total": {k: sum(x["feasible"][k] for x in g) for k in ("slot_grid", "integer_minute", "event")},
         "mean_pareto_vector_coverage": {k: statistics.fmean(x["pareto_vectors_covered"][k] for x in g if x["pareto_vectors_covered"][k] is not None)
@@ -195,12 +204,13 @@ def _delta(rows):
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--partition", choices=["dev", "tuning", "holdout"], required=True)
+    ap.add_argument("--partition", choices=["dev", "tuning", "holdout", "final"], required=True)
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--weight-samples", type=int, default=30)
     args = ap.parse_args(argv)
     args.out.mkdir(parents=True, exist_ok=True)
-    specs = [with_fuel_reading(sp, inc) for sp in stratified_specs(args.partition) for inc in (True, False)]
+    base = final_evaluation_specs() if args.partition == "final" else stratified_specs(args.partition)
+    specs = [with_fuel_reading(sp, inc) for sp in base for inc in (True, False)]
     tracemalloc.start()
     t0 = time.perf_counter()
     rows = [evaluate_spec(sp, args.weight_samples) for sp in specs]
